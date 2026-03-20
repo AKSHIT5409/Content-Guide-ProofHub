@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Software Industry & Pricing Models — Session Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0d0a;
+    --paper: #f5f0e8;
+    --warm-mid: #c8b89a;
+    --accent: #c94c1a;
+    --accent-muted: #e8d0c3;
+    --rule: #d4c9b8;
+    --green: #2a5c45;
+    --green-light: #dcecd5;
+    --blue: #1a3a5c;
+    --blue-light: #d0dded;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Instrument Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, rgba(200,184,154,.06) 0px, rgba(200,184,154,.06) 1px, transparent 1px, transparent 60px),
+      repeating-linear-gradient(0deg,  rgba(200,184,154,.06) 0px, rgba(200,184,154,.06) 1px, transparent 1px, transparent 60px);
+    pointer-events: none;
+  }
+
+  .cover-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    opacity: .8;
+  }
+
+  .cover-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cover-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.6rem;
+    animation: fadeUp .6s ease both;
+  }
+
+  .cover-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    animation: fadeUp .6s .1s ease both;
+  }
+
+  .cover-title em {
+    font-style: italic;
+    color: var(--warm-mid);
+  }
+
+  .cover-sub {
+    font-size: 1.05rem;
+    color: rgba(245,240,232,.65);
+    margin-top: 2rem;
+    max-width: 520px;
+    animation: fadeUp .6s .2s ease both;
+  }
+
+  .cover-agenda {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .agenda-pill {
+    background: rgba(201,76,26,.18);
+    border: 1px solid rgba(201,76,26,.35);
+    color: #f0b49a;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .4rem 1rem;
+    border-radius: 2rem;
+  }
+
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(200,184,154,.5);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(200,184,154,.15);
+    padding-top: 1.5rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .lead {
+    font-size: 1.08rem;
+    color: #3a3630;
+    max-width: 660px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+
+  .stat {
+    background: var(--paper);
+    padding: 1.8rem 1.6rem;
+  }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: .4rem;
+  }
+
+  .stat-label {
+    font-size: 12.5px;
+    color: #6a6055;
+    line-height: 1.45;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-muted);
+    padding: 1.2rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #3a2018;
+  }
+
+  .callout strong { color: var(--accent); }
+
+  /* ── CATEGORY GRID ── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin: 2.5rem 0;
+  }
+
+  .cat-card {
+    border: 1px solid var(--rule);
+    padding: 1.4rem;
+    position: relative;
+  }
+
+  .cat-card::before {
+    content: attr(data-n);
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--warm-mid);
+    letter-spacing: .1em;
+  }
+
+  .cat-card h4 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    margin-bottom: .4rem;
+  }
+
+  .cat-card p {
+    font-size: 13.5px;
+    color: #5a5048;
+    line-height: 1.55;
+    margin-bottom: .7rem;
+  }
+
+  .cat-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .06em;
+    padding: .2rem .6rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2px;
+  }
+
+  .tag.green  { background: var(--green); }
+  .tag.blue   { background: var(--blue); }
+  .tag.accent { background: var(--accent); }
+
+  /* ── DIVIDER BANNER ── */
+  .banner {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .banner h3 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -.02em;
+    line-height: 1.15;
+  }
+
+  .banner h3 em {
+    font-style: italic;
+    color: var(--warm-mid);
+  }
+
+  .banner p {
+    margin-top: 1rem;
+    color: rgba(245,240,232,.6);
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+  }
+
+  /* ── PRICING COMPARE ── */
+  .pricing-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 640px) {
+    .pricing-wrap { grid-template-columns: 1fr; }
+  }
+
+  .pricing-card {
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .pricing-card.flat { border-color: var(--green); }
+
+  .pricing-header {
+    padding: 1.3rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .pricing-card.flat .pricing-header {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  .pricing-header h3 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+  }
+
+  .pricing-model-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+
+  .pricing-body {
+    padding: 1.4rem 1.5rem;
+  }
+
+  .pricing-body p {
+    font-size: 13.5px;
+    color: #4a4540;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .pricing-formula {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: #ede8df;
+    padding: .7rem 1rem;
+    margin-bottom: 1.2rem;
+    border-radius: 2px;
+    color: var(--ink);
+  }
+
+  .pricing-card.flat .pricing-formula {
+    background: var(--green-light);
+    color: var(--green);
+  }
+
+  .pro-con-list {
+    list-style: none;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .pro-con-list li {
+    padding: .35rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: .5rem;
+  }
+
+  .pro-con-list li:last-child { border-bottom: none; }
+
+  .ico { font-size: 13px; flex-shrink: 0; }
+
+  /* ── POSITIONING TABLE ── */
+  .pos-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 2rem 0;
+  }
+
+  .pos-table th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #6a6055;
+    text-align: left;
+    padding: .8rem 1rem;
+    border-bottom: 2px solid var(--ink);
+    background: transparent;
+  }
+
+  .pos-table td {
+    padding: .8rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.55;
+    color: #3a3530;
+  }
+
+  .pos-table tr:last-child td { border-bottom: none; }
+
+  .pos-table .dim { color: #9a9088; font-size: 12.5px; }
+
+  .highlight-row td { background: var(--green-light); font-weight: 600; color: var(--green); }
+
+  /* ── INSIGHT BOXES ── */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .insight {
+    border: 1px solid var(--rule);
+    padding: 1.4rem;
+  }
+
+  .insight-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--rule);
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+
+  .insight h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: .4rem;
+  }
+
+  .insight p {
+    font-size: 13px;
+    color: #5a5048;
+    line-height: 1.55;
+  }
+
+  /* ── PROOFHUB SECTION ── */
+  .ph-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4rem 2.5rem;
+  }
+
+  .ph-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .ph-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--warm-mid);
+    margin-bottom: 1.2rem;
+  }
+
+  .ph-section h2 {
+    color: var(--paper);
+  }
+
+  .ph-section .lead { color: rgba(245,240,232,.7); }
+
+  .ph-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(200,184,154,.2);
+    margin: 2.5rem 0;
+    border: 1px solid rgba(200,184,154,.2);
+  }
+
+  .ph-card {
+    background: var(--ink);
+    padding: 1.5rem;
+  }
+
+  .ph-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: .6rem;
+  }
+
+  .ph-card h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: .4rem;
+    color: var(--paper);
+  }
+
+  .ph-card p {
+    font-size: 12.5px;
+    color: rgba(245,240,232,.5);
+    line-height: 1.55;
+  }
+
+  .ph-advantage {
+    border: 1px solid rgba(42,92,69,.8);
+    background: rgba(42,92,69,.25);
+    padding: 1.4rem 1.6rem;
+    margin-top: 1.5rem;
+    border-radius: 2px;
+  }
+
+  .ph-advantage strong {
+    display: block;
+    color: #7fcca3;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+
+  .ph-advantage p {
+    font-size: 13.5px;
+    color: rgba(245,240,232,.75);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--warm-mid);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media print {
+    .cover { min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-label">Session Guide · Internal</div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Content Team · Foundations</div>
+    <h1 class="cover-title">The PM Software<br><em>Industry &amp; How<br>Pricing Shapes It</em></h1>
+    <p class="cover-sub">A practical session guide covering market structure, major player categories, and the strategic logic of per-user vs. flat pricing — with a focus on why it matters for the content we write.</p>
+    <div class="cover-agenda">
+      <span class="agenda-pill">Part 01 — The Industry</span>
+      <span class="agenda-pill">Part 02 — Pricing Models</span>
+      <span class="agenda-pill">Part 03 — ProofHub's Position</span>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <span>ProofHub Content Team</span>
+    <span>2025</span>
+  </div>
+</div>
+
+
+<!-- ══ PART 01 ═════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Part 01</div>
+  <h2>What Is the Project Management Software Industry?</h2>
+  <p class="lead">At its core, this industry sells one thing: a shared system of record for how work gets done. Teams use these tools to plan tasks, communicate, track progress, and hit deadlines — instead of relying on email threads and spreadsheets.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-num">$9.8B</div>
+      <div class="stat-label">Global PM software market size (2024 est.)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~13%</div>
+      <div class="stat-label">Annual growth rate (CAGR) through 2030</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">77%</div>
+      <div class="stat-label">High-performing projects use PM software</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">SMBs</div>
+      <div class="stat-label">Fastest-growing buyer segment today</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Why it exists:</strong> The default alternative is unstructured work — email, Slack threads, shared docs, and spreadsheets. PM software replaces this chaos with visibility and accountability.
+  </div>
+
+  <div class="section-label" style="margin-top:2.5rem;">Market Segments</div>
+  <p style="margin-bottom:1.5rem; color:#5a5048; font-size:14px;">Not all PM tools target the same buyer. The market splits across team size, use case, and complexity level.</p>
+
+  <div class="cat-grid">
+    <div class="cat-card" data-n="01">
+      <h4>Work Management Platforms</h4>
+      <p>General-purpose tools designed for broad adoption. Cover task management, timelines, workload views, and integrations. Target mid-size to enterprise teams.</p>
+      <div class="cat-examples">
+        <span class="tag">Asana</span>
+        <span class="tag">monday.com</span>
+        <span class="tag">ClickUp</span>
+      </div>
+    </div>
+    <div class="cat-card" data-n="02">
+      <h4>All-in-One Team Tools</h4>
+      <p>Combine project management with communication, file storage, and time tracking. Built to replace multiple subscriptions for smaller teams.</p>
+      <div class="cat-examples">
+        <span class="tag green">ProofHub</span>
+        <span class="tag">Basecamp</span>
+        <span class="tag">Teamwork</span>
+      </div>
+    </div>
+    <div class="cat-card" data-n="03">
+      <h4>Agile / Dev-Focused Tools</h4>
+      <p>Built around sprint planning, backlog management, and engineering workflows. Deeper issue tracking and developer integrations.</p>
+      <div class="cat-examples">
+        <span class="tag blue">Jira</span>
+        <span class="tag blue">Linear</span>
+        <span class="tag blue">Shortcut</span>
+      </div>
+    </div>
+    <div class="cat-card" data-n="04">
+      <h4>Database / Flexible Platforms</h4>
+      <p>Highly customizable tools that let teams build their own workflows from scratch. Low structure, high flexibility — steeper learning curve.</p>
+      <div class="cat-examples">
+        <span class="tag">Notion</span>
+        <span class="tag">Airtable</span>
+        <span class="tag">Coda</span>
+      </div>
+    </div>
+    <div class="cat-card" data-n="05">
+      <h4>Enterprise Suite Tools</h4>
+      <p>Portfolio-level management, resource planning, and enterprise governance. Complex, expensive, sold via dedicated sales teams.</p>
+      <div class="cat-examples">
+        <span class="tag accent">Microsoft Project</span>
+        <span class="tag accent">Wrike</span>
+        <span class="tag accent">Smartsheet</span>
+      </div>
+    </div>
+    <div class="cat-card" data-n="06">
+      <h4>Niche / Vertical Tools</h4>
+      <p>Tailored for specific industries — construction, marketing, creative agencies, IT teams. Deeper features for one vertical, weaker everywhere else.</p>
+      <div class="cat-examples">
+        <span class="tag">Buildertrend</span>
+        <span class="tag">CoSchedule</span>
+        <span class="tag">ServiceNow</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>What this means for content:</strong> When we write a comparison article, we need to understand which segment each tool belongs to. Comparing monday.com with Jira isn't apples to apples — they serve different primary buyers.
+  </div>
+</div>
+
+
+<!-- ══ BANNER ══════════════════════════════════ -->
+<div class="banner">
+  <h3>Pricing isn't just a billing detail.<br><em>It's a positioning statement.</em></h3>
+  <p>The pricing model a PM tool chooses signals who they want as a customer, how they expect teams to grow, and what kind of value they're promising. Understanding this sharpens everything we write.</p>
+</div>
+
+
+<!-- ══ PART 02 ═════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Part 02</div>
+  <h2>What Pricing Models Exist?</h2>
+  <p class="lead">Two models dominate the PM software space. Each carries a different promise to the buyer — and a different business logic for the vendor.</p>
+
+  <div class="pricing-wrap">
+
+    <!-- PER-USER -->
+    <div class="pricing-card">
+      <div class="pricing-header">
+        <h3>Per-User Pricing</h3>
+        <span class="pricing-model-tag">Most common</span>
+      </div>
+      <div class="pricing-body">
+        <p>You pay a recurring fee for every seat on the team. Add a person, your bill goes up. Remove one, it goes down. The cost scales linearly with headcount.</p>
+        <div class="pricing-formula">Monthly Cost = Price/user × No. of users</div>
+        <p><strong>Who uses it:</strong></p>
+        <ul class="pro-con-list">
+          <li><span class="ico">💰</span> Asana — from $10.99/user/mo (Business)</li>
+          <li><span class="ico">💰</span> monday.com — from $9/user/mo (Basic)</li>
+          <li><span class="ico">💰</span> ClickUp — from $7/user/mo (Unlimited)</li>
+          <li><span class="ico">💰</span> Jira — from $7.75/user/mo (Standard)</li>
+          <li><span class="ico">💰</span> Notion — from $10/user/mo (Plus)</li>
+        </ul>
+        <br>
+        <p><strong>Implications for buyers:</strong></p>
+        <ul class="pro-con-list">
+          <li><span class="ico">✅</span> Low entry cost for tiny teams (2–3 people)</li>
+          <li><span class="ico">✅</span> Feel like you're paying only for what you use</li>
+          <li><span class="ico">❌</span> Costs escalate fast as teams grow (20+ users)</li>
+          <li><span class="ico">❌</span> Teams often limit access to control costs</li>
+          <li><span class="ico">❌</span> Budget unpredictability when headcount fluctuates</li>
+          <li><span class="ico">❌</span> Clients or guests often charged as extra seats</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLAT -->
+    <div class="pricing-card flat">
+      <div class="pricing-header">
+        <h3>Flat / Fixed Pricing</h3>
+        <span class="pricing-model-tag">Rarer, growing</span>
+      </div>
+      <div class="pricing-body">
+        <p>One fixed monthly fee regardless of how many people use the tool. Add users freely — the price stays the same within the plan tier.</p>
+        <div class="pricing-formula">Monthly Cost = Fixed Plan Price (unlimited users)</div>
+        <p><strong>Who uses it:</strong></p>
+        <ul class="pro-con-list">
+          <li><span class="ico">🟢</span> ProofHub — $45/mo (Essential), $89/mo (Ultimate)</li>
+          <li><span class="ico">🟢</span> Basecamp — $299/mo (flat for all users)</li>
+          <li><span class="ico">🟢</span> Teamwork — partial flat tiers for larger plans</li>
+        </ul>
+        <br>
+        <p><strong>Implications for buyers:</strong></p>
+        <ul class="pro-con-list">
+          <li><span class="ico">✅</span> Predictable cost — easy to budget</li>
+          <li><span class="ico">✅</span> Teams can invite clients, guests freely</li>
+          <li><span class="ico">✅</span> No disincentive to collaborate widely</li>
+          <li><span class="ico">✅</span> Becomes cheaper per-user as the team scales</li>
+          <li><span class="ico">❌</span> Higher upfront cost for very small teams (1–5)</li>
+          <li><span class="ico">❌</span> Less common, so requires more education for buyers</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label" style="margin-top:3rem;">Side-by-Side: How the Math Changes</div>
+
+  <table class="pos-table">
+    <thead>
+      <tr>
+        <th>Team Size</th>
+        <th>Per-User ($10/user/mo)</th>
+        <th>Flat Rate (ProofHub $89/mo)</th>
+        <th>Difference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>5 users</td>
+        <td>$50/mo</td>
+        <td>$89/mo</td>
+        <td class="dim">Per-user cheaper</td>
+      </tr>
+      <tr>
+        <td>10 users</td>
+        <td>$100/mo</td>
+        <td>$89/mo</td>
+        <td class="dim">Roughly equal</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>20 users</td>
+        <td>$200/mo</td>
+        <td>$89/mo</td>
+        <td>ProofHub saves $111/mo</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>40 users</td>
+        <td>$400/mo</td>
+        <td>$89/mo</td>
+        <td>ProofHub saves $311/mo</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>100 users</td>
+        <td>$1,000/mo</td>
+        <td>$89/mo</td>
+        <td>ProofHub saves $911/mo</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>The inflection point:</strong> Flat pricing trails per-user pricing at very small team sizes, then crosses over somewhere between 8–12 users depending on the rates. After that crossover, the cost gap widens quickly and permanently.
+  </div>
+
+  <div class="section-label" style="margin-top:3rem;">Other Pricing Models (Less Common)</div>
+  <div class="insight-grid">
+    <div class="insight">
+      <div class="insight-num">03</div>
+      <h4>Freemium / Free Forever</h4>
+      <p>Core features free with limits; upgrades unlock more storage, users, or features. ClickUp and Trello use this to acquire users at scale.</p>
+    </div>
+    <div class="insight">
+      <div class="insight-num">04</div>
+      <h4>Usage-Based</h4>
+      <p>Pay for what you consume — API calls, automations, storage. Rare in PM tools but common in adjacent SaaS (e.g., Zapier).</p>
+    </div>
+    <div class="insight">
+      <div class="insight-num">05</div>
+      <h4>Tiered Features</h4>
+      <p>Price based on feature access, not seat count. Often layered on top of per-user or flat pricing to drive upsells to Business/Enterprise plans.</p>
+    </div>
+    <div class="insight">
+      <div class="insight-num">06</div>
+      <h4>Enterprise (Quote-Based)</h4>
+      <p>No public pricing. Sales negotiates custom contracts with large accounts. Common for Wrike, Smartsheet, and enterprise Microsoft Project.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ PART 03: PROOFHUB ═══════════════════════ -->
+<div class="ph-section">
+  <div class="ph-inner">
+    <div class="ph-label">Part 03</div>
+    <h2>ProofHub's Position in This Market</h2>
+    <p class="lead">ProofHub occupies a specific and defensible niche: an all-in-one work management tool with flat pricing, purpose-built for growing SMB teams that need predictability without complexity.</p>
+
+    <div class="ph-cards">
+      <div class="ph-card">
+        <div class="ph-card-icon">📦</div>
+        <h4>All-in-One</h4>
+        <p>Tasks, timelines, files, discussions, time tracking, and proofing — in one tool, not a bundle of integrations.</p>
+      </div>
+      <div class="ph-card">
+        <div class="ph-card-icon">📊</div>
+        <h4>Flat Pricing</h4>
+        <p>$45/mo or $89/mo regardless of user count. No per-seat penalty. No budget math every time you add someone.</p>
+      </div>
+      <div class="ph-card">
+        <div class="ph-card-icon">🎯</div>
+        <h4>SMB-Focused</h4>
+        <p>Not chasing enterprise. Built for teams of 10–200 who want structure without a six-month implementation.</p>
+      </div>
+      <div class="ph-card">
+        <div class="ph-card-icon">💬</div>
+        <h4>No Per-User Bloat</h4>
+        <p>Clients, contractors, and guests can be added freely. Collaboration isn't gated behind extra seat costs.</p>
+      </div>
+    </div>
+
+    <div class="ph-advantage">
+      <strong>The Core Positioning Argument</strong>
+      <p>Competitors like Asana or monday.com make you pay more every time your team grows. ProofHub flips this: as your team scales, your cost per person drops. Growth becomes financially predictable instead of financially punishing. This is the most defensible and distinctive thing we can say — and it should show up clearly in every comparison article we write.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ══════════════════════════════════ -->
+<div class="page-footer">
+  <span>ProofHub — Content Team</span>
+  <span>Session Guide · PM Industry &amp; Pricing Models</span>
+</div>
+
+</body>
+</html>
