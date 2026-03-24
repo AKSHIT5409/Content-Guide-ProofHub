@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMBOK 8th Edition — Writer's Terminology Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300;1,9..144,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0c0a;
+  --paper: #f2f0ed;
+  --cream: #faf7f2;
+  --slate-dark: #1e2535;
+  --slate-mid: #2e3a4e;
+  --slate-accent: #4a6080;
+  --slate-light: #d0d8e4;
+  --slate-faint: #eef1f6;
+  --amber: #b8780e;
+  --amber-light: #f0e0b8;
+  --amber-faint: #faf4e6;
+  --coral: #b83a2a;
+  --coral-faint: #faf0ec;
+  --green: #2d5a3a;
+  --green-light: #d4e8db;
+  --rule: #d0ccc5;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--slate-dark);
+  color: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 85% 20%, rgba(74,96,128,0.3) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate-accent);
+  opacity: 0.9;
+  position: relative;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
+.cover-type {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242,240,237,0.35);
+  margin-bottom: 1.5rem;
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+}
+.cover-title em {
+  font-style: italic;
+  color: #8aafd4;
+}
+.cover-subtitle {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(242,240,237,0.55);
+  margin-top: 1.5rem;
+  max-width: 560px;
+  line-height: 1.65;
+}
+.cover-purpose {
+  background: rgba(74,96,128,0.2);
+  border-left: 3px solid #8aafd4;
+  padding: 1.25rem 1.75rem;
+  margin-top: 2.5rem;
+  max-width: 620px;
+  border-radius: 0 4px 4px 0;
+}
+.cover-purpose-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8aafd4;
+  margin-bottom: 0.4rem;
+}
+.cover-purpose p {
+  font-size: 0.875rem;
+  color: rgba(242,240,237,0.7);
+  line-height: 1.65;
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cover-badge {
+  background: #8aafd4;
+  color: var(--slate-dark);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.cover-attach {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(242,240,237,0.3);
+  letter-spacing: 0.08em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 4rem;
+}
+@media (max-width: 700px) {
+  .page { padding: 3rem 1.5rem; }
+  .cover { padding: 2rem 1.5rem; }
+  .cover-title { font-size: 2.4rem; }
+}
+
+/* ── SECTION ── */
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--slate-accent);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--slate-dark);
+  margin-bottom: 0.75rem;
+}
+.section-lead {
+  font-size: 0.95rem;
+  color: #2a3030;
+  max-width: 680px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+hr.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+
+/* ── EDITIONS CONTEXT ── */
+.edition-note {
+  background: var(--slate-dark);
+  color: var(--paper);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 600px) {
+  .edition-note { grid-template-columns: 1fr; }
+}
+.edition-item {}
+.edition-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(242,240,237,0.35);
+  margin-bottom: 0.3rem;
+}
+.edition-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 0.3rem;
+}
+.edition-desc {
+  font-size: 0.8rem;
+  color: rgba(242,240,237,0.55);
+  line-height: 1.55;
+}
+.edition-item.current .edition-name {
+  color: #8aafd4;
+}
+.edition-item.current .edition-label {
+  color: #8aafd4;
+  opacity: 0.8;
+}
+
+/* ── WHY IT MATTERS CALLOUT ── */
+.why-box {
+  border: 1px solid var(--slate-light);
+  border-left: 4px solid var(--slate-accent);
+  background: var(--slate-faint);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+}
+.why-box-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate-accent);
+  margin-bottom: 0.4rem;
+}
+.why-box p {
+  font-size: 0.875rem;
+  color: #2a3540;
+  line-height: 1.7;
+}
+
+/* ── TERMINOLOGY CHANGE CARDS ── */
+.change-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+.change-card {
+  border: 1px solid var(--rule);
+  background: #fff;
+  display: grid;
+  grid-template-columns: 4px 1fr;
+}
+.change-card-bar {
+  background: var(--card-color, var(--slate-accent));
+}
+.change-card-body {
+  padding: 1.5rem 2rem;
+}
+.change-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.change-card-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--slate-dark);
+}
+.change-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+}
+.tag-rename { background: #e8f0f8; color: #2a4a70; border: 1px solid #c0d0e4; }
+.tag-restructure { background: #f0e8f8; color: #4a2a70; border: 1px solid #d0c0e4; }
+.tag-reframe { background: var(--amber-faint); color: #6a4a10; border: 1px solid var(--amber-light); }
+.tag-new { background: var(--green-light); color: var(--green); border: 1px solid #b0d4bc; }
+
+.change-then-now {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  margin: 1rem 0;
+}
+@media (max-width: 600px) {
+  .change-then-now { grid-template-columns: 1fr; }
+  .change-arrow { display: none; }
+}
+.change-col {}
+.change-col-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a9aaa;
+  margin-bottom: 0.4rem;
+}
+.change-col-content {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #2a3030;
+  line-height: 1.55;
+}
+.change-col-content.is-old {
+  background: #fdf8f5;
+  border-color: #e8ddd0;
+  color: #6a5040;
+  text-decoration-line: none;
+}
+.change-col-content ul {
+  margin: 0.3rem 0 0 1rem;
+  font-size: 0.82rem;
+  color: inherit;
+}
+.change-col-content li {
+  margin-bottom: 0.2rem;
+  line-height: 1.5;
+}
+.change-arrow {
+  color: var(--rule);
+  font-size: 1.2rem;
+  padding-top: 1.75rem;
+  text-align: center;
+}
+
+.change-implication {
+  font-size: 0.82rem;
+  color: #3a4a50;
+  line-height: 1.65;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 0.75rem;
+}
+.change-implication strong {
+  color: var(--slate-dark);
+  font-weight: 600;
+}
+
+/* ── PRACTICAL RULES ── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+.rule-card {
+  background: #fff;
+  padding: 1.5rem;
+}
+.rule-number {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--slate-light);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.rule-title {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--slate-dark);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+.rule-desc {
+  font-size: 0.82rem;
+  color: #3a4a50;
+  line-height: 1.6;
+}
+
+/* ── QUICK-REFERENCE TABLE ── */
+.ref-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+table.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+table.ref-table th {
+  background: var(--slate-dark);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+table.ref-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.5;
+  color: #2a3030;
+}
+table.ref-table tr:nth-child(even) td {
+  background: var(--slate-faint);
+}
+table.ref-table td:first-child {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--slate-dark);
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--cream);
+  border-right: 2px solid var(--slate-light);
+}
+table.ref-table td.old-term {
+  color: #8a7060;
+  font-style: italic;
+  text-decoration: line-through;
+  text-decoration-color: #c8b0a0;
+}
+table.ref-table td.new-term {
+  color: var(--slate-dark);
+  font-weight: 500;
+}
+.status-pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+.pill-changed { background: #e8f0f8; color: #2a4a70; }
+.pill-new { background: var(--green-light); color: var(--green); }
+.pill-same { background: var(--paper); color: #8a9aaa; border: 1px solid var(--rule); }
+
+/* ── WRITER NOTE ── */
+.writer-note {
+  background: var(--slate-dark);
+  color: var(--paper);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-left: 3px solid #8aafd4;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.writer-note-icon { font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+.writer-note-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(242,240,237,0.8);
+}
+.writer-note-text strong { color: #8aafd4; font-weight: 600; }
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #9aa0aa;
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">ProofHub Content Team — Writer Onboarding Program</div>
+  <div class="cover-body">
+    <div class="cover-type">Reference Document · Attached to Session 2</div>
+    <h1 class="cover-title">PMBOK<br><em>8th Edition</em><br>Orientation</h1>
+    <p class="cover-subtitle">A terminology guide for writers. Not a session to study — a reference to consult when you encounter PMBOK language in sources so you can tell whether it's current or outdated.</p>
+    <div class="cover-purpose">
+      <div class="cover-purpose-label">Why This Exists</div>
+      <p>The PMBOK Guide is one of the most widely referenced documents in PM. It gets updated, and the terminology shifts between editions. Online sources don't always signal which edition they're drawing from. This guide tells you what changed in the 8th Edition (2025) so you can read sources accurately and write with current vocabulary.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-badge">Reference — Not Prescriptive</div>
+    <div class="cover-attach">
+      Companion to Session 2: Processes &amp; Phases<br>
+      Source: PMBOK® Guide, 8th Edition, PMI (2025)
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page">
+
+  <!-- CONTEXT: EDITIONS -->
+  <div class="section-number">00 · Context</div>
+  <h2 class="section-title">Which Edition Are You Reading?</h2>
+  <p class="section-lead">Most PM content online was written against the 5th or 6th Edition. The 7th Edition (2021) introduced major structural changes. The 8th Edition (2025) refined those further. Before you use a source for a methodology or PM process article, it helps to know where its vocabulary comes from.</p>
+
+  <div class="edition-note">
+    <div class="edition-item">
+      <div class="edition-label">5th / 6th Edition</div>
+      <div class="edition-name">2013 / 2017</div>
+      <div class="edition-desc">Process-heavy. Organised by 10 Knowledge Areas and 5 Process Groups. Heavy on inputs, tools, techniques, and outputs (ITTO). Still widely referenced — this is what many certification-prep resources are based on.</div>
+    </div>
+    <div class="edition-item">
+      <div class="edition-label">7th Edition</div>
+      <div class="edition-name">2021</div>
+      <div class="edition-desc">Major structural break. Removed process groups and knowledge areas as the primary organising framework. Introduced 8 Performance Domains and 12 Principles. Controversial — seen as too abstract by many practitioners.</div>
+    </div>
+    <div class="edition-item current">
+      <div class="edition-label">8th Edition — Current</div>
+      <div class="edition-name">2025</div>
+      <div class="edition-desc">Streamlined the 7th. Six principles (down from 12). Process Groups reintroduced as "Focus Areas." Seven Performance Domains. Terminology updated to reflect value-delivery framing. Explicit hybrid and AI coverage.</div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <div class="why-box-label">Why This Matters for Your Writing</div>
+    <p>A source that says "process group" is almost certainly pre-2021. A source that says "focus area" is current. A source that uses "knowledge areas" as the primary framework is 6th Edition or earlier. None of this makes a source wrong — but it means you should cross-check before treating its framing as the current standard. When you write, use current vocabulary.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- THE FOUR KEY CHANGES -->
+  <div class="section-number">01 · What Changed</div>
+  <h2 class="section-title">Four Changes Worth Knowing</h2>
+  <p class="section-lead">These are the changes that affect how PM is discussed in current sources, certification materials, and practitioner writing. Understanding them helps you evaluate what you're reading — not memorise a framework.</p>
+
+  <div class="change-cards">
+
+    <!-- CHANGE 1: Project definition -->
+    <div class="change-card" style="--card-color: #4a6080;">
+      <div class="change-card-bar"></div>
+      <div class="change-card-body">
+        <div class="change-card-meta">
+          <div class="change-card-title">How "project" and "success" are defined</div>
+          <span class="change-tag tag-reframe">Reframe</span>
+        </div>
+        <div class="change-then-now">
+          <div class="change-col">
+            <div class="change-col-label">Before (older editions)</div>
+            <div class="change-col-content is-old">A temporary endeavour undertaken to create a unique product, service, or result. Success = delivering within scope, schedule, and budget.</div>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-col">
+            <div class="change-col-label">8th Edition (2025)</div>
+            <div class="change-col-content">A temporary initiative in a unique context undertaken to <strong>create value</strong>. Success = consensus that the project delivered value worth the effort and expense.</div>
+          </div>
+        </div>
+        <div class="change-implication"><strong>What this means for your writing:</strong> Articles that still define project success purely as "on time, on budget, on scope" are working from older framing. The current understanding is that a project can miss budget and still be a success if it delivered genuine value (the Sydney Opera House example is used in the 8th Edition itself). When writing about PM outcomes, value delivery is the primary measure — constraints are inputs to that, not the definition of success.</div>
+      </div>
+    </div>
+
+    <!-- CHANGE 2: Process Groups → Focus Areas -->
+    <div class="change-card" style="--card-color: #7a4a8a;">
+      <div class="change-card-bar"></div>
+      <div class="change-card-body">
+        <div class="change-card-meta">
+          <div class="change-card-title">Process Groups → Focus Areas</div>
+          <span class="change-tag tag-rename">Rename + Reframe</span>
+        </div>
+        <div class="change-then-now">
+          <div class="change-col">
+            <div class="change-col-label">Before (6th Edition and earlier)</div>
+            <div class="change-col-content is-old">
+              <strong>Process Groups</strong> — five formal categories of processes that a project moves through in sequence:
+              <ul>
+                <li>Initiating</li>
+                <li>Planning</li>
+                <li>Executing</li>
+                <li>Monitoring &amp; Controlling</li>
+                <li>Closing</li>
+              </ul>
+            </div>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-col">
+            <div class="change-col-label">8th Edition (2025)</div>
+            <div class="change-col-content">
+              <strong>Focus Areas</strong> — same five names, but now described as areas of activity that can be implemented through formal processes, informal practices, or flexible policies — not necessarily a strict sequence.
+              <ul>
+                <li>Initiating</li>
+                <li>Planning</li>
+                <li>Executing</li>
+                <li>Monitoring &amp; Controlling</li>
+                <li>Closing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="change-implication"><strong>What this means for your writing:</strong> The five areas are the same. The vocabulary is different. When older sources say "process group," the current equivalent is "focus area." More importantly, the new framing explicitly acknowledges that Agile and hybrid teams don't move through these linearly or through prescribed processes — they address these areas fluidly. This is the PMBOK finally catching up to how most teams actually work.</div>
+      </div>
+    </div>
+
+    <!-- CHANGE 3: Knowledge Areas → Performance Domains -->
+    <div class="change-card" style="--card-color: #3a6a4a;">
+      <div class="change-card-bar"></div>
+      <div class="change-card-body">
+        <div class="change-card-meta">
+          <div class="change-card-title">Knowledge Areas → Performance Domains</div>
+          <span class="change-tag tag-restructure">Restructure</span>
+        </div>
+        <div class="change-then-now">
+          <div class="change-col">
+            <div class="change-col-label">Before (5th / 6th Edition)</div>
+            <div class="change-col-content is-old">
+              <strong>10 Knowledge Areas</strong> — each with its own processes, inputs, tools &amp; outputs:
+              <ul>
+                <li>Integration</li>
+                <li>Scope</li>
+                <li>Schedule</li>
+                <li>Cost</li>
+                <li>Quality</li>
+                <li>Resource</li>
+                <li>Communications</li>
+                <li>Risk</li>
+                <li>Procurement</li>
+                <li>Stakeholder</li>
+              </ul>
+            </div>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-col">
+            <div class="change-col-label">8th Edition (2025)</div>
+            <div class="change-col-content">
+              <strong>7 Performance Domains</strong> — broader outcome-oriented areas with 40 non-prescriptive processes distributed across them:
+              <ul>
+                <li>Governance</li>
+                <li>Scope (includes Quality)</li>
+                <li>Schedule</li>
+                <li>Finance (formerly Cost)</li>
+                <li>Stakeholders (includes Communications)</li>
+                <li>Resources</li>
+                <li>Risk</li>
+              </ul>
+              Note: Integration and Procurement are absorbed; Procurement moved to an appendix.
+            </div>
+          </div>
+        </div>
+        <div class="change-implication"><strong>What this means for your writing:</strong> You will encounter both sets of vocabulary in your research. Sources using "knowledge areas" are drawing from the 5th or 6th Edition — still valid, still widely used, just older. Sources using "performance domains" are current. The substantive content overlaps significantly; what changed is the organising logic, not most of the underlying PM practice. Don't use "knowledge areas" as a current term in your articles without flagging it as historical vocabulary.</div>
+      </div>
+    </div>
+
+    <!-- CHANGE 4: Principles 12 → 6 + Sustainability -->
+    <div class="change-card" style="--card-color: #b8780e;">
+      <div class="change-card-bar"></div>
+      <div class="change-card-body">
+        <div class="change-card-meta">
+          <div class="change-card-title">Principles: 12 reduced to 6 — Sustainability added</div>
+          <span class="change-tag tag-new">Consolidated + New</span>
+        </div>
+        <div class="change-then-now">
+          <div class="change-col">
+            <div class="change-col-label">7th Edition (2021)</div>
+            <div class="change-col-content is-old">12 principles — seen as overlapping and difficult to apply practically.</div>
+          </div>
+          <div class="change-arrow">→</div>
+          <div class="change-col">
+            <div class="change-col-label">8th Edition (2025)</div>
+            <div class="change-col-content">
+              <strong>6 Principles:</strong>
+              <ul>
+                <li>Adopt a Holistic View</li>
+                <li>Focus on Value</li>
+                <li>Embed Quality Into Processes &amp; Deliverables</li>
+                <li>Be an Accountable Leader</li>
+                <li>Integrate Sustainability Within All Project Areas</li>
+                <li>Build an Empowered Culture</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="change-implication"><strong>What this means for your writing:</strong> The inclusion of Sustainability as a named principle is genuinely new. This reflects a broader shift in how organisations justify and evaluate projects — ESG (Environmental, Social, Governance) accountability is now formally part of the PM standard, not an optional consideration. For ProofHub's readers in enterprise and regulated industries, this is increasingly relevant context. For most SMB readers, it's background — not a practical daily concern.</div>
+      </div>
+    </div>
+
+  </div><!-- /change-cards -->
+
+  <hr class="rule">
+
+  <!-- QUICK-REFERENCE TABLE -->
+  <div class="section-number">02 · Quick Reference</div>
+  <h2 class="section-title">Terminology at a Glance</h2>
+  <p class="section-lead">Use this when you encounter a term in a source and need to know whether it's current, outdated, or unchanged. All three statuses are valid — this just tells you what edition the source is drawing from.</p>
+
+  <div class="ref-table-wrap">
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Term you encounter</th>
+          <th>Edition</th>
+          <th>Current equivalent (8th Ed.)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Process Groups</td>
+          <td>5th / 6th (pre-2021)</td>
+          <td>Focus Areas</td>
+          <td><span class="status-pill pill-changed">Changed</span></td>
+        </tr>
+        <tr>
+          <td>Knowledge Areas</td>
+          <td>5th / 6th (pre-2021)</td>
+          <td>Performance Domains</td>
+          <td><span class="status-pill pill-changed">Changed</span></td>
+        </tr>
+        <tr>
+          <td>Integration Management</td>
+          <td>5th / 6th</td>
+          <td>Absorbed into Governance domain</td>
+          <td><span class="status-pill pill-changed">Changed</span></td>
+        </tr>
+        <tr>
+          <td>Cost Management</td>
+          <td>5th / 6th</td>
+          <td>Finance Performance Domain</td>
+          <td><span class="status-pill pill-changed">Renamed</span></td>
+        </tr>
+        <tr>
+          <td>Communications Management</td>
+          <td>5th / 6th</td>
+          <td>Part of Stakeholders Domain</td>
+          <td><span class="status-pill pill-changed">Merged</span></td>
+        </tr>
+        <tr>
+          <td>Procurement Management</td>
+          <td>5th / 6th</td>
+          <td>Appendix X4 (no longer a domain)</td>
+          <td><span class="status-pill pill-changed">Demoted</span></td>
+        </tr>
+        <tr>
+          <td>Initiating / Planning / Executing / Monitoring &amp; Controlling / Closing</td>
+          <td>All editions</td>
+          <td>Same names, now called Focus Areas</td>
+          <td><span class="status-pill pill-changed">Reframed</span></td>
+        </tr>
+        <tr>
+          <td>Triple Constraint (scope / time / cost)</td>
+          <td>All editions</td>
+          <td>Still valid — used as a constraint model</td>
+          <td><span class="status-pill pill-same">Unchanged</span></td>
+        </tr>
+        <tr>
+          <td>Project Charter</td>
+          <td>All editions</td>
+          <td>Unchanged</td>
+          <td><span class="status-pill pill-same">Unchanged</span></td>
+        </tr>
+        <tr>
+          <td>WBS (Work Breakdown Structure)</td>
+          <td>All editions</td>
+          <td>Unchanged</td>
+          <td><span class="status-pill pill-same">Unchanged</span></td>
+        </tr>
+        <tr>
+          <td>Stakeholder Register</td>
+          <td>All editions</td>
+          <td>Unchanged</td>
+          <td><span class="status-pill pill-same">Unchanged</span></td>
+        </tr>
+        <tr>
+          <td>Sustainability as a principle</td>
+          <td>8th Edition only</td>
+          <td>New — "Integrate Sustainability Within All Project Areas"</td>
+          <td><span class="status-pill pill-new">New</span></td>
+        </tr>
+        <tr>
+          <td>AI in project management</td>
+          <td>8th Edition (Appendix X3)</td>
+          <td>New formal coverage — not in previous editions</td>
+          <td><span class="status-pill pill-new">New</span></td>
+        </tr>
+        <tr>
+          <td>Predictive / Adaptive / Hybrid approaches</td>
+          <td>7th / 8th editions</td>
+          <td>Current. Replaces Waterfall/Agile as the standard PMI vocabulary.</td>
+          <td><span class="status-pill pill-changed">Updated</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="rule">
+
+  <!-- PRACTICAL WRITING RULES -->
+  <div class="section-number">03 · Application</div>
+  <h2 class="section-title">Five Rules for Writing About PM Concepts</h2>
+  <p class="section-lead">These are the practical takeaways from understanding the edition landscape. Apply them whenever you're writing about PM processes, lifecycle phases, or project success.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-number">01</div>
+      <div class="rule-title">Use current vocabulary in your writing — even when your source uses old vocabulary</div>
+      <div class="rule-desc">If a source says "process group" and you're writing for a 2025 audience, write "focus area" (or explain both). Your job is to translate source material into current language, not reproduce it as-is.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">02</div>
+      <div class="rule-title">Don't treat PMBOK as the only vocabulary for PM</div>
+      <div class="rule-desc">Most practitioners, especially in tech and creative industries, never use PMBOK vocabulary in their daily work. Use it when it's the right language for the reader. Don't force it where plain language serves better.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">03</div>
+      <div class="rule-title">Frame project success around value, not just constraints</div>
+      <div class="rule-desc">"On time, on budget, on scope" is a valid shorthand but it's not the complete picture anymore. Current practice, and current PMBOK, measures success as value delivered — constraints are inputs to that, not the definition.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">04</div>
+      <div class="rule-title">When in doubt about a source's currency, check for edition signals</div>
+      <div class="rule-desc">The presence of "process groups" or "knowledge areas" as organising vocabulary signals pre-2021 content. "Performance domains" and "focus areas" signal 7th or 8th Edition. Neither is automatically wrong — just signals the edition context.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-number">05</div>
+      <div class="rule-title">Remember the certification body caveat from Session 3</div>
+      <div class="rule-desc">PMI's vocabulary is authoritative for PMI. It is not the only valid way to describe PM concepts. Practitioners using Scrum, Kanban, or hybrid approaches often use entirely different vocabulary for the same underlying activities — and that vocabulary is equally valid for the readers who work in those environments.</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The point of this document in one sentence:</strong> PMBOK vocabulary is in transition, online sources don't label their edition, and your job is to write in current language — which means you need to be able to recognise old terms when you encounter them, know what they map to today, and write for an audience that spans practitioners who use none of this vocabulary and practitioners who use it daily.</div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="doc-footer">ProofHub Content Team — Internal Use Only · PMBOK 8th Edition Reference · Session 2 Companion</div>
+
+</body>
+</html>

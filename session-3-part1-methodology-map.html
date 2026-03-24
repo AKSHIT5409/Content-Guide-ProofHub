@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 3 · Part 1 — The Methodology Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300;1,9..144,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0c0a;
+  --paper: #f4ede0;
+  --paper-dark: #e8dece;
+  --amber: #c97d1a;
+  --amber-light: #f5e4c0;
+  --amber-faint: #faf3e5;
+  --navy: #152035;
+  --navy-mid: #243452;
+  --slate: #7a8699;
+  --rule: #d4c9b4;
+  --red-flag: #b83a2a;
+  --green-ok: #2d6449;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--navy);
+  color: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% 30%, rgba(201,125,26,0.12) 0%, transparent 65%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  opacity: 0.9;
+  position: relative;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
+.cover-session {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244,237,224,0.4);
+  margin-bottom: 1.5rem;
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--amber);
+}
+.cover-subtitle {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(244,237,224,0.6);
+  margin-top: 1.5rem;
+  max-width: 560px;
+  line-height: 1.6;
+}
+.cover-objective {
+  background: rgba(201,125,26,0.12);
+  border-left: 3px solid var(--amber);
+  padding: 1.25rem 1.5rem;
+  margin-top: 2.5rem;
+  max-width: 620px;
+  border-radius: 0 4px 4px 0;
+}
+.cover-objective-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.4rem;
+}
+.cover-objective p {
+  font-size: 0.9rem;
+  color: rgba(244,237,224,0.75);
+  line-height: 1.6;
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+.cover-part-badge {
+  background: var(--amber);
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.cover-nav {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(244,237,224,0.35);
+  letter-spacing: 0.08em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 4rem;
+}
+@media (max-width: 700px) {
+  .page { padding: 3rem 1.5rem; }
+  .cover { padding: 2rem 1.5rem; }
+  .cover-title { font-size: 2.6rem; }
+}
+
+/* ── SECTION HEADERS ── */
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+.section-lead {
+  font-size: 1rem;
+  color: #3a3530;
+  max-width: 680px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+hr.section-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+
+/* ── ORIGIN LOGIC INTRO ── */
+.origin-intro {
+  background: var(--navy);
+  color: var(--paper);
+  padding: 2.5rem 3rem;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.origin-intro::before {
+  content: '"';
+  font-family: var(--serif);
+  font-size: 18rem;
+  font-weight: 800;
+  color: rgba(201,125,26,0.08);
+  position: absolute;
+  top: -4rem;
+  left: -1rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.origin-intro blockquote {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(244,237,224,0.85);
+  position: relative;
+  max-width: 600px;
+}
+.origin-intro blockquote strong {
+  color: var(--amber);
+  font-style: normal;
+  font-weight: 600;
+}
+.origin-intro cite {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(244,237,224,0.35);
+  margin-top: 1rem;
+}
+
+/* ── METHODOLOGY CARDS ── */
+.method-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.method-card {
+  border: 1px solid var(--rule);
+  background: #fff;
+  display: grid;
+  grid-template-columns: 5px 1fr;
+}
+.method-card-accent {
+  background: var(--card-color, var(--amber));
+}
+.method-card-body {
+  padding: 1.5rem 2rem;
+}
+.method-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.method-name {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.method-era {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  padding-top: 3px;
+}
+.method-origin-line {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--card-color, var(--amber));
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.method-origin-line::before {
+  content: '▸';
+  opacity: 0.6;
+}
+.method-desc {
+  font-size: 0.875rem;
+  color: #3a3530;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+.method-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.method-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  background: var(--amber-faint);
+  border: 1px solid var(--amber-light);
+  color: #7a5a18;
+  text-transform: uppercase;
+}
+.method-tag.industry {
+  background: #edf4f0;
+  border-color: #c0d9cb;
+  color: #2d6449;
+}
+
+/* ── WHERE THEY PLAY OUT — TABLE ── */
+.industry-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+table.industry-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+table.industry-table th {
+  background: var(--navy);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+table.industry-table th:first-child {
+  background: var(--navy-mid);
+}
+table.industry-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  color: #2a2520;
+  line-height: 1.5;
+}
+table.industry-table tr:nth-child(even) td {
+  background: rgba(244,237,224,0.5);
+}
+table.industry-table td:first-child {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--navy);
+  white-space: nowrap;
+  background: var(--amber-faint);
+  border-right: 2px solid var(--amber-light);
+}
+.dot-primary { color: var(--amber); font-size: 1.1em; }
+.dot-secondary { color: var(--slate); font-size: 0.9em; }
+
+.table-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--slate);
+  letter-spacing: 0.05em;
+}
+
+/* ── HYBRID REALITY ── */
+.hybrid-box {
+  background: var(--amber-faint);
+  border: 1px solid var(--amber-light);
+  border-left: 4px solid var(--amber);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+}
+.hybrid-box h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.hybrid-box p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #3a3530;
+}
+
+.hybrid-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.hybrid-example {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 1.25rem;
+}
+.hybrid-example-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 0.4rem;
+}
+.hybrid-example-team {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.hybrid-example-mix {
+  font-size: 0.82rem;
+  color: #5a5048;
+  line-height: 1.6;
+}
+
+/* ── WRITER CALLOUT ── */
+.writer-note {
+  background: #1a2e1e;
+  color: var(--paper);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-left: 3px solid #5ab87a;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.writer-note-icon {
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.writer-note-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(244,237,224,0.82);
+}
+.writer-note-text strong {
+  color: #5ab87a;
+  font-weight: 600;
+}
+
+/* ── INDUSTRY FRAMING CALLOUT ── */
+.industry-frame {
+  border-top: 2px solid var(--amber);
+  padding-top: 1.2rem;
+  margin: 2rem 0;
+}
+.industry-frame-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.5rem;
+}
+.industry-frame p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #3a3530;
+  font-style: italic;
+}
+
+/* ── HANDOFF BRIDGE ── */
+.handoff {
+  background: var(--navy);
+  color: var(--paper);
+  padding: 3rem 4rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.handoff::after {
+  content: '→';
+  font-family: var(--serif);
+  font-size: 12rem;
+  font-weight: 800;
+  position: absolute;
+  right: 2rem;
+  bottom: -2rem;
+  color: rgba(201,125,26,0.08);
+  pointer-events: none;
+}
+.handoff-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.6rem;
+}
+.handoff h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--paper);
+}
+.handoff p {
+  font-size: 0.9rem;
+  color: rgba(244,237,224,0.7);
+  line-height: 1.7;
+  max-width: 580px;
+}
+.handoff-next {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(201,125,26,0.4);
+  padding: 0.6rem 1.2rem;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">ProofHub Content Team — Writer Onboarding Program</div>
+  <div class="cover-body">
+    <div class="cover-session">Session 03 · Part 1 of 2</div>
+    <h1 class="cover-title">The <em>Methodology</em><br>Map</h1>
+    <p class="cover-subtitle">Why PM methodologies exist, where each one plays out in the modern workplace, and the hybrid reality most teams actually live in.</p>
+    <div class="cover-objective">
+      <div class="cover-objective-label">Session Objective</div>
+      <p>Understand that methodologies are not arbitrary — each emerged as a response to specific failures. Know where each one dominates today, and why most real teams blend and adapt rather than follow any single approach cleanly.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-part-badge">Part 1 — Origins &amp; Modern Map</div>
+    <div class="cover-nav">
+      Session 1: PM Fundamentals ✓<br>
+      Session 2: Processes &amp; Phases ✓<br>
+      Session 3: Methodologies ← You are here
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: WHY METHODOLOGIES EXIST -->
+<div class="page">
+  <div class="section-number">01 · Foundation</div>
+  <h2 class="section-title">Why Methodologies Exist</h2>
+  <p class="section-lead">Every major PM methodology has an origin story rooted in failure. Teams hit a wall — missed deadlines, budget overruns, collapsed software projects, manufacturing chaos — and someone formalised a better way. Understanding this is what separates a writer who can explain methodologies from one who just lists their features.</p>
+
+  <div class="origin-intro">
+    <blockquote>
+      Methodologies are not philosophies invented in conference rooms.<br>
+      They are <strong>solutions to specific, documented failures</strong> — built by practitioners who got burned and decided to codify what worked.
+      <cite>Core principle for Session 3</cite>
+    </blockquote>
+  </div>
+
+  <div class="industry-frame">
+    <div class="industry-frame-label">Industry Framing</div>
+    <p>Before any methodology existed, teams ran projects on instinct, hierarchy, and hope. The chaos was expensive — construction projects ran over budget, manufacturing lines broke down unpredictably, and early software projects were a catastrophe. Each methodology below is a direct response to that chaos in a specific industry context.</p>
+  </div>
+
+  <!-- METHODOLOGY CARDS -->
+  <div class="method-grid">
+
+    <div class="method-card" style="--card-color: #2a5c8a;">
+      <div class="method-card-accent"></div>
+      <div class="method-card-body">
+        <div class="method-header">
+          <div class="method-name">Waterfall</div>
+          <div class="method-era">1950s–1970s</div>
+        </div>
+        <div class="method-origin-line" style="color: #2a5c8a;">Born from: Construction &amp; Manufacturing logic</div>
+        <p class="method-desc">Waterfall formalised what construction and engineering teams already did: plan everything upfront, then execute in strict sequence — requirements → design → build → test → deploy. You don't pour the foundation after the walls go up. For physical projects with fixed specs, this made complete sense.</p>
+        <p class="method-desc"><strong>The failure it revealed:</strong> When software teams adopted this logic in the 1970s–80s, they discovered a fatal flaw — software requirements change, and changing a requirement in Waterfall means going back to the start. Projects that took years to build were obsolete by delivery.</p>
+        <div class="method-tags">
+          <span class="method-tag industry">Construction</span>
+          <span class="method-tag industry">Defence</span>
+          <span class="method-tag industry">Manufacturing</span>
+          <span class="method-tag industry">Government</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-card" style="--card-color: #c97d1a;">
+      <div class="method-card-accent"></div>
+      <div class="method-card-body">
+        <div class="method-header">
+          <div class="method-name">Agile</div>
+          <div class="method-era">Manifesto: 2001</div>
+        </div>
+        <div class="method-origin-line">Born from: Software development's Waterfall failures</div>
+        <p class="method-desc">Seventeen software developers, exhausted by failed Waterfall projects, met in Utah in 2001 and wrote the Agile Manifesto. It was a direct rejection of the rigid, documentation-heavy, plan-everything-upfront approach. The core insight: software is not a building. Requirements evolve, and your process needs to accommodate that.</p>
+        <p class="method-desc"><strong>What it introduced:</strong> Iterative delivery, continuous feedback loops, cross-functional teams, working software over comprehensive documentation. Agile is a philosophy, not a process — it describes values and principles, not specific steps.</p>
+        <div class="method-tags">
+          <span class="method-tag industry">Software Dev</span>
+          <span class="method-tag industry">Product Teams</span>
+          <span class="method-tag industry">Startups</span>
+          <span class="method-tag industry">Tech Companies</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-card" style="--card-color: #4a7c59;">
+      <div class="method-card-accent"></div>
+      <div class="method-card-body">
+        <div class="method-header">
+          <div class="method-name">Scrum</div>
+          <div class="method-era">1990s–present</div>
+        </div>
+        <div class="method-origin-line" style="color: #4a7c59;">Born from: Formalising what high-performing teams already did</div>
+        <p class="method-desc">Jeff Sutherland and Ken Schwaber observed that the best software teams weren't following Waterfall — they were working in short bursts, holding daily check-ins, and retrospecting regularly. Scrum formalised this pattern. It gave names to the roles (Scrum Master, Product Owner, Development Team), the ceremonies (Sprint Planning, Daily Standup, Sprint Review, Retrospective), and the artifacts (Product Backlog, Sprint Backlog).</p>
+        <p class="method-desc"><strong>Why it matters:</strong> Scrum is the most widely implemented Agile framework. Many teams say they "do Agile" but what they mean is they do a version of Scrum — often an adapted, impure version.</p>
+        <div class="method-tags">
+          <span class="method-tag industry">Software Dev</span>
+          <span class="method-tag industry">Product Management</span>
+          <span class="method-tag industry">Marketing Teams</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-card" style="--card-color: #8a3a6a;">
+      <div class="method-card-accent"></div>
+      <div class="method-card-body">
+        <div class="method-header">
+          <div class="method-name">Kanban</div>
+          <div class="method-era">1940s Toyota → Knowledge Work: 2000s</div>
+        </div>
+        <div class="method-origin-line" style="color: #8a3a6a;">Born from: Toyota's manufacturing floor constraints</div>
+        <p class="method-desc">Toyota's production system was being throttled by overproduction — building inventory nobody needed yet, while other parts of the line stalled. Kanban (Japanese for "visual signal") solved this by making work visible on a board and capping how much work could be in progress at any stage. When one station finished, it pulled from the previous — not the other way around.</p>
+        <p class="method-desc"><strong>The modern translation:</strong> David Anderson adapted Kanban for software teams in 2007. The board became columns (To Do → In Progress → Done), and WIP limits became a tool for exposing bottlenecks in knowledge work. Unlike Scrum, Kanban has no roles, no sprints, no ceremonies — just flow.</p>
+        <div class="method-tags">
+          <span class="method-tag industry">Engineering Teams</span>
+          <span class="method-tag industry">Support Teams</span>
+          <span class="method-tag industry">Content Teams</span>
+          <span class="method-tag industry">Operations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-card" style="--card-color: #5a4a2a;">
+      <div class="method-card-accent"></div>
+      <div class="method-card-body">
+        <div class="method-header">
+          <div class="method-name">PRINCE2</div>
+          <div class="method-era">1989 (UK Government)</div>
+        </div>
+        <div class="method-origin-line" style="color: #5a4a2a;">Born from: UK government IT projects losing control</div>
+        <p class="method-desc">PRINCE2 (PRojects IN Controlled Environments) was commissioned by the UK government after a series of costly, unaccountable public sector IT failures. It defined a highly structured process with clearly assigned roles, defined governance stages, and mandatory documentation — ensuring someone was always accountable at every decision point.</p>
+        <p class="method-desc"><strong>Why it still matters:</strong> PRINCE2 dominates in UK/European government, finance, and large enterprise environments where accountability, audit trails, and formal governance are non-negotiable. It is rarely used in fast-moving tech companies — the overhead doesn't suit that pace.</p>
+        <div class="method-tags">
+          <span class="method-tag industry">Government</span>
+          <span class="method-tag industry">Finance</span>
+          <span class="method-tag industry">Large Enterprise</span>
+          <span class="method-tag industry">UK / Europe</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /method-grid -->
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>For your writing:</strong> Whenever you write about a methodology, anchor it in the problem it was built to solve. "Agile works well for software teams" is forgettable. "Agile was built specifically because Waterfall was producing software that was outdated by the time it shipped" is the sentence a reader understands and remembers.</div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- SECTION 2: WHERE THEY PLAY OUT -->
+  <div class="section-number">02 · Modern Map</div>
+  <h2 class="section-title">Where Each Methodology Plays Out Today</h2>
+  <p class="section-lead">Methodology choice is rarely ideological. Teams choose based on the nature of their work, client relationships, regulatory requirements, pace of change, and what their industry has standardised around. This table gives you a working map.</p>
+
+  <div class="table-legend">
+    <div class="legend-item"><span class="dot-primary">●</span> Dominant / most common</div>
+    <div class="legend-item"><span class="dot-secondary">◦</span> Used, but not dominant</div>
+    <div class="legend-item" style="color: #bbb;">— Rarely used</div>
+  </div>
+
+  <div class="industry-table-wrap">
+    <table class="industry-table">
+      <thead>
+        <tr>
+          <th>Industry / Team Type</th>
+          <th>Waterfall</th>
+          <th>Agile/Scrum</th>
+          <th>Kanban</th>
+          <th>PRINCE2</th>
+          <th>Hybrid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Software Development</td>
+          <td><span class="dot-secondary">◦</span> legacy systems</td>
+          <td><span class="dot-primary">●</span> dominant</td>
+          <td><span class="dot-secondary">◦</span> ops &amp; support</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> very common</td>
+        </tr>
+        <tr>
+          <td>Product / SaaS Teams</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> dominant</td>
+          <td><span class="dot-secondary">◦</span> roadmap planning</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> very common</td>
+        </tr>
+        <tr>
+          <td>Construction / Engineering</td>
+          <td><span class="dot-primary">●</span> dominant</td>
+          <td style="color:#bbb;">—</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-secondary">◦</span></td>
+          <td style="color:#bbb;">—</td>
+        </tr>
+        <tr>
+          <td>Marketing Teams</td>
+          <td><span class="dot-secondary">◦</span> campaigns</td>
+          <td><span class="dot-secondary">◦</span> content sprints</td>
+          <td><span class="dot-primary">●</span> editorial flow</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> very common</td>
+        </tr>
+        <tr>
+          <td>Government / Public Sector</td>
+          <td><span class="dot-secondary">◦</span></td>
+          <td><span class="dot-secondary">◦</span> IT projects</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> dominant (UK/EU)</td>
+          <td><span class="dot-secondary">◦</span></td>
+        </tr>
+        <tr>
+          <td>Financial Services</td>
+          <td><span class="dot-secondary">◦</span> compliance work</td>
+          <td><span class="dot-secondary">◦</span> IT teams</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span></td>
+          <td><span class="dot-secondary">◦</span></td>
+        </tr>
+        <tr>
+          <td>Creative Agencies</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-secondary">◦</span></td>
+          <td><span class="dot-primary">●</span> workflow management</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> very common</td>
+        </tr>
+        <tr>
+          <td>Remote / Distributed Teams</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-secondary">◦</span></td>
+          <td><span class="dot-primary">●</span> async visibility</td>
+          <td style="color:#bbb;">—</td>
+          <td><span class="dot-primary">●</span> very common</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>What this table is actually showing you:</strong> Methodology choice follows the nature of the work — not personality, not preference. Fixed-spec physical work → Waterfall. Fast-changing, iterative work → Agile/Scrum. Continuous incoming work with no sprint structure → Kanban. High governance accountability requirements → PRINCE2. And most teams? They mix. Which brings us to the most important part of this session.</div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- SECTION 3: HYBRID REALITY -->
+  <div class="section-number">03 · The Real World</div>
+  <h2 class="section-title">The Hybrid Reality</h2>
+  <p class="section-lead">No team runs a textbook methodology. Most teams run a hybrid — shaped by their history, their tools, their people, and what worked last quarter. A writer who doesn't understand this will produce methodology content that sounds out of touch to the very readers they're trying to help.</p>
+
+  <div class="hybrid-box">
+    <h3>Why hybrids exist — and why it's not a failure</h3>
+    <p>A Scrum team that skips Sprint Reviews because their client prefers continuous delivery hasn't "broken Scrum." They've adapted it to fit a real working relationship. A marketing team that runs monthly sprints and a Kanban board at the same time isn't confused — they're dealing with two different types of work simultaneously. Hybrid approaches are not a sign that a team is doing PM wrong. They are usually a sign that a team is doing PM <em>realistically</em>.</p>
+  </div>
+
+  <div class="hybrid-examples">
+    <div class="hybrid-example">
+      <div class="hybrid-example-label">Common Hybrid</div>
+      <div class="hybrid-example-team">Software Team — "ScrumBan"</div>
+      <div class="hybrid-example-mix">Uses Scrum sprints for feature development, but manages bugs and support tickets on a continuous Kanban board alongside. Two work types, two rhythms, one team.</div>
+    </div>
+    <div class="hybrid-example">
+      <div class="hybrid-example-label">Common Hybrid</div>
+      <div class="hybrid-example-team">Agency — "Waterfall client, Agile delivery"</div>
+      <div class="hybrid-example-mix">Presents clients with a fixed-scope, fixed-timeline Waterfall plan (what clients want). Internally delivers it in two-week Agile sprints. The output looks Waterfall; the process is Agile.</div>
+    </div>
+    <div class="hybrid-example">
+      <div class="hybrid-example-label">Common Hybrid</div>
+      <div class="hybrid-example-team">Enterprise — "Scaled Agile"</div>
+      <div class="hybrid-example-mix">Uses SAFe (Scaled Agile Framework) to coordinate Agile teams across a large organisation that still has Waterfall-style annual budgeting and planning. A deliberate institutional compromise.</div>
+    </div>
+    <div class="hybrid-example">
+      <div class="hybrid-example-label">Common Hybrid</div>
+      <div class="hybrid-example-team">Content Team — "Sprint + Flow"</div>
+      <div class="hybrid-example-mix">Monthly editorial planning sprint sets the calendar. Individual articles move through a Kanban board (Drafting → Review → Published). Strategic work is planned; operational work flows.</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The practical implication for your writing:</strong> When you write about Scrum, you will be writing for readers who do a version of Scrum — not the textbook version. Acknowledge this. Don't write "a Scrum team must hold Sprint Reviews every two weeks." Write about the intent behind Sprint Reviews and when teams adapt the cadence to fit their situation. Readers who live in hybrid environments disengage immediately from content that lectures them about doing their methodology "wrong."</div>
+  </div>
+
+  <div class="industry-frame">
+    <div class="industry-frame-label">Industry Framing — Connecting it to the Reader</div>
+    <p>The reason hybrid approaches dominate is the same reason PM tools exist: real organisations are messy, and teams need flexible systems that adapt to their work rather than the other way around. When you write about methodologies, the underlying question for the reader is always: "will this work for how my team actually operates?" That question is never answered by a purist description of how a methodology is supposed to work.</p>
+  </div>
+
+  <!-- HANDOFF TO PART 2 -->
+  <div class="handoff">
+    <div class="handoff-label">Continue to Part 2</div>
+    <h3>Now that you know what methodologies are — here's how to write about them well.</h3>
+    <p>Part 2 of this session covers the practical craft layer: how to evaluate sources, spot vendor-influenced methodology content, stay neutral across different reader preferences, and bridge everything you've learned in Sessions 1–3 toward the reader profiling session.</p>
+    <div class="handoff-next">→ Open Session 3 · Part 2: The Writer's Filter</div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="doc-footer">ProofHub Content Team — Internal Use Only · Session 3 · Part 1 of 2</div>
+
+</body>
+</html>

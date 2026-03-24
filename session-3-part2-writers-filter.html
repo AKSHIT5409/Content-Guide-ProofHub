@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 3 · Part 2 — The Writer's Filter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300;1,9..144,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0c0a;
+  --paper: #f0f4f2;
+  --paper-warm: #f4ede0;
+  --forest: #1a3528;
+  --forest-mid: #2a4a38;
+  --green: #3a7a56;
+  --green-light: #d4ece1;
+  --green-faint: #edf5f0;
+  --coral: #c4461a;
+  --coral-light: #f5ddd5;
+  --coral-faint: #faf0ec;
+  --slate: #6a7d74;
+  --rule: #c8d8d0;
+  --amber: #b8780e;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--forest);
+  color: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 30% 70%, rgba(58,122,86,0.25) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  opacity: 0.9;
+  position: relative;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
+.cover-session {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(240,244,242,0.4);
+  margin-bottom: 1.5rem;
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+}
+.cover-title em {
+  font-style: italic;
+  color: #6dd49a;
+}
+.cover-subtitle {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(240,244,242,0.6);
+  margin-top: 1.5rem;
+  max-width: 560px;
+  line-height: 1.6;
+}
+.cover-objective {
+  background: rgba(58,122,86,0.18);
+  border-left: 3px solid #6dd49a;
+  padding: 1.25rem 1.5rem;
+  margin-top: 2.5rem;
+  max-width: 620px;
+  border-radius: 0 4px 4px 0;
+}
+.cover-objective-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6dd49a;
+  margin-bottom: 0.4rem;
+}
+.cover-objective p {
+  font-size: 0.9rem;
+  color: rgba(240,244,242,0.75);
+  line-height: 1.6;
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+.cover-part-badge {
+  background: #6dd49a;
+  color: var(--forest);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.cover-nav {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,244,242,0.35);
+  letter-spacing: 0.08em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 4rem;
+}
+@media (max-width: 700px) {
+  .page { padding: 3rem 1.5rem; }
+  .cover { padding: 2rem 1.5rem; }
+  .cover-title { font-size: 2.6rem; }
+}
+
+/* ── SECTION HEADERS ── */
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+.section-lead {
+  font-size: 1rem;
+  color: #2a3530;
+  max-width: 680px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+hr.section-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+
+/* ── SOURCE HIERARCHY ── */
+.source-hierarchy {
+  margin-bottom: 2.5rem;
+}
+.source-tier {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 1.25rem;
+  margin-bottom: 1rem;
+  align-items: start;
+}
+.source-tier-num {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tier-1 .source-tier-num { background: var(--forest); color: #6dd49a; }
+.tier-2 .source-tier-num { background: var(--green); color: var(--green-faint); }
+.tier-3 .source-tier-num { background: var(--green-light); color: var(--forest); }
+.tier-4 .source-tier-num { background: var(--coral-light); color: var(--coral); }
+.tier-bad .source-tier-num { background: var(--coral); color: #fff; font-size: 1rem; }
+.source-tier-body {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+}
+.source-tier-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 0.2rem;
+}
+.tier-1 .source-tier-label { color: var(--forest); }
+.tier-bad .source-tier-label { color: var(--coral); }
+.source-tier-name {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.3rem;
+}
+.source-tier-desc {
+  font-size: 0.85rem;
+  color: #3a4840;
+  line-height: 1.6;
+}
+.source-tier-examples {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--slate);
+  margin-top: 0.3rem;
+}
+
+/* ── RED FLAGS ── */
+.red-flags-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+.red-flag-card {
+  background: #fff;
+  padding: 1.5rem;
+  position: relative;
+}
+.red-flag-card::before {
+  content: '⚑';
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--coral);
+  opacity: 0.5;
+}
+.red-flag-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 0.4rem;
+}
+.red-flag-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.red-flag-desc {
+  font-size: 0.83rem;
+  color: #3a4840;
+  line-height: 1.6;
+}
+.red-flag-example {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--coral);
+  background: var(--coral-faint);
+  padding: 0.4rem 0.6rem;
+  margin-top: 0.6rem;
+  border-left: 2px solid var(--coral);
+  line-height: 1.5;
+}
+
+/* ── CERT BODIES ── */
+.cert-box {
+  background: var(--paper-warm);
+  border: 1px solid #d4c9b4;
+  border-left: 4px solid var(--amber);
+  padding: 1.75rem 2.25rem;
+  margin-bottom: 2rem;
+}
+.cert-box-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.4rem;
+}
+.cert-box h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3a3020;
+  margin-bottom: 0.5rem;
+}
+.cert-box p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #4a4030;
+}
+.cert-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.cert-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0.75rem;
+  font-size: 0.83rem;
+  align-items: start;
+}
+.cert-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--amber);
+  padding-top: 1px;
+}
+.cert-desc {
+  color: #4a4030;
+  line-height: 1.55;
+}
+
+/* ── NEUTRAL WRITING ── */
+.neutral-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 2rem;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 600px) {
+  .neutral-comparison { grid-template-columns: 1fr; }
+}
+.nc-col {
+  padding: 1.5rem;
+}
+.nc-col-bad {
+  background: #fff5f3;
+  border-right: 1px solid var(--rule);
+}
+.nc-col-good {
+  background: var(--green-faint);
+}
+.nc-header {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.nc-col-bad .nc-header { color: var(--coral); }
+.nc-col-good .nc-header { color: var(--green); }
+.nc-item {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #2a3530;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.nc-item:last-child { border-bottom: none; }
+.nc-bullet-bad { color: var(--coral); flex-shrink: 0; margin-top: 1px; }
+.nc-bullet-good { color: var(--green); flex-shrink: 0; margin-top: 1px; }
+
+/* ── WRITER CALLOUT ── */
+.writer-note {
+  background: var(--forest);
+  color: var(--paper);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-left: 3px solid #6dd49a;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.writer-note-icon {
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.writer-note-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(240,244,242,0.82);
+}
+.writer-note-text strong {
+  color: #6dd49a;
+  font-weight: 600;
+}
+
+/* ── INDUSTRY FRAMING ── */
+.industry-frame {
+  border-top: 2px solid var(--green);
+  padding-top: 1.2rem;
+  margin: 2rem 0;
+}
+.industry-frame-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+.industry-frame p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #2a3530;
+  font-style: italic;
+}
+
+/* ── VOCABULARY ALIGNMENT ── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.vocab-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--green);
+  padding: 1rem 1.25rem;
+}
+.vocab-term {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.25rem;
+}
+.vocab-desc {
+  font-size: 0.78rem;
+  color: #4a5a50;
+  line-height: 1.55;
+}
+.vocab-next {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+}
+
+/* ── HANDOFF BRIDGE — FINAL ── */
+.handoff-final {
+  background: var(--forest);
+  color: var(--paper);
+  padding: 4rem 5rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.handoff-final::before {
+  content: '4';
+  font-family: var(--serif);
+  font-size: 20rem;
+  font-weight: 800;
+  position: absolute;
+  right: -1rem;
+  bottom: -4rem;
+  color: rgba(109,212,154,0.06);
+  pointer-events: none;
+  line-height: 1;
+}
+.handoff-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6dd49a;
+  margin-bottom: 1rem;
+}
+.handoff-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  max-width: 580px;
+}
+.handoff-body {
+  font-size: 0.9rem;
+  color: rgba(240,244,242,0.7);
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.handoff-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  max-width: 580px;
+}
+.hc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: rgba(240,244,242,0.75);
+  line-height: 1.6;
+}
+.hc-check {
+  color: #6dd49a;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.handoff-next-session {
+  border: 1px solid rgba(109,212,154,0.3);
+  padding: 1.5rem 2rem;
+  max-width: 480px;
+}
+.handoff-next-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,244,242,0.35);
+  margin-bottom: 0.4rem;
+}
+.handoff-next-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 0.4rem;
+}
+.handoff-next-desc {
+  font-size: 0.83rem;
+  color: rgba(240,244,242,0.55);
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">ProofHub Content Team — Writer Onboarding Program</div>
+  <div class="cover-body">
+    <div class="cover-session">Session 03 · Part 2 of 2</div>
+    <h1 class="cover-title">The <em>Writer's</em><br>Filter</h1>
+    <p class="cover-subtitle">How to research methodology content accurately, evaluate sources, stay neutral across reader preferences, and bridge three sessions of industry knowledge into the reader profiling session.</p>
+    <div class="cover-objective">
+      <div class="cover-objective-label">Session Objective</div>
+      <p>Build a reliable filter for evaluating methodology sources online. Understand what vendor-influenced content looks like and how to separate it from practitioner knowledge. Know ProofHub's neutrality standard — and why it's the right standard for our readers.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-part-badge">Part 2 — Research &amp; Neutrality</div>
+    <div class="cover-nav">
+      Session 1: PM Fundamentals ✓<br>
+      Session 2: Processes &amp; Phases ✓<br>
+      Session 3: Methodologies ← You are here
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: RESEARCH FILTER -->
+<div class="page">
+
+  <div class="section-number">01 · Research</div>
+  <h2 class="section-title">How to Research Methodologies:<br>A Source Hierarchy</h2>
+  <p class="section-lead">The internet has no shortage of methodology content. Much of it is accurate. A significant portion is not — it's vendor marketing dressed in educational clothes, certification body propaganda, or opinion presented as consensus. Before you write a word about any methodology, you need to know what you're reading.</p>
+
+  <!-- SOURCE HIERARCHY -->
+  <div class="source-hierarchy">
+
+    <div class="source-tier tier-1">
+      <div class="source-tier-num">1</div>
+      <div class="source-tier-body">
+        <div class="source-tier-label">Highest Trust</div>
+        <div class="source-tier-name">Primary source documents — the original texts</div>
+        <div class="source-tier-desc">The Agile Manifesto (agilemanifesto.org), the original Scrum Guide (scrumguides.org), the Toyota Production System documentation. These are what the methodology actually says — before anyone reinterpreted, simplified, or commercialised it. Slower to read, but authoritative.</div>
+        <div class="source-tier-examples">agilemanifesto.org · scrumguides.org · original PRINCE2 handbook</div>
+      </div>
+    </div>
+
+    <div class="source-tier tier-2">
+      <div class="source-tier-num">2</div>
+      <div class="source-tier-body">
+        <div class="source-tier-label">High Trust</div>
+        <div class="source-tier-name">Practitioner-written content — people who've applied it professionally</div>
+        <div class="source-tier-desc">Blog posts, conference talks, and books by working practitioners — PMs, Scrum Masters, engineering leads, consultants who are not primarily selling a tool or a certification. Look for first-person experience, nuanced caveats, and honest discussion of where a methodology struggles. These people have lived with tradeoffs. They write differently from marketers.</div>
+        <div class="source-tier-examples">Martin Fowler's bliki · Basecamp's Shape Up · practitioner conference talks</div>
+      </div>
+    </div>
+
+    <div class="source-tier tier-3">
+      <div class="source-tier-num">3</div>
+      <div class="source-tier-body">
+        <div class="source-tier-label">Useful — with caveats</div>
+        <div class="source-tier-name">Certification bodies — useful, but read with their institutional lens in mind</div>
+        <div class="source-tier-desc">PMI, Scrum Alliance, and AXELOS (PRINCE2) produce accurate methodology descriptions — but remember they have commercial interests. PMI makes money selling PMP certifications; the Scrum Alliance sells Certified Scrum Master training. Their content will present their methodology favourably and emphasise the value of certification. This doesn't make it wrong. It makes it partial.</div>
+        <div class="source-tier-examples">PMI.org · ScrumAlliance.org · AXELOS.com</div>
+      </div>
+    </div>
+
+    <div class="source-tier tier-4">
+      <div class="source-tier-num">4</div>
+      <div class="source-tier-body">
+        <div class="source-tier-label">Read carefully</div>
+        <div class="source-tier-name">Software vendor content — educational surface, marketing intent</div>
+        <div class="source-tier-desc">Atlassian's Agile coach content, monday.com's methodology guides, Asana's PM glossary — these are written by people who know PM well, and the factual content is often accurate. But every guide ends up implying that their tool is the natural choice for that methodology. Read these to understand how methodologies are being explained to a mainstream audience, not as authoritative sources.</div>
+        <div class="source-tier-examples">Atlassian Agile Coach · monday.com blog · Asana Learn guides</div>
+      </div>
+    </div>
+
+    <div class="source-tier tier-bad">
+      <div class="source-tier-num">✕</div>
+      <div class="source-tier-body">
+        <div class="source-tier-label">Do not use as a source</div>
+        <div class="source-tier-name">Generic "best practices" content with no authorship or methodology expertise</div>
+        <div class="source-tier-desc">Unnamed listicle articles on high-DA sites, AI-generated methodology overviews, content mills producing "what is Scrum" articles with no practitioner input. These are written for SEO, not accuracy. They often flatten nuance, present opinion as fact, and occasionally mix up framework definitions. You will find them in abundance on the first page of Google.</div>
+        <div class="source-tier-examples">Nameless roundup posts · AI-generated content farms · scraper sites</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RED FLAGS -->
+  <h3 style="font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--forest); margin-bottom: 1.25rem; margin-top: 2.5rem;">Red Flags to Watch For</h3>
+  <p style="font-size: 0.9rem; color: #2a3530; margin-bottom: 1.5rem; line-height: 1.7; max-width: 680px;">These patterns in a source should immediately raise your guard. They don't always mean the content is wrong — but they mean you need to verify elsewhere before using it.</p>
+
+  <div class="red-flags-grid">
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">The methodology is described as having no real downsides</div>
+      <div class="red-flag-desc">Every methodology has legitimate tradeoffs. Agile doesn't work well for fixed-price contracts. Scrum overhead is real for small teams. Waterfall fails when requirements change. If an article has nothing critical to say, it's promotional.</div>
+      <div class="red-flag-example">"Agile is the modern standard and works for any team that wants to be productive."</div>
+    </div>
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">"Tool X is the best tool for this methodology"</div>
+      <div class="red-flag-desc">This is positioning dressed as methodology education. Tool selection and methodology are separate decisions. Scrum can be run in Notion, a spreadsheet, or a whiteboard. Any article that ends with a tool recommendation has a marketing objective, not an educational one.</div>
+      <div class="red-flag-example">"Jira is the gold standard for Agile teams" — written on Atlassian's blog.</div>
+    </div>
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">The framework is described as universally applicable</div>
+      <div class="red-flag-desc">No methodology works for every context. If you're reading content that argues Scrum can transform any team — a construction company, a law firm, a restaurant chain — without significant adaptation, the author is selling something. Methodologies are context-dependent by design.</div>
+      <div class="red-flag-example">"Kanban can revolutionise how any business operates."</div>
+    </div>
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">Certification is presented as the only path to competence</div>
+      <div class="red-flag-desc">Certification bodies have a financial interest in making certifications feel mandatory. Many excellent Scrum Masters are uncertified. Many certified PMs are ineffective. Certification demonstrates training; it doesn't certify competence. Content that treats "get certified" as the primary next step is institutional marketing.</div>
+      <div class="red-flag-example">"You can't truly lead an Agile team without a CSM certification."</div>
+    </div>
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">The methodology is described in its pure, idealised form only</div>
+      <div class="red-flag-desc">As you learned in Part 1 — most teams run hybrids. Content that describes a methodology as though teams implement it perfectly, with all roles filled and all ceremonies followed, is written for textbooks, not for real practitioners. It signals the author hasn't worked in the environment they're describing.</div>
+      <div class="red-flag-example">"In a Scrum team, the Product Owner always maintains a fully groomed backlog prioritised by business value."</div>
+    </div>
+
+    <div class="red-flag-card">
+      <div class="red-flag-label">Red Flag</div>
+      <div class="red-flag-title">No author, no date, no cited sources</div>
+      <div class="red-flag-desc">Methodology knowledge evolves. The Scrum Guide has been updated multiple times. Agile practices in 2024 look different from 2010. Undated content from unnamed authors cannot be verified or contextualised. If you can't tell when it was written or who wrote it, treat it as unverified until you can cross-check the claims elsewhere.</div>
+    </div>
+
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>Your practical rule:</strong> For every methodology claim in your draft, ask — where did I read this, and does the source have an interest in me believing it? If you can't answer the first question, find a source. If the answer to the second question is "yes," cross-check with a source that has a different interest.</div>
+  </div>
+
+  <!-- CERT BODIES NUANCE -->
+  <div class="cert-box">
+    <div class="cert-box-label">A Note on Certification Bodies</div>
+    <h3>Useful — but read with their incentives in mind</h3>
+    <p>The major certification bodies are legitimate institutions that have done real work to define and standardise PM practice. Their content is often accurate and well-maintained. But they are also organisations with commercial interests — they sell training, exams, and credentials. Use their resources for foundational definitions and process descriptions. Don't use them as your only source, and don't reproduce their framing of "why certification matters."</p>
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-name">PMI</div>
+        <div class="cert-desc">Project Management Institute. Publishes the PMBOK Guide — a solid process reference. Sells the PMP certification. Strong US and global enterprise influence. Tends toward structured, traditional PM.</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Scrum Alliance</div>
+        <div class="cert-desc">Sells CSM, CSP and other Scrum certifications. Their Scrum definitions are accurate but they have a strong institutional interest in keeping Scrum distinct from other Agile approaches.</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">Scrum.org</div>
+        <div class="cert-desc">Ken Schwaber's organisation (co-creator of Scrum). Publishes the official Scrum Guide — the best primary source for what Scrum actually is. Less commercially aggressive than Scrum Alliance.</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">AXELOS / PeopleCert</div>
+        <div class="cert-desc">Owns PRINCE2 and ITIL. UK-government-originated, now commercial. PRINCE2 documentation is authoritative for PRINCE2. Useful for UK/European governance contexts.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- SECTION 2: STAYING NEUTRAL -->
+  <div class="section-number">02 · Voice</div>
+  <h2 class="section-title">Staying Neutral in Methodology Content</h2>
+  <p class="section-lead">ProofHub's readers are not a monolith. Some run Scrum. Some have never heard the word Scrum and run their projects on instinct. Some are being asked to introduce Agile to a team that's always used Waterfall and is resistant to change. Your job is to help each of them understand clearly — not to advocate for a particular approach or engineer them toward ProofHub.</p>
+
+  <div class="neutral-comparison">
+    <div class="nc-col nc-col-bad">
+      <div class="nc-header">✕ Avoid — Takes a side or pushes the reader</div>
+      <div class="nc-item"><span class="nc-bullet-bad">✕</span><span>Agile is the modern approach. Most forward-thinking teams have moved away from Waterfall.</span></div>
+      <div class="nc-item"><span class="nc-bullet-bad">✕</span><span>Scrum's structured ceremonies make it the superior choice for teams that want accountability.</span></div>
+      <div class="nc-item"><span class="nc-bullet-bad">✕</span><span>If your team isn't using a PM methodology yet, you're leaving productivity on the table.</span></div>
+      <div class="nc-item"><span class="nc-bullet-bad">✕</span><span>ProofHub supports all major methodologies, making it the natural tool for any approach you choose.</span></div>
+      <div class="nc-item"><span class="nc-bullet-bad">✕</span><span>Teams that resist Agile are usually dealing with organisational culture issues they haven't addressed.</span></div>
+    </div>
+    <div class="nc-col nc-col-good">
+      <div class="nc-header">✓ Aim for — Helps the reader choose what fits their situation</div>
+      <div class="nc-item"><span class="nc-bullet-good">✓</span><span>Agile works well for teams whose requirements change frequently. Waterfall remains appropriate for fixed-scope projects with stable specifications.</span></div>
+      <div class="nc-item"><span class="nc-bullet-good">✓</span><span>Scrum's ceremony structure suits teams that benefit from regular checkpoints. Smaller teams often find the overhead outweighs the benefit.</span></div>
+      <div class="nc-item"><span class="nc-bullet-good">✓</span><span>Many teams run projects effectively without a named methodology. The question is whether a structured approach would solve a specific problem they're experiencing.</span></div>
+      <div class="nc-item"><span class="nc-bullet-good">✓</span><span>Explain how the concept applies to the reader's situation. Let the tool recommendation follow naturally if it does.</span></div>
+      <div class="nc-item"><span class="nc-bullet-good">✓</span><span>When teams struggle to adopt Agile, it's often because the methodology was chosen before understanding whether it fits the work — not because the team is resistant to improvement.</span></div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The underlying standard:</strong> A reader who prefers Waterfall should finish your Agile article feeling like they understand it clearly — not like they've been persuaded they're doing something wrong. A reader evaluating Scrum should understand both why teams adopt it and the conditions under which it doesn't work well. Clarity serves everyone. Advocacy serves a subset and alienates the rest.</div>
+  </div>
+
+  <div class="industry-frame">
+    <div class="industry-frame-label">Why This Matters for ProofHub Specifically</div>
+    <p>ProofHub's readers span construction project managers, marketing directors, agency leads, and software teams. They arrive from very different methodology backgrounds. Content that reads as "Agile-first" silently tells half of them that this content isn't for them. A neutral lens is not just an ethical stance — it's the commercially intelligent one for an audience this broad.</p>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- SECTION 3: HANDOFF TO READER PROFILING -->
+  <div class="section-number">03 · Bridge</div>
+  <h2 class="section-title">Vocabulary to Carry Into Reader Profiling</h2>
+  <p class="section-lead">Session 4 — Reader Profiling — builds directly on what you've covered in Sessions 1 through 3. The concepts below appear throughout all three sessions, and they're the same vocabulary the reader profiling session uses to describe the people who search for and read ProofHub's content. You don't need to memorise definitions. You need to notice these concepts appearing naturally in your understanding of the industry so far.</p>
+
+  <div class="vocab-grid">
+    <div class="vocab-card">
+      <div class="vocab-term">Pain Point</div>
+      <div class="vocab-desc">The specific professional problem that sends someone looking for information. Not "I want to learn about Scrum" — but "our sprints keep overrunning and we can't figure out why."</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+    <div class="vocab-card">
+      <div class="vocab-term">Awareness Level</div>
+      <div class="vocab-desc">How much does the reader already know when they arrive? Are they searching "what is project management" or "Scrum vs Kanban for remote teams"? Same topic, completely different entry points.</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+    <div class="vocab-card">
+      <div class="vocab-term">Decision Trigger</div>
+      <div class="vocab-desc">The event that made someone search today rather than a month ago. A missed deadline. A new team lead demanding methodology change. A tool contract renewal coming up. The trigger shapes the urgency and intent behind the search.</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+    <div class="vocab-card">
+      <div class="vocab-term">Job To Be Done</div>
+      <div class="vocab-desc">What the reader needs to accomplish by the end of the article. Understand a concept? Make a decision? Build a case for their manager? Each job requires a different structure and depth of content.</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+    <div class="vocab-card">
+      <div class="vocab-term">Reader Role</div>
+      <div class="vocab-desc">Who is this person inside their team? A PM writing for their team's buy-in reads differently from a team lead looking for personal understanding. Role determines vocabulary, authority, and what counts as "useful."</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+    <div class="vocab-card">
+      <div class="vocab-term">Team Context</div>
+      <div class="vocab-desc">What kind of team is this person on? Size, industry, remote vs in-office, PM maturity level. As you've now learned — context shapes methodology choice and shapes what content a reader will find realistic vs out of touch.</div>
+      <div class="vocab-next">↳ Used in reader profiling</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>Your job going into Session 4:</strong> You've spent three sessions learning the industry — the problems, the processes, the methodologies, the teams. Session 4 asks: who is the person living inside this industry, what are they struggling with, and what are they typing into Google when they need help? You're not starting from zero — you're applying what you know to specific real people.</div>
+  </div>
+
+  <!-- HANDOFF FINAL -->
+  <div class="handoff-final">
+    <div class="handoff-label">Session 3 Complete — Looking Forward</div>
+    <h2 class="handoff-title">You now have the industry context. Session 4 introduces the people inside it.</h2>
+    <p class="handoff-body">Everything in Sessions 1–3 describes the world ProofHub's readers live and work in. The project lifecycles, the methodologies, the hybrid realities, the team structures — these are the professional environment a reader brings with them to every article they open. Session 4 turns the lens outward and asks: who exactly is this person, what does their daily work look like, and what do they need from a ProofHub article to feel like it was worth their time?</p>
+
+    <div class="handoff-checklist">
+      <div class="hc-item">
+        <div class="hc-check">✓</div>
+        <span>You can explain why each major methodology exists in terms of the failure it was built to solve — not just what it is.</span>
+      </div>
+      <div class="hc-item">
+        <div class="hc-check">✓</div>
+        <span>You have a working map of which methodologies dominate which industries and why.</span>
+      </div>
+      <div class="hc-item">
+        <div class="hc-check">✓</div>
+        <span>You understand that most real teams run hybrids — and your writing will reflect that rather than contradict it.</span>
+      </div>
+      <div class="hc-item">
+        <div class="hc-check">✓</div>
+        <span>You have a source hierarchy and a set of red flags for evaluating methodology content before you use it.</span>
+      </div>
+      <div class="hc-item">
+        <div class="hc-check">✓</div>
+        <span>You understand ProofHub's neutrality standard and why it's the right approach for an audience as broad as ours.</span>
+      </div>
+    </div>
+
+    <div class="handoff-next-session">
+      <div class="handoff-next-label">Up Next</div>
+      <div class="handoff-next-title">Session 4 · Reader Profiling</div>
+      <div class="handoff-next-desc">Who reads ProofHub's content, what they're trying to solve, and how to write so it actually lands with a real professional — not a theoretical reader persona.</div>
+    </div>
+
+  </div>
+
+</div><!-- /page -->
+
+<div class="doc-footer">ProofHub Content Team — Internal Use Only · Session 3 · Part 2 of 2</div>
+
+</body>
+</html>

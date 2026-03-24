@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 4 · Part 2 — Writing for the Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300;1,9..144,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0c0a;
+  --paper: #f5f0ea;
+  --paper-mid: #ede5d8;
+  --terra: #9e3b20;
+  --terra-light: #f0d5cc;
+  --terra-faint: #faf2ee;
+  --warm-dark: #2a1a12;
+  --warm-mid: #4a3028;
+  --ochre: #c4880e;
+  --ochre-light: #f5e4b8;
+  --ochre-faint: #fdf7e8;
+  --rule: #ddd0c4;
+  --slate: #7a6a60;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--terra);
+  color: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 80% 80%, rgba(42,26,18,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 10% 15%, rgba(255,255,255,0.06) 0%, transparent 55%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,0.55);
+  position: relative;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
+.cover-session {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,0.35);
+  margin-bottom: 1.5rem;
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--ochre-light);
+}
+.cover-subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(245,240,234,0.55);
+  margin-top: 1.5rem;
+  max-width: 560px;
+  line-height: 1.65;
+}
+.cover-objective {
+  background: rgba(42,26,18,0.25);
+  border-left: 3px solid var(--ochre-light);
+  padding: 1.25rem 1.75rem;
+  margin-top: 2.5rem;
+  max-width: 620px;
+  border-radius: 0 4px 4px 0;
+}
+.cover-objective-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ochre-light);
+  margin-bottom: 0.4rem;
+}
+.cover-objective p {
+  font-size: 0.875rem;
+  color: rgba(245,240,234,0.72);
+  line-height: 1.65;
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cover-part-badge {
+  background: var(--ochre-light);
+  color: var(--warm-dark);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.cover-nav {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(245,240,234,0.3);
+  letter-spacing: 0.08em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 4rem;
+}
+@media (max-width: 700px) {
+  .page { padding: 3rem 1.5rem; }
+  .cover { padding: 2rem 1.5rem; }
+  .cover-title { font-size: 2.6rem; }
+}
+
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--warm-dark);
+  margin-bottom: 0.9rem;
+}
+.section-lead {
+  font-size: 0.95rem;
+  color: var(--warm-mid);
+  max-width: 680px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+hr.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+
+/* ── THREE PART FRAMEWORK ── */
+.framework-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+@media (max-width: 580px) { .framework-trio { grid-template-columns: 1fr; } }
+.framework-card { background: #fff; padding: 1.75rem; }
+.framework-card:nth-child(2) { background: var(--warm-dark); }
+.fc-number {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.framework-card:nth-child(1) .fc-number { color: var(--terra-light); }
+.framework-card:nth-child(2) .fc-number { color: rgba(245,240,234,0.15); }
+.framework-card:nth-child(3) .fc-number { color: var(--ochre-light); }
+.fc-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+.framework-card:nth-child(1) .fc-title { color: var(--terra); }
+.framework-card:nth-child(2) .fc-title { color: var(--paper); }
+.framework-card:nth-child(3) .fc-title { color: var(--ochre); }
+.fc-desc {
+  font-size: 0.845rem;
+  line-height: 1.65;
+}
+.framework-card:nth-child(1) .fc-desc { color: #3a2a20; }
+.framework-card:nth-child(2) .fc-desc { color: rgba(245,240,234,0.65); }
+.framework-card:nth-child(3) .fc-desc { color: #3a2a10; }
+.fc-example {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 2px;
+}
+.framework-card:nth-child(1) .fc-example { background: var(--terra-faint); color: var(--terra); border-left: 2px solid var(--terra-light); }
+.framework-card:nth-child(2) .fc-example { background: rgba(245,240,234,0.06); color: rgba(245,240,234,0.55); border-left: 2px solid rgba(245,240,234,0.15); }
+.framework-card:nth-child(3) .fc-example { background: var(--ochre-faint); color: var(--ochre); border-left: 2px solid var(--ochre-light); }
+
+/* ── APPLIED EXAMPLES ── */
+.applied-example {
+  border: 1px solid var(--rule);
+  background: #fff;
+  margin-bottom: 1.5rem;
+}
+.ae-header {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 1rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ae-topic {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+.ae-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,0.45);
+}
+.ae-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 580px) { .ae-body { grid-template-columns: 1fr; } }
+.ae-col {
+  padding: 1.5rem 1.75rem;
+  border-right: 1px solid var(--rule);
+}
+.ae-col:last-child { border-right: none; }
+.ae-col-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.ae-reader-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  background: var(--terra-faint);
+  border: 1px solid var(--terra-light);
+  color: var(--terra);
+  margin-bottom: 0.6rem;
+}
+.ae-row {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #2a2018;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(221,208,196,0.5);
+  align-items: flex-start;
+}
+.ae-row:last-child { border-bottom: none; }
+.ae-row-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--slate);
+  flex-shrink: 0;
+  width: 80px;
+  padding-top: 2px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+/* ── LIMITS BOX ── */
+.limits-intro {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 2.5rem 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.limits-intro::before {
+  content: '≠';
+  font-family: var(--serif);
+  font-size: 16rem;
+  font-weight: 800;
+  position: absolute;
+  right: -1rem;
+  top: -3rem;
+  color: rgba(245,240,234,0.04);
+  pointer-events: none;
+  line-height: 1;
+}
+.limits-intro-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8956a;
+  margin-bottom: 0.6rem;
+}
+.limits-intro blockquote {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(245,240,234,0.82);
+  max-width: 600px;
+  position: relative;
+}
+.limits-intro blockquote strong {
+  color: #e8956a;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.limits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 2rem;
+}
+.limit-card {
+  background: #fff;
+  padding: 1.5rem;
+}
+.limit-card-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.4rem;
+}
+.limit-card-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--warm-dark);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+.limit-card-desc {
+  font-size: 0.83rem;
+  color: #3a2a20;
+  line-height: 1.6;
+}
+
+/* ── WRITER NOTE ── */
+.writer-note {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-left: 3px solid #e8956a;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.writer-note-icon { font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+.writer-note-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(245,240,234,0.8);
+}
+.writer-note-text strong { color: #e8956a; font-weight: 600; }
+
+/* ── SESSION CLOSE ── */
+.session-close {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 4rem 5rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.session-close::before {
+  content: '4';
+  font-family: var(--serif);
+  font-size: 24rem;
+  font-weight: 800;
+  position: absolute;
+  right: -2rem;
+  bottom: -5rem;
+  color: rgba(232,149,106,0.05);
+  pointer-events: none;
+  line-height: 1;
+}
+.sc-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8956a;
+  margin-bottom: 1rem;
+}
+.sc-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  max-width: 580px;
+}
+.sc-body {
+  font-size: 0.9rem;
+  color: rgba(245,240,234,0.65);
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: 2.5rem;
+}
+.sc-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+.sc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: rgba(245,240,234,0.75);
+  line-height: 1.6;
+}
+.sc-check {
+  color: #e8956a;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  margin-top: 1px;
+}
+.sc-divider {
+  border: none;
+  border-top: 1px solid rgba(245,240,234,0.1);
+  margin: 2rem 0;
+}
+.sc-programme {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,240,234,0.08);
+  max-width: 620px;
+}
+@media (max-width: 580px) { .sc-programme { grid-template-columns: 1fr 1fr; } }
+.sc-session {
+  padding: 1.25rem;
+  background: rgba(245,240,234,0.04);
+}
+.sc-session.active {
+  background: rgba(232,149,106,0.12);
+  border: 1px solid rgba(232,149,106,0.25);
+}
+.sc-session-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,0.3);
+  margin-bottom: 0.3rem;
+}
+.sc-session.active .sc-session-num { color: #e8956a; }
+.sc-session-title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(245,240,234,0.5);
+  line-height: 1.4;
+}
+.sc-session.active .sc-session-title { color: var(--paper); }
+.sc-complete {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(245,240,234,0.25);
+  margin-top: 0.3rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.sc-session.active .sc-complete { color: #e8956a; opacity: 0.7; }
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">ProofHub Content Team — Writer Onboarding Program</div>
+  <div class="cover-body">
+    <div class="cover-session">Session 04 · Part 2 of 2</div>
+    <h1 class="cover-title">Writing<br>for the <em>Reader</em></h1>
+    <p class="cover-subtitle">The three-part framework for every article you write. How knowing your reader changes every structural decision. What ProofHub's content is not trying to do.</p>
+    <div class="cover-objective">
+      <div class="cover-objective-label">Session Objective</div>
+      <p>Apply reader knowledge to concrete writing decisions. Leave this session with a repeatable framework — pain point, decision trigger, job to be done — that you can run against any brief before you start writing.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-part-badge">Part 2 — Framework &amp; Application</div>
+    <div class="cover-nav">
+      Session 1: PM Fundamentals ✓<br>
+      Session 2: Processes &amp; Phases ✓<br>
+      Session 3: Methodologies ✓<br>
+      Session 4: Reader Profiling ← Final session
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- SECTION 1: THE THREE-PART FRAMEWORK -->
+  <div class="section-number">01 · Framework</div>
+  <h2 class="section-title">Pain Point. Decision Trigger. Job To Be Done.</h2>
+  <p class="section-lead">Three questions. Run them against every article before you write the first sentence. The answers tell you what the opening paragraph needs to acknowledge, how deep the article needs to go, and where it should end. Skipping this is why articles get written that no specific person would find genuinely useful.</p>
+
+  <div class="framework-trio">
+    <div class="framework-card">
+      <div class="fc-number">01</div>
+      <div class="fc-title">Pain Point</div>
+      <div class="fc-desc">The ongoing professional problem that makes this topic relevant to the reader's life. Not a generic frustration — a specific, nameable thing that's costing them time, trust, or results on a recurring basis.</div>
+      <div class="fc-example">"Our projects keep running late and I don't have visibility into why until it's already a problem."</div>
+    </div>
+    <div class="framework-card">
+      <div class="fc-number">02</div>
+      <div class="fc-title">Decision Trigger</div>
+      <div class="fc-desc">The specific event that made them search today rather than six months ago. Something changed — a deadline was missed, a client complained, a manager asked for a process, a contract renewal is coming up. The trigger shapes urgency and intent.</div>
+      <div class="fc-example">"We just missed a client deadline and my manager asked me to come back with a plan to prevent it happening again."</div>
+    </div>
+    <div class="framework-card">
+      <div class="fc-number">03</div>
+      <div class="fc-title">Job To Be Done</div>
+      <div class="fc-desc">What the reader needs to accomplish by the time they close the tab. Understand a concept. Make a decision. Build a case for their team. Choose between options. Each job requires a different structure, depth, and ending.</div>
+      <div class="fc-example">"I need to walk into a meeting tomorrow with a credible answer to why our timelines slip and what we're going to do about it."</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>These three things connect to Sessions 1–3 directly.</strong> Every pain point maps to something you now understand about how projects fail — scope creep, poor handoffs, unclear ownership, no visibility into progress. Every decision trigger maps to a real event in a professional's working life. Every job to be done maps to a stage on the awareness spectrum. You're not applying an abstract framework — you're applying the industry context you've built over four sessions to a real person's real situation.</div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 2: HOW READER CONTEXT CHANGES THE ARTICLE -->
+  <div class="section-number">02 · Application</div>
+  <h2 class="section-title">How the Reader Changes the Article</h2>
+  <p class="section-lead">Two writers covering the same topic will write different articles if they've identified different readers. These examples show exactly what changes — and what should change — when you write for a specific person rather than a generic audience.</p>
+
+  <!-- EXAMPLE 1 -->
+  <div class="applied-example">
+    <div class="ae-header">
+      <div class="ae-topic">Topic: "How to manage project scope"</div>
+      <div class="ae-tag">Same topic · Two readers · Two different articles</div>
+    </div>
+    <div class="ae-body">
+      <div class="ae-col">
+        <div class="ae-col-label">Reader A</div>
+        <div class="ae-reader-tag">The Stretched Team Lead</div>
+        <div class="ae-row"><span class="ae-row-label">Pain point</span><span>Clients keep adding requests mid-project and the team ends up working weekends.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Trigger</span><span>A project just overran by three weeks due to late additions that weren't scoped.</span></div>
+        <div class="ae-row"><span class="ae-row-label">JTBD</span><span>A practical way to push back on scope additions without damaging the client relationship.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Opening</span><span>Opens with the scenario: a client sends a "quick addition" at 4pm on a Friday. The reader nods. You've already earned the next paragraph.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Depth</span><span>Practical steps, real language for client conversations, a simple template. No formal scope management theory.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Ending</span><span>Closes when the reader has a usable process. No need to explain what a WBS is.</span></div>
+      </div>
+      <div class="ae-col">
+        <div class="ae-col-label">Reader B</div>
+        <div class="ae-reader-tag">The Evaluating PM</div>
+        <div class="ae-row"><span class="ae-row-label">Pain point</span><span>Scope creep is eroding margin on fixed-price contracts and the team can't trace where it originates.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Trigger</span><span>Post-mortem on a recently closed project showed 30% of work was undocumented additions.</span></div>
+        <div class="ae-row"><span class="ae-row-label">JTBD</span><span>A structured approach to scope change control that can be formalised across multiple projects.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Opening</span><span>Opens with the business cost: undocumented scope additions are a margin problem, not just a workload one. Doesn't explain what scope is.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Depth</span><span>Change control processes, traceability, how to document and price additions, governance options. Assumes PM literacy throughout.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Ending</span><span>Closes with implementation — how to roll this out to a team, what good looks like in practice.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAMPLE 2 -->
+  <div class="applied-example">
+    <div class="ae-header">
+      <div class="ae-topic">Topic: "What is Agile project management"</div>
+      <div class="ae-tag">Same topic · Two readers · Two different articles</div>
+    </div>
+    <div class="ae-body">
+      <div class="ae-col">
+        <div class="ae-col-label">Reader A</div>
+        <div class="ae-reader-tag">The Junior Team Member</div>
+        <div class="ae-row"><span class="ae-row-label">Pain point</span><span>Their team "does Agile" and they nod along in sprint planning without understanding what they're agreeing to.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Trigger</span><span>Onboarding at a new job. Their manager mentioned the Agile methodology and they want to understand before the next meeting.</span></div>
+        <div class="ae-row"><span class="ae-row-label">JTBD</span><span>Understand what Agile is well enough to participate confidently — not become an expert.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Opening</span><span>Starts from their experience: "if your team works in sprints, holds standups, and reviews work at the end of each cycle — you're already doing Agile."</span></div>
+        <div class="ae-row"><span class="ae-row-label">Depth</span><span>Core concepts only — iterations, sprints, retrospectives, the backlog. Plain language, concrete examples. No comparison to Waterfall until the concept is solid.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Ending</span><span>Closes with "what to expect in a typical Agile team" — sends them back to work feeling oriented.</span></div>
+      </div>
+      <div class="ae-col">
+        <div class="ae-col-label">Reader B</div>
+        <div class="ae-reader-tag">The Founder / Ops Manager</div>
+        <div class="ae-row"><span class="ae-row-label">Pain point</span><span>A developer they hired keeps asking to "work Agile" and they're not sure what that means for their delivery timelines and client commitments.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Trigger</span><span>They need to decide whether to adopt Agile for an upcoming product build — a real decision with real consequences.</span></div>
+        <div class="ae-row"><span class="ae-row-label">JTBD</span><span>Understand whether Agile is right for their situation — not a textbook definition.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Opening</span><span>Starts from the decision they're facing: "your developer wants to work in sprints. Here's what that means for your deadlines, your client conversations, and your team structure."</span></div>
+        <div class="ae-row"><span class="ae-row-label">Depth</span><span>What Agile means practically for a non-technical founder. When it works, when it doesn't. What they need to have in place before adopting it.</span></div>
+        <div class="ae-row"><span class="ae-row-label">Ending</span><span>Closes with a decision framework — "if X describes your situation, Agile is worth trying. If Y, start somewhere simpler."</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The pattern in both examples:</strong> The reader's situation shapes the opening sentence, the assumed knowledge level, the examples used, and where the article ends. None of these differences require writing a worse article for either reader — they require writing a <em>different</em> article. The instinct to cover everything for everyone is what produces articles that genuinely serve nobody.</div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 3: WHAT THE CONTENT ISN'T TRYING TO DO -->
+  <div class="section-number">03 · Limits</div>
+  <h2 class="section-title">What ProofHub's Content Is Not Trying to Do</h2>
+  <p class="section-lead">Understanding your reader also means understanding the limits of a single article. Writing for a defined reader is a deliberate editorial choice — it means explicitly not writing for everyone else at the same time. That's not a failure. It's how good content works.</p>
+
+  <div class="limits-intro">
+    <div class="limits-intro-label">The core tension</div>
+    <blockquote>
+      Writing for everyone usually means writing for <strong>no one</strong>. Choosing a reader is not about excluding people — it's about giving one person a genuinely useful experience instead of giving many people a vaguely relevant one.
+    </blockquote>
+  </div>
+
+  <div class="limits-grid">
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Convert every reader into a ProofHub user in one visit</div>
+      <div class="limit-card-desc">Most readers are not ready to buy when they arrive. A Stage 1 reader finding your article on "what is a project kickoff meeting" is building awareness, not evaluating tools. Content that pushes ProofHub at that moment reads as intrusive and loses the reader's trust for every future article they might find.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Teach every aspect of PM in every article</div>
+      <div class="limit-card-desc">An article about project scope management does not need to also cover risk, scheduling, and stakeholder communication. Including everything signals to the reader that the writer didn't trust them to know what they were searching for. Serve the search intent — then stop.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Argue that ProofHub is the best tool for every situation</div>
+      <div class="limit-card-desc">ProofHub is the right tool for many teams. It is not right for every team. Content that forces a ProofHub recommendation into every topic — including topics where it's irrelevant — reads as promotional. A reader who feels manipulated doesn't come back. A reader who got genuinely useful information might.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Please every reader equally on every article</div>
+      <div class="limit-card-desc">A deeply practical article for the Stretched Team Lead will feel too basic to the Evaluating PM. That's fine. The alternative — writing it vague enough to not alienate either — means it's not genuinely useful to either. Choose the reader the article is actually for. Write for them. Let the others find the article that was written for them.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Resolve every question the reader might have</div>
+      <div class="limit-card-desc">An article that tries to cover every related question becomes a sprawling resource that answers none of them well. Define the job to be done for this specific reader. Do that job. End the article when the job is done — not when you've run out of related things to say.</div>
+    </div>
+    <div class="limit-card">
+      <div class="limit-card-label">Not its job</div>
+      <div class="limit-card-title">Sound like it was written by a PM expert for PM experts</div>
+      <div class="limit-card-desc">Most of ProofHub's readers are not certified PMs. They're professionals who manage projects as part of a broader role. Content written in dense PM vocabulary — process groups, knowledge areas, integrated baselines — excludes the majority of people who would genuinely benefit from a clearer explanation in plain language.</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The editorial principle behind all of this:</strong> Every time you sit down to write, you are making a choice about who the article is for. That choice should be conscious and deliberate — not defaulted into by trying to include everything. A well-defined reader is the single most useful constraint you can impose on yourself before you start writing. Everything else — structure, depth, tone, examples, where the article ends — follows from knowing who you're actually talking to.</div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SESSION CLOSE: FULL ARC -->
+  <div class="session-close">
+    <div class="sc-label">Onboarding Programme Complete</div>
+    <h2 class="sc-title">You have the industry. You have the reader. Now write.</h2>
+    <p class="sc-body">Four sessions. The industry that created the need for PM tools. The processes and phases that structure how projects actually run. The methodologies teams choose — and how most teams adapt and blend them in practice. And now: the people who search for help navigating all of it, what sends them searching, and what they need when they arrive. That's the complete foundation for writing ProofHub content that works.</p>
+
+    <div class="sc-checklist">
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You understand why PM exists — the real professional problems it was built to solve, not just the category description.</span>
+      </div>
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You can explain what happens in each phase of a project and why PM tools matter at each stage.</span>
+      </div>
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You can write about methodologies with genuine context — origin, tradeoffs, hybrid reality — not just feature lists.</span>
+      </div>
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You can evaluate sources accurately, recognise vendor-influenced content, and stay neutral across reader preferences.</span>
+      </div>
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You know who ProofHub's readers are, what sends them searching, and how to make a conscious choice about who an article is for.</span>
+      </div>
+      <div class="sc-item">
+        <div class="sc-check">✓</div>
+        <span>You have a three-part framework — pain point, decision trigger, job to be done — that you can run against any brief before writing.</span>
+      </div>
+    </div>
+
+    <hr class="sc-divider">
+
+    <div class="sc-programme">
+      <div class="sc-session">
+        <div class="sc-session-num">Session 1</div>
+        <div class="sc-session-title">PM Fundamentals</div>
+        <div class="sc-complete">Complete ✓</div>
+      </div>
+      <div class="sc-session">
+        <div class="sc-session-num">Session 2</div>
+        <div class="sc-session-title">Processes &amp; Phases</div>
+        <div class="sc-complete">Complete ✓</div>
+      </div>
+      <div class="sc-session">
+        <div class="sc-session-num">Session 3</div>
+        <div class="sc-session-title">Methodologies</div>
+        <div class="sc-complete">Complete ✓</div>
+      </div>
+      <div class="sc-session active">
+        <div class="sc-session-num">Session 4</div>
+        <div class="sc-session-title">Reader Profiling</div>
+        <div class="sc-complete">Complete ✓</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="doc-footer">ProofHub Content Team — Internal Use Only · Session 4 · Part 2 of 2 · Onboarding Programme Complete</div>
+</body>
+</html>

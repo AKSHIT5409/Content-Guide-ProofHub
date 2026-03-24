@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 4 · Part 1 — The Reader Landscape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300;1,9..144,600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f0c0a;
+  --paper: #f5f0ea;
+  --paper-mid: #ede5d8;
+  --terra: #9e3b20;
+  --terra-mid: #b8472a;
+  --terra-light: #f0d5cc;
+  --terra-faint: #faf2ee;
+  --warm-dark: #2a1a12;
+  --warm-mid: #4a3028;
+  --ochre: #c4880e;
+  --ochre-light: #f5e4b8;
+  --ochre-faint: #fdf7e8;
+  --rule: #ddd0c4;
+  --slate: #7a6a60;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--warm-dark);
+  color: var(--paper);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 20% 75%, rgba(158,59,32,0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 15%, rgba(196,136,14,0.12) 0%, transparent 55%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  opacity: 0.7;
+  position: relative;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
+.cover-session {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,240,234,0.35);
+  margin-bottom: 1.5rem;
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+.cover-title em {
+  font-style: italic;
+  color: #e8956a;
+}
+.cover-subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(245,240,234,0.55);
+  margin-top: 1.5rem;
+  max-width: 560px;
+  line-height: 1.65;
+}
+.cover-objective {
+  background: rgba(158,59,32,0.2);
+  border-left: 3px solid #e8956a;
+  padding: 1.25rem 1.75rem;
+  margin-top: 2.5rem;
+  max-width: 620px;
+  border-radius: 0 4px 4px 0;
+}
+.cover-objective-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8956a;
+  margin-bottom: 0.4rem;
+}
+.cover-objective p {
+  font-size: 0.875rem;
+  color: rgba(245,240,234,0.72);
+  line-height: 1.65;
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cover-part-badge {
+  background: #e8956a;
+  color: var(--warm-dark);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.cover-nav {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(245,240,234,0.3);
+  letter-spacing: 0.08em;
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 4rem;
+}
+@media (max-width: 700px) {
+  .page { padding: 3rem 1.5rem; }
+  .cover { padding: 2rem 1.5rem; }
+  .cover-title { font-size: 2.6rem; }
+}
+
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--warm-dark);
+  margin-bottom: 0.9rem;
+}
+.section-lead {
+  font-size: 0.95rem;
+  color: var(--warm-mid);
+  max-width: 680px;
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+hr.rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 4rem 0;
+}
+
+/* ── PERSONA VS PROFILING ── */
+.comparison-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 580px) { .comparison-block { grid-template-columns: 1fr; } }
+.comp-col { padding: 1.75rem 2rem; }
+.comp-col-left {
+  background: #fdf8f4;
+  border-right: 1px solid var(--rule);
+}
+.comp-col-right { background: #fff; }
+.comp-header {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.comp-col-left .comp-header { color: var(--slate); }
+.comp-col-right .comp-header { color: var(--terra); }
+.comp-row {
+  font-size: 0.855rem;
+  line-height: 1.6;
+  color: #3a3028;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-dot-muted { color: var(--slate); flex-shrink: 0; margin-top: 2px; font-size: 0.75rem; }
+.comp-dot-active { color: var(--terra); flex-shrink: 0; margin-top: 2px; font-size: 0.75rem; }
+
+/* ── READER PROFILE CARDS ── */
+.reader-profiles { display: flex; flex-direction: column; gap: 2rem; margin-bottom: 2rem; }
+
+.reader-card {
+  border: 1px solid var(--rule);
+  background: #fff;
+  display: grid;
+  grid-template-columns: 5px 1fr;
+}
+.reader-card-bar { background: var(--card-color, var(--terra)); }
+.reader-card-body { padding: 1.75rem 2.25rem; }
+
+.reader-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.reader-name {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--warm-dark);
+}
+.reader-industry-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.reader-situation {
+  font-size: 0.875rem;
+  color: var(--warm-mid);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+
+.reader-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.reader-fact {}
+.reader-fact-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--card-color, var(--terra));
+  margin-bottom: 0.3rem;
+}
+.reader-fact-value {
+  font-size: 0.845rem;
+  color: #2a2018;
+  line-height: 1.6;
+}
+
+.reader-search-trigger {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--card-color, var(--terra));
+  padding: 0.9rem 1.25rem;
+  margin-top: 0.75rem;
+}
+.rst-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 0.25rem;
+}
+.rst-query {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--warm-dark);
+  font-weight: 500;
+}
+.rst-note {
+  font-size: 0.8rem;
+  color: var(--slate);
+  margin-top: 0.3rem;
+  line-height: 1.5;
+}
+
+/* ── INDUSTRY FRAME ── */
+.industry-frame {
+  border-top: 2px solid var(--terra);
+  padding-top: 1.1rem;
+  margin: 2rem 0;
+}
+.industry-frame-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.4rem;
+}
+.industry-frame p {
+  font-size: 0.875rem;
+  color: var(--warm-mid);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* ── AWARENESS SPECTRUM ── */
+.spectrum-track {
+  position: relative;
+  margin: 2.5rem 0;
+}
+.spectrum-bar {
+  height: 8px;
+  background: linear-gradient(to right, var(--paper-mid), var(--terra-light), var(--terra));
+  border-radius: 4px;
+  margin-bottom: 0;
+  position: relative;
+}
+.spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.spectrum-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.spectrum-stages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 1.5rem;
+}
+.spectrum-stage {
+  background: #fff;
+  padding: 1.25rem;
+}
+.ss-level {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.ss-name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--warm-dark);
+  margin-bottom: 0.35rem;
+  line-height: 1.25;
+}
+.ss-query {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--terra);
+  margin-bottom: 0.4rem;
+  line-height: 1.45;
+}
+.ss-desc {
+  font-size: 0.78rem;
+  color: var(--slate);
+  line-height: 1.55;
+}
+.stage-1 .ss-level { color: #9aaa8a; }
+.stage-2 .ss-level { color: var(--ochre); }
+.stage-3 .ss-level { color: #c87040; }
+.stage-4 .ss-level { color: var(--terra); }
+
+@media (max-width: 640px) {
+  .spectrum-stages { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── WRITER NOTE ── */
+.writer-note {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-left: 3px solid #e8956a;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.writer-note-icon { font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+.writer-note-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(245,240,234,0.8);
+}
+.writer-note-text strong { color: #e8956a; font-weight: 600; }
+
+/* ── HANDOFF ── */
+.handoff {
+  background: var(--warm-dark);
+  color: var(--paper);
+  padding: 3rem 4rem;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.handoff::after {
+  content: '→';
+  font-family: var(--serif);
+  font-size: 14rem;
+  font-weight: 800;
+  position: absolute;
+  right: 1rem;
+  bottom: -3rem;
+  color: rgba(232,149,106,0.07);
+  pointer-events: none;
+  line-height: 1;
+}
+.handoff-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e8956a;
+  margin-bottom: 0.6rem;
+}
+.handoff h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--paper);
+  max-width: 560px;
+}
+.handoff p {
+  font-size: 0.875rem;
+  color: rgba(245,240,234,0.65);
+  line-height: 1.7;
+  max-width: 580px;
+}
+.handoff-next {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e8956a;
+  border: 1px solid rgba(232,149,106,0.35);
+  padding: 0.6rem 1.2rem;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">ProofHub Content Team — Writer Onboarding Program</div>
+  <div class="cover-body">
+    <div class="cover-session">Session 04 · Part 1 of 2</div>
+    <h1 class="cover-title">The <em>Reader</em><br>Landscape</h1>
+    <p class="cover-subtitle">Who actually reads ProofHub's content, what professional situation they're in when they search, and how to map their awareness level before writing a word.</p>
+    <div class="cover-objective">
+      <div class="cover-objective-label">Session Objective</div>
+      <p>Move from abstract industry knowledge to a concrete picture of real people. Understand the four core reader groups, why the same person can need fundamentally different articles on the same topic, and how to read a search query and place it on the awareness spectrum.</p>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-part-badge">Part 1 — Reader Groups &amp; Awareness</div>
+    <div class="cover-nav">
+      Session 1: PM Fundamentals ✓<br>
+      Session 2: Processes &amp; Phases ✓<br>
+      Session 3: Methodologies ✓<br>
+      Session 4: Reader Profiling ← You are here
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- SECTION 1: PERSONA VS PROFILING -->
+  <div class="section-number">01 · Foundation</div>
+  <h2 class="section-title">Why Personas Aren't Enough</h2>
+  <p class="section-lead">Most content teams hand writers a persona: a job title, a few bullet points, maybe a name and a stock photo. Personas describe who someone is. They don't tell you what that person needs at the specific moment they open your article — and that moment is the only thing that matters.</p>
+
+  <div class="comparison-block">
+    <div class="comp-col comp-col-left">
+      <div class="comp-header">What a persona tells you</div>
+      <div class="comp-row"><span class="comp-dot-muted">–</span><span>Job title and seniority level</span></div>
+      <div class="comp-row"><span class="comp-dot-muted">–</span><span>Industry and company size</span></div>
+      <div class="comp-row"><span class="comp-dot-muted">–</span><span>General goals and frustrations</span></div>
+      <div class="comp-row"><span class="comp-dot-muted">–</span><span>Tools they use day-to-day</span></div>
+      <div class="comp-row"><span class="comp-dot-muted">–</span><span>A static snapshot of their professional life</span></div>
+    </div>
+    <div class="comp-col comp-col-right">
+      <div class="comp-header">What reader profiling adds</div>
+      <div class="comp-row"><span class="comp-dot-active">✓</span><span>What problem sent them searching today — not in general</span></div>
+      <div class="comp-row"><span class="comp-dot-active">✓</span><span>How much they already know about this topic right now</span></div>
+      <div class="comp-row"><span class="comp-dot-active">✓</span><span>What they need to accomplish by the end of this specific article</span></div>
+      <div class="comp-row"><span class="comp-dot-active">✓</span><span>What would make them feel the article was worth their time</span></div>
+      <div class="comp-row"><span class="comp-dot-active">✓</span><span>The live context they bring to this page, right now</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.9rem; color: var(--warm-mid); line-height:1.75; max-width:680px; margin-bottom:1.5rem;">The same person — a project manager at a 30-person agency — can arrive at two ProofHub articles on the same day in completely different states. At 9am they're searching "how to write a project brief" because a client just asked for one and they've never written a formal one. At 3pm they're searching "ProofHub vs Asana" because their contract renewal is next week. Same person. Entirely different article needed each time.</p>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>The shift in how you think:</strong> Stop asking "who is this person?" before you write. Start asking "what does this person need to accomplish by the time they close this tab?" The answer to that question determines everything — opening paragraph, depth of explanation, examples, where the article ends.</div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 2: FOUR READER GROUPS -->
+  <div class="section-number">02 · Reader Groups</div>
+  <h2 class="section-title">ProofHub's Four Core Readers</h2>
+  <p class="section-lead">These are not rigid personas. They are recognisable professional situations that ProofHub's content is most likely to serve. A real reader may move between them depending on the article. Understanding these situations — grounded in the industry knowledge from Sessions 1–3 — is what lets you write for a real person rather than a theoretical one.</p>
+
+  <div class="reader-profiles">
+
+    <!-- READER 1 -->
+    <div class="reader-card" style="--card-color: #9e5a20;">
+      <div class="reader-card-bar"></div>
+      <div class="reader-card-body">
+        <div class="reader-top">
+          <div class="reader-name">The Stretched Team Lead</div>
+          <div class="reader-industry-tag">Most common ProofHub reader</div>
+        </div>
+        <p class="reader-situation">"I'm managing projects but nobody gave me a framework. I'm figuring it out as I go and things keep slipping through."</p>
+        <div class="reader-grid">
+          <div class="reader-fact">
+            <div class="reader-fact-label">Who they are</div>
+            <div class="reader-fact-value">Team lead, department manager, or senior individual contributor who took on project coordination informally. No PM certification. No dedicated PM role.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">Their daily reality</div>
+            <div class="reader-fact-value">Juggling their actual job alongside coordination work. Using email, spreadsheets, or a shared doc as a makeshift project system. Constantly putting out fires.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What they need from an article</div>
+            <div class="reader-fact-value">Something they can apply immediately. Not theory — practical steps, real examples, and language that acknowledges their situation isn't textbook PM.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What will lose them</div>
+            <div class="reader-fact-value">Jargon-heavy explanations, content that assumes a formal PM structure exists, or articles that feel written for a certified PM rather than someone learning on the job.</div>
+          </div>
+        </div>
+        <div class="reader-search-trigger">
+          <div class="rst-label">Typical search that lands them on a ProofHub article</div>
+          <div class="rst-query">"how to keep projects on track" · "project status update template" · "how to manage multiple projects at once"</div>
+          <div class="rst-note">Practical, immediate, solution-oriented. They know the problem — they want an answer.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- READER 2 -->
+    <div class="reader-card" style="--card-color: #6a3a8a;">
+      <div class="reader-card-bar"></div>
+      <div class="reader-card-body">
+        <div class="reader-top">
+          <div class="reader-name">The Evaluating PM</div>
+          <div class="reader-industry-tag">High conversion value</div>
+        </div>
+        <p class="reader-situation">"I know what I'm doing. I'm looking for specific information, evidence, or a comparison that helps me make a decision or sharpen my practice."</p>
+        <div class="reader-grid">
+          <div class="reader-fact">
+            <div class="reader-fact-label">Who they are</div>
+            <div class="reader-fact-value">Experienced project manager, operations lead, or department head with formal or informal PM experience. May hold PMP or equivalent. Reads critically.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">Their daily reality</div>
+            <div class="reader-fact-value">Managing structured projects, possibly overseeing a team of PMs. Looking to improve specific areas, evaluate tools, or stay current with practice.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What they need from an article</div>
+            <div class="reader-fact-value">Specificity and honesty. They will notice vague generalisations and inflated claims immediately. Evidence, comparisons, and acknowledgement of tradeoffs earn their trust.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What will lose them</div>
+            <div class="reader-fact-value">Over-explained basics, promotional framing disguised as education, or any claim that oversimplifies something they know to be complex.</div>
+          </div>
+        </div>
+        <div class="reader-search-trigger">
+          <div class="rst-label">Typical search that lands them on a ProofHub article</div>
+          <div class="rst-query">"ProofHub vs Asana for project managers" · "best project management software for agencies" · "how to set up a project governance framework"</div>
+          <div class="rst-note">Specific, comparative, or depth-seeking. They've already decided what they're looking for.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- READER 3 -->
+    <div class="reader-card" style="--card-color: #2a6a4a;">
+      <div class="reader-card-bar"></div>
+      <div class="reader-card-body">
+        <div class="reader-top">
+          <div class="reader-name">The Founder or Operations Manager</div>
+          <div class="reader-industry-tag">SMB-heavy</div>
+        </div>
+        <p class="reader-situation">"I'm responsible for everything and I need my team to stop dropping balls. I don't care what the methodology is called — I just need things to work."</p>
+        <div class="reader-grid">
+          <div class="reader-fact">
+            <div class="reader-fact-label">Who they are</div>
+            <div class="reader-fact-value">Small business owner, startup founder, or operations manager at an SMB with no dedicated PM function. They make tool decisions and own outcomes.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">Their daily reality</div>
+            <div class="reader-fact-value">Wearing multiple hats. Projects run informally. Accountability is fuzzy. They're looking to install some structure without creating overhead that slows the team down.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What they need from an article</div>
+            <div class="reader-fact-value">Practical outcomes and honest ROI framing. They respond to "this saves you X hours" or "this stops Y from happening" more than any methodology discussion.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What will lose them</div>
+            <div class="reader-fact-value">Complexity, heavy implementation requirements, and content that assumes a team with dedicated roles. They need lightweight solutions.</div>
+          </div>
+        </div>
+        <div class="reader-search-trigger">
+          <div class="rst-label">Typical search that lands them on a ProofHub article</div>
+          <div class="rst-query">"how to manage a small team" · "project management for small business" · "how to stop missing deadlines"</div>
+          <div class="rst-note">Problem-first, outcome-oriented. The query describes a symptom — the article needs to diagnose and solve it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- READER 4 -->
+    <div class="reader-card" style="--card-color: #7a5a28;">
+      <div class="reader-card-bar"></div>
+      <div class="reader-card-body">
+        <div class="reader-top">
+          <div class="reader-name">The Junior Team Member</div>
+          <div class="reader-industry-tag">Understanding, not deciding</div>
+        </div>
+        <p class="reader-situation">"Someone above me mentioned this and I need to understand it. I'm not making decisions — I'm trying to catch up so I don't look lost in the next meeting."</p>
+        <div class="reader-grid">
+          <div class="reader-fact">
+            <div class="reader-fact-label">Who they are</div>
+            <div class="reader-fact-value">Early-career professional, recent hire, or someone new to a team that uses structured PM. Not responsible for tool selection or process design — just needs to function within it.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">Their daily reality</div>
+            <div class="reader-fact-value">Being asked to use tools or follow processes they weren't trained on. Learning by doing, often without formal onboarding. Self-teaching through search.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What they need from an article</div>
+            <div class="reader-fact-value">Clear explanations without assumed knowledge. Plain language. Concrete examples. A sense that it's okay not to know this already — not condescension, but genuine clarity.</div>
+          </div>
+          <div class="reader-fact">
+            <div class="reader-fact-label">What will lose them</div>
+            <div class="reader-fact-value">Assumed familiarity with jargon, dense process diagrams without explanation, or content clearly written for decision-makers when they're just trying to understand.</div>
+          </div>
+        </div>
+        <div class="reader-search-trigger">
+          <div class="rst-label">Typical search that lands them on a ProofHub article</div>
+          <div class="rst-query">"what is a project kickoff meeting" · "what does a project manager do" · "agile vs waterfall explained"</div>
+          <div class="rst-note">Definitional, foundational, or clarifying. They need understanding — not decisions, not tactics.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="industry-frame">
+    <div class="industry-frame-label">Why These Profiles Connect to Sessions 1–3</div>
+    <p>These aren't abstract personas — they're people living inside the industry you've spent three sessions learning about. The Stretched Team Lead is the team lead from the collaboration session who manages projects without formal training. The Evaluating PM is someone who's already navigated the hybrid reality from Session 3. The Founder is running the kind of SMB where PM happened informally long before any tool was introduced. The Junior Member is at the start of the journey you've just completed. When you write, you're not writing for a profile — you're writing for a person you now have enough context to picture clearly.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- SECTION 3: AWARENESS SPECTRUM -->
+  <div class="section-number">03 · Awareness</div>
+  <h2 class="section-title">The Awareness Spectrum</h2>
+  <p class="section-lead">Two people can search the same topic and be in completely different states of awareness. The same article cannot serve both of them equally. Before you write, you need to place your reader on this spectrum — because awareness level determines the opening paragraph, the assumed knowledge, the depth of explanation, and where the article ends.</p>
+
+  <div class="spectrum-track">
+    <div class="spectrum-labels">
+      <span class="spectrum-label">Unaware</span>
+      <span class="spectrum-label">Problem-aware</span>
+      <span class="spectrum-label">Solution-aware</span>
+      <span class="spectrum-label">Most aware</span>
+    </div>
+    <div class="spectrum-bar"></div>
+  </div>
+
+  <div class="spectrum-stages">
+    <div class="spectrum-stage stage-1">
+      <div class="ss-level">Stage 1 — Unaware</div>
+      <div class="ss-name">Doesn't know they have a PM problem yet</div>
+      <div class="ss-query">"how to organise team work"</div>
+      <div class="ss-desc">They're searching for general productivity or organisation help. PM framing is introduced through their actual situation — not through PM vocabulary they don't yet have.</div>
+    </div>
+    <div class="spectrum-stage stage-2">
+      <div class="ss-level">Stage 2 — Problem-Aware</div>
+      <div class="ss-name">Knows the pain, doesn't know the solution</div>
+      <div class="ss-query">"why do projects always run late"</div>
+      <div class="ss-desc">They've named the problem but not the solution. They need the article to connect their pain to a cause, and the cause to a practical fix — not a product pitch.</div>
+    </div>
+    <div class="spectrum-stage stage-3">
+      <div class="ss-level">Stage 3 — Solution-Aware</div>
+      <div class="ss-name">Knows PM tools exist, evaluating options</div>
+      <div class="ss-query">"best project management software 2025"</div>
+      <div class="ss-desc">They know the category. They're comparing. They need specificity — features, pricing, honest tradeoffs. Generic "here's what PM software does" content is irrelevant to them.</div>
+    </div>
+    <div class="spectrum-stage stage-4">
+      <div class="ss-level">Stage 4 — Most Aware</div>
+      <div class="ss-name">Knows ProofHub, needs a reason to act</div>
+      <div class="ss-query">"ProofHub pricing" · "ProofHub review"</div>
+      <div class="ss-desc">They've already found ProofHub. They need confirmation, social proof, or a specific answer to remove the last objection. The article's job is to close, not educate.</div>
+    </div>
+  </div>
+
+  <div class="writer-note">
+    <div class="writer-note-icon">✍</div>
+    <div class="writer-note-text"><strong>How to use this in practice:</strong> When you receive a brief or a keyword, place it on the spectrum before you do anything else. "What is a Gantt chart" is Stage 1–2. "Gantt chart software comparison" is Stage 3. "ProofHub Gantt chart" is Stage 4. Each requires a different opening, a different assumed knowledge level, and a different ending. Writing a Stage 1 article with a Stage 4 tone loses the reader in the first paragraph. Writing a Stage 4 article with Stage 1 depth wastes the time of someone who already knows all of it.</div>
+  </div>
+
+  <!-- HANDOFF TO PART 2 -->
+  <div class="handoff">
+    <div class="handoff-label">Continue to Part 2</div>
+    <h3>You know who the reader is. Now let's look at how to write for them.</h3>
+    <p>Part 2 introduces the three-part framework — pain point, decision trigger, job to be done — and walks through exactly how knowing your reader changes every structural decision in an article. It also covers what ProofHub's content is not trying to do, and closes the full four-session onboarding arc.</p>
+    <div class="handoff-next">→ Open Session 4 · Part 2: Writing for the Reader</div>
+  </div>
+
+</div>
+
+<div class="doc-footer">ProofHub Content Team — Internal Use Only · Session 4 · Part 1 of 2</div>
+</body>
+</html>
