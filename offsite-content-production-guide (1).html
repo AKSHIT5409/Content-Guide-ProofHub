@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offsite Content — Production Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #111008;
+  --paper: #f7f4ef;
+  --paper-mid: #ede9e1;
+  --paper-dark: #e2dcd2;
+  --burgundy: #7a1f2e;
+  --burgundy-light: #e8cdd1;
+  --burgundy-faint: #faf3f4;
+  --charcoal: #2a2520;
+  --mid: #5a524a;
+  --rule: #d4cec4;
+  --muted: #8a8278;
+  --serif: 'Libre Baskerville', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── HEADER ── */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3rem 5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--burgundy);
+}
+.masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 80px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 80px);
+  pointer-events: none;
+}
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.masthead-org {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.35);
+}
+.masthead-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--burgundy-light);
+  opacity: 0.7;
+}
+.masthead-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  position: relative;
+  margin-bottom: 1rem;
+}
+.masthead-title span {
+  color: var(--burgundy-light);
+  font-style: italic;
+}
+.masthead-bottom {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  flex-wrap: wrap;
+}
+.masthead-desc {
+  font-size: 0.9rem;
+  color: rgba(247,244,239,0.55);
+  max-width: 580px;
+  line-height: 1.65;
+  font-weight: 300;
+}
+.masthead-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(247,244,239,0.25);
+  white-space: nowrap;
+  line-height: 1.9;
+}
+
+/* ── FLOW STRIP ── */
+.flow-strip {
+  background: var(--burgundy);
+  padding: 0.85rem 5rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.flow-strip::-webkit-scrollbar { display: none; }
+.flow-step {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.55);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.flow-step.active {
+  color: var(--paper);
+  font-weight: 500;
+}
+.flow-sep {
+  color: rgba(247,244,239,0.25);
+  margin: 0 0.75rem;
+  font-size: 0.7rem;
+}
+
+/* ── LAYOUT ── */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4rem 5rem;
+}
+@media (max-width: 720px) {
+  .page { padding: 3rem 1.5rem; }
+  .masthead { padding: 2rem 1.5rem; }
+  .flow-strip { padding: 0.85rem 1.5rem; }
+}
+
+/* ── PRODUCTION STEPS ── */
+.step {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0 2.5rem;
+  margin-bottom: 4rem;
+  align-items: start;
+}
+@media (max-width: 600px) {
+  .step { grid-template-columns: 1fr; gap: 0.5rem; }
+  .step-num { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+}
+.step-num {
+  text-align: right;
+}
+.step-num-digit {
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--paper-dark);
+  display: block;
+}
+.step-num-label {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rule);
+  display: block;
+  margin-top: 0.2rem;
+}
+.step-body {}
+.step-title {
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+  padding-top: 0.6rem;
+}
+.step-subtitle {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 1.25rem;
+}
+.step-intro {
+  font-size: 0.9rem;
+  color: var(--mid);
+  line-height: 1.72;
+  margin-bottom: 1.5rem;
+  max-width: 640px;
+}
+
+/* ── CHECKLIST ── */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--rule);
+  background: #fff;
+  margin-bottom: 1.5rem;
+}
+.check-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: stretch;
+}
+.check-item:last-child { border-bottom: none; }
+.check-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.9rem;
+  border-right: 1px solid var(--rule);
+  background: var(--paper);
+}
+.check-box-inner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--rule);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.check-content {
+  padding: 0.8rem 1.1rem;
+}
+.check-label {
+  font-size: 0.86rem;
+  color: var(--charcoal);
+  line-height: 1.6;
+  font-weight: 500;
+}
+.check-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 0.2rem;
+}
+
+/* ── NOTE BOXES ── */
+.note {
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.855rem;
+  line-height: 1.65;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.note.instruction {
+  background: var(--paper-mid);
+  border-left: 3px solid var(--charcoal);
+  color: var(--charcoal);
+}
+.note.warning {
+  background: var(--burgundy-faint);
+  border-left: 3px solid var(--burgundy);
+  color: #3a1018;
+}
+.note-icon { flex-shrink: 0; margin-top: 1px; font-size: 0.9rem; }
+.note-text { line-height: 1.65; }
+.note-text strong { font-weight: 600; }
+
+/* ── AUTHOR PROFILES ── */
+.author-profiles {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.author-card {
+  border: 1px solid var(--rule);
+  background: #fff;
+}
+.author-header {
+  display: grid;
+  grid-template-columns: 4px 1fr;
+}
+.author-bar { background: var(--author-color, var(--burgundy)); }
+.author-header-body {
+  padding: 1.1rem 1.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.author-name {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--charcoal);
+}
+.author-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.author-body {
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 640px) {
+  .author-body { grid-template-columns: 1fr; }
+}
+.author-fact-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--author-color, var(--burgundy));
+  margin-bottom: 0.3rem;
+}
+.author-fact-value {
+  font-size: 0.82rem;
+  color: #2a2018;
+  line-height: 1.6;
+}
+.author-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+.author-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.45rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  color: var(--mid);
+}
+.author-avoid {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--burgundy);
+  background: var(--burgundy-faint);
+  border: 1px solid var(--burgundy-light);
+  padding: 0.5rem 0.75rem;
+  line-height: 1.55;
+  margin-top: 0.4rem;
+}
+
+/* ── OUTLINE TYPES ── */
+.outline-types {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 580px) {
+  .outline-types { grid-template-columns: 1fr; }
+}
+.outline-type {
+  background: #fff;
+  padding: 1.5rem;
+}
+.ot-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 0.3rem;
+}
+.ot-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+}
+.ot-rule {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.ot-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+.ot-struct-item {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--mid);
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+.ot-struct-num {
+  color: var(--rule);
+  flex-shrink: 0;
+  width: 16px;
+}
+.ot-avoid {
+  font-size: 0.78rem;
+  color: var(--burgundy);
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  line-height: 1.5;
+}
+
+/* ── APPROVAL BOX ── */
+.approval-box {
+  border: 1px solid var(--rule);
+  background: #fff;
+  margin-bottom: 1.5rem;
+}
+.approval-header {
+  background: var(--charcoal);
+  color: var(--paper);
+  padding: 0.9rem 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.approval-header-title {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.approval-header-tag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.4);
+}
+.approval-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 560px) {
+  .approval-body { grid-template-columns: 1fr; }
+}
+.approval-col {
+  padding: 1.25rem 1.4rem;
+  border-right: 1px solid var(--rule);
+}
+.approval-col:last-child { border-right: none; }
+.approval-col-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.approval-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.approval-item {
+  font-size: 0.84rem;
+  color: var(--charcoal);
+  line-height: 1.55;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.approval-bullet {
+  color: var(--rule);
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  margin-top: 4px;
+}
+
+/* ── PLATFORM REFERENCE ── */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 580px) {
+  .platform-grid { grid-template-columns: 1fr; }
+}
+.platform-card { background: #fff; }
+.platform-header {
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 2px solid var(--platform-color, var(--burgundy));
+}
+.platform-name {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 0.15rem;
+}
+.platform-type {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--platform-color, var(--burgundy));
+}
+.platform-body { padding: 1rem 1.25rem; }
+.platform-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0.5rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(212,206,196,0.5);
+  align-items: start;
+  font-size: 0.82rem;
+}
+.platform-row:last-child { border-bottom: none; }
+.platform-row-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding-top: 1px;
+  line-height: 1.4;
+}
+.platform-row-value {
+  color: var(--charcoal);
+  line-height: 1.55;
+}
+
+/* ── VOICE BOX ── */
+.voice-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.voice-rule {
+  background: #fff;
+  padding: 1.25rem;
+}
+.voice-rule-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin-bottom: 0.4rem;
+}
+.voice-rule-title {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+.voice-rule-desc {
+  font-size: 0.8rem;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── DIVIDER ── */
+hr.section-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 0 0 4rem 0;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  background: var(--ink);
+  padding: 1.5rem 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-org {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.25);
+}
+.footer-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(247,244,239,0.15);
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-top">
+    <div class="masthead-org">ProofHub Content Team</div>
+    <div class="masthead-type">Production Reference — Offsite Content</div>
+  </div>
+  <h1 class="masthead-title">From Keyword to<br><span>Publish-Ready Draft</span></h1>
+  <div class="masthead-bottom">
+    <p class="masthead-desc">A step-by-step production guide for offsite content — LinkedIn posts, Medium articles, and guest posts across all content types. Open this at the start of every assignment and work through each step in order.</p>
+    <div class="masthead-meta">
+      Platforms: LinkedIn · Medium · Guest Posts<br>
+      Types: Thought Leadership · Educational · Listicle<br>
+      Authors: Sandeep · Vartika · Nandini
+    </div>
+  </div>
+</div>
+
+<!-- FLOW STRIP -->
+<div class="flow-strip">
+  <div class="flow-step">01 · Study the Publication</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">02 · Understand the Topic</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">03 · Match the Author</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">04 · Build the Outline</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">05 · Get Approval</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">06 · Draft</div>
+  <div class="flow-sep">›</div>
+  <div class="flow-step">07 · Platform Reference</div>
+</div>
+
+<div class="page">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">01</span>
+      <span class="step-num-label">First</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Study the Target Publication</h2>
+      <div class="step-subtitle">Before you research the topic, understand where it's going</div>
+      <p class="step-intro">Read at least five to eight articles on the target publication before you touch the topic. You're not looking for inspiration — you're building a factual picture of how this publication works. Document what you find. Your outline will be wrong if you skip this step.</p>
+
+      <div class="checklist">
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Article length range</div>
+            <div class="check-desc">Count words on three to five representative articles. Note the floor and ceiling. This is your target range — not a guideline.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Structural pattern</div>
+            <div class="check-desc">Do articles use subheadings throughout, or do they run as narrative prose? Do they use numbered lists, bullet points, or neither? Copy their structure — do not impose your own.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Opening style</div>
+            <div class="check-desc">Does the publication open with a hook, a statistic, a question, or a direct statement? Read the first paragraph of five articles and identify the pattern.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Tone and register</div>
+            <div class="check-desc">Formal or conversational? First-person or third? Does the author address the reader directly ("you") or write observationally? Is there humour, or is the tone consistently straight?</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">What the publication values</div>
+            <div class="check-desc">Are articles primarily practical (step-by-step, actionable) or analytical (opinion, insight, argument)? Does the publication favour data-heavy content or experience-led storytelling?</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">How articles end</div>
+            <div class="check-desc">Do they close with a summary, a call to action, a reflection, or do they simply stop when the content is done? Match the closing convention.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Link and citation style</div>
+            <div class="check-desc">Do articles link out frequently or sparingly? Do they cite studies and statistics, or are they largely assertion-based? Does the publication link to external tools or keep it neutral?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note instruction">
+        <div class="note-icon">→</div>
+        <div class="note-text">Write down your findings in a short paragraph before moving to Step 2. You will reference them when building the outline. If you can't describe the publication's style in three sentences, read more articles.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">02</span>
+      <span class="step-num-label">Second</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Understand the Topic</h2>
+      <div class="step-subtitle">Research the subject through the publication's lens, not in general</div>
+      <p class="step-intro">General topic research is not enough. You need to understand the topic specifically as it relates to this publication and its readers. Your research has two parts: what has already been said on this publication about this topic, and what angle is genuinely missing or underserved.</p>
+
+      <div class="checklist">
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Search the publication for your keyword and related terms</div>
+            <div class="check-desc">Find every article on this site that covers the same topic. Read the top two or three. Note the angles they've taken, the arguments they've made, and the gaps they've left.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Identify what has not been said</div>
+            <div class="check-desc">Your article cannot cover the same ground as existing content on this publication. Find an angle that's genuinely different — a narrower focus, an opposing view, a more practical approach, or a more current angle.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Understand what the keyword actually signals</div>
+            <div class="check-desc">Who is searching for this? What do they already know? What problem are they trying to solve? The keyword tells you the topic — reader intent tells you the treatment.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Gather sources and evidence you will actually use</div>
+            <div class="check-desc">Collect statistics, research findings, or examples that are relevant to your chosen angle. Only gather what you plan to use. Save URLs. Note publication dates — do not cite research older than three to four years unless it is foundational.</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-box"><div class="check-box-inner"></div></div>
+          <div class="check-content">
+            <div class="check-label">Form a clear angle for the piece</div>
+            <div class="check-desc">By the end of your research, write one sentence describing the specific angle this article will take. If you can't write that sentence, your research isn't complete.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note warning">
+        <div class="note-icon">⚑</div>
+        <div class="note-text"><strong>Do not start the outline before you have a clear angle.</strong> An outline built without a defined angle produces a generic article that covers a topic rather than saying something specific about it. The publication already has generic coverage. Your article needs to add something.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">03</span>
+      <span class="step-num-label">Third</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Match the Author Profile</h2>
+      <div class="step-subtitle">The author is pre-assigned — use this section to write in their voice accurately</div>
+      <p class="step-intro">Your brief will tell you which author this piece is published under. Use the profiles below to calibrate your writing before you outline anything. The three authors have distinct voices, expertise areas, and content styles. Writing Nandini's voice like Sandeep's is a fundamental error.</p>
+
+      <div class="author-profiles">
+
+        <!-- SANDEEP -->
+        <div class="author-card" style="--author-color: #1a3a5c;">
+          <div class="author-header">
+            <div class="author-bar"></div>
+            <div class="author-header-body">
+              <div>
+                <div class="author-name">Sandeep Kashyap</div>
+                <div class="author-role">Founder &amp; CEO, ProofHub</div>
+              </div>
+            </div>
+          </div>
+          <div class="author-body">
+            <div>
+              <div class="author-fact-label">Voice &amp; Tone</div>
+              <div class="author-fact-value">Visionary and direct. Writes from the perspective of someone who has built and scaled a company. Confident without being academic. Uses first-person experience as the basis for broader arguments about leadership, culture, and work.</div>
+            </div>
+            <div>
+              <div class="author-fact-label">Topic Ownership</div>
+              <div class="author-tag-list">
+                <span class="author-tag">Leadership</span>
+                <span class="author-tag">Entrepreneurship</span>
+                <span class="author-tag">Work culture</span>
+                <span class="author-tag">Team management</span>
+                <span class="author-tag">Growth mindset</span>
+                <span class="author-tag">Agile at scale</span>
+                <span class="author-tag">PM for leaders</span>
+                <span class="author-tag">Bootstrap &amp; startup</span>
+              </div>
+            </div>
+            <div>
+              <div class="author-fact-label">Content Types That Fit</div>
+              <div class="author-fact-value" style="margin-bottom:0.5rem;">Thought leadership opinion pieces, leadership lessons drawn from experience, frameworks for building high-performing teams, culture and values articles.</div>
+              <div class="author-avoid">Avoid: Tool-comparison listicles, technical how-to guides, beginner-level educational content. Sandeep's voice does not suit content that is instructional at a granular level.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARTIKA -->
+        <div class="author-card" style="--author-color: #2a5c45;">
+          <div class="author-header">
+            <div class="author-bar"></div>
+            <div class="author-header-body">
+              <div>
+                <div class="author-name">Vartika Kashyap</div>
+                <div class="author-role">Chief Marketing Officer, ProofHub</div>
+              </div>
+            </div>
+          </div>
+          <div class="author-body">
+            <div>
+              <div class="author-fact-label">Voice &amp; Tone</div>
+              <div class="author-fact-value">Informed, practical, and grounded in real workplace situations. Writes as a senior professional who understands teams from the inside. Accessible without being simplified. Uses real-world examples and data to support arguments.</div>
+            </div>
+            <div>
+              <div class="author-fact-label">Topic Ownership</div>
+              <div class="author-tag-list">
+                <span class="author-tag">Productivity</span>
+                <span class="author-tag">Team building</span>
+                <span class="author-tag">Work culture</span>
+                <span class="author-tag">People management</span>
+                <span class="author-tag">B2B marketing</span>
+                <span class="author-tag">Remote work</span>
+                <span class="author-tag">Collaboration</span>
+                <span class="author-tag">Workplace wellbeing</span>
+              </div>
+            </div>
+            <div>
+              <div class="author-fact-label">Content Types That Fit</div>
+              <div class="author-fact-value" style="margin-bottom:0.5rem;">Educational guides, practical how-to articles, opinion-led pieces on team dynamics and culture, workplace insight articles backed by data or research.</div>
+              <div class="author-avoid">Avoid: Heavily technical PM process content, tool-comparison tables with feature breakdowns, founder-perspective thought leadership. Keep the focus on people and teams, not process mechanics.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NANDINI -->
+        <div class="author-card" style="--author-color: #5a3a1a;">
+          <div class="author-header">
+            <div class="author-bar"></div>
+            <div class="author-header-body">
+              <div>
+                <div class="author-name">Nandini Sharma</div>
+                <div class="author-role">Marketing Manager, ProofHub</div>
+              </div>
+            </div>
+          </div>
+          <div class="author-body">
+            <div>
+              <div class="author-fact-label">Voice &amp; Tone</div>
+              <div class="author-fact-value">Clear, knowledgeable, and technically grounded. Writes as a practitioner who has tested and analysed tools rather than as a theorist. Makes complex technical concepts accessible without dumbing them down. Precise and evidence-led.</div>
+            </div>
+            <div>
+              <div class="author-fact-label">Topic Ownership</div>
+              <div class="author-tag-list">
+                <span class="author-tag">PM software</span>
+                <span class="author-tag">Tool comparisons</span>
+                <span class="author-tag">Productivity apps</span>
+                <span class="author-tag">Project management</span>
+                <span class="author-tag">Digital collaboration</span>
+                <span class="author-tag">Workflow guides</span>
+                <span class="author-tag">Listicles &amp; roundups</span>
+                <span class="author-tag">How-to guides</span>
+              </div>
+            </div>
+            <div>
+              <div class="author-fact-label">Content Types That Fit</div>
+              <div class="author-fact-value" style="margin-bottom:0.5rem;">Comparison articles, tool roundups, explainer guides, step-by-step how-tos, listicles with evaluation criteria, middle-funnel commercial content.</div>
+              <div class="author-avoid">Avoid: Opinion-led thought leadership without practical grounding, high-level leadership philosophy, content that does not involve tools or processes in some way.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note instruction">
+        <div class="note-icon">→</div>
+        <div class="note-text">Before building the outline, write two or three sentences in the author's voice to calibrate. If it doesn't sound like them, adjust before writing 1,500 words in the wrong register.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">04</span>
+      <span class="step-num-label">Fourth</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Build the Outline</h2>
+      <div class="step-subtitle">Structure the piece before you write a single sentence of content</div>
+      <p class="step-intro">Your outline is built from four inputs: the publication's structural conventions (Step 1), your defined angle (Step 2), the author's voice and content type (Step 3), and the content type logic below. The outline must contain more than section headings — it needs to show what each section will argue or cover and why it comes in that order.</p>
+
+      <div class="outline-types">
+        <div class="outline-type">
+          <div class="ot-label">Content Type</div>
+          <div class="ot-name">Thought Leadership</div>
+          <div class="ot-rule">The article must have a clear point of view. It argues something — it does not just cover a topic.</div>
+          <div class="ot-structure">
+            <div class="ot-struct-item"><span class="ot-struct-num">1.</span><span>Opening — a concrete situation that sets up the argument</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">2.</span><span>The claim — the specific position the author takes</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">3.</span><span>Evidence — experience, observation, or data that supports it</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">4.</span><span>Implication — what this means for the reader's situation</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">5.</span><span>Close — a direct statement, not a summary</span></div>
+          </div>
+          <div class="ot-avoid">Do not write a balanced "here are both sides" piece. Thought leadership takes a position.</div>
+        </div>
+        <div class="outline-type">
+          <div class="ot-label">Content Type</div>
+          <div class="ot-name">Educational / How-To</div>
+          <div class="ot-rule">Organised by what the reader needs to understand in what order. Each section solves one part of the problem.</div>
+          <div class="ot-structure">
+            <div class="ot-struct-item"><span class="ot-struct-num">1.</span><span>Opening — name the problem the reader is experiencing</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">2.</span><span>Context — why this problem exists or why it matters</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">3.</span><span>Core steps or concepts — in the order the reader needs them</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">4.</span><span>Common mistakes or exceptions — what trips people up</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">5.</span><span>Close — what to do first when the reader finishes</span></div>
+          </div>
+          <div class="ot-avoid">Do not add sections because the topic has more to say. Add sections because the reader needs them to solve the problem.</div>
+        </div>
+        <div class="outline-type">
+          <div class="ot-label">Content Type</div>
+          <div class="ot-name">Listicle — Middle Funnel</div>
+          <div class="ot-rule">Each item in the list must carry real evaluation weight. A list of ten things with one sentence each is not a listicle — it is a padded outline.</div>
+          <div class="ot-structure">
+            <div class="ot-struct-item"><span class="ot-struct-num">1.</span><span>Opening — the specific decision or problem the list addresses</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">2.</span><span>Evaluation criteria — how you're assessing each item (stated upfront)</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">3.</span><span>The list — each item with name, brief description, and specific evidence</span></div>
+            <div class="ot-struct-item"><span class="ot-struct-num">4.</span><span>Close — how to choose between them, or what to do next</span></div>
+          </div>
+          <div class="ot-avoid">Do not pad the list to hit a number. If seven items are honest, write seven. If three need more depth, write three with depth.</div>
+        </div>
+      </div>
+
+      <div class="note instruction">
+        <div class="note-icon">→</div>
+        <div class="note-text"><strong>What your outline must contain for each section:</strong> The section heading, a one or two sentence description of what that section covers and argues, the key point or evidence it will use, and — for thought leadership — the logical connection to the next section. Headings alone are not an outline.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">05</span>
+      <span class="step-num-label">Fifth</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Get the Outline Approved</h2>
+      <div class="step-subtitle">Content head reviews before you write a word of the draft</div>
+      <p class="step-intro">Send the outline to the content head before drafting. Do not begin writing until you have sign-off. A rejected outline after a full draft has been written is a full draft's worth of wasted work.</p>
+
+      <div class="approval-box">
+        <div class="approval-header">
+          <div class="approval-header-title">What the content head is checking</div>
+          <div class="approval-header-tag">QA &amp; Factual Correctness</div>
+        </div>
+        <div class="approval-body">
+          <div class="approval-col">
+            <div class="approval-col-label">What they review</div>
+            <div class="approval-list">
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>Whether the angle is factually accurate and not based on a misunderstanding of the topic</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>Whether the claims in the outline can be substantiated</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>Whether the content type and structure fit the author profile and publication</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>Whether the section logic holds — does the outline build toward something, or does it just list?</span></div>
+            </div>
+          </div>
+          <div class="approval-col">
+            <div class="approval-col-label">What to include when you submit</div>
+            <div class="approval-list">
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>The target publication and URL</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>The assigned author</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>The keyword and your defined angle (one sentence)</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>The full outline with section descriptions — not just headings</span></div>
+              <div class="approval-item"><span class="approval-bullet">▸</span><span>Your planned sources for any factual claims</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note warning">
+        <div class="note-icon">⚑</div>
+        <div class="note-text">If the outline is sent back with feedback, resolve the feedback fully before resubmitting. Do not resubmit with partial changes and assume the rest is fine.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">06</span>
+      <span class="step-num-label">Sixth</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Write the Draft</h2>
+      <div class="step-subtitle">From approved outline to publish-ready content</div>
+      <p class="step-intro">Write against the approved outline. Every section should deliver what the outline promised. Do not add new sections mid-draft because you thought of something — if the section wasn't in the approved outline, it wasn't approved. If something genuinely important emerges, flag it before adding it.</p>
+
+      <div class="voice-rules">
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 1</div>
+          <div class="voice-rule-title">Write in the author's voice throughout — not yours</div>
+          <div class="voice-rule-desc">You are a ghostwriter. The reader will believe this is the author's own thinking and experience. Every sentence should pass this test: would this author say this, in this way? If not, rewrite it until it does.</div>
+        </div>
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 2</div>
+          <div class="voice-rule-title">Every factual claim needs a source you have verified</div>
+          <div class="voice-rule-desc">Do not write "studies show" without a specific study. Do not cite a statistic you found on a secondary site — find the original source. If you can't verify a claim, cut it or rewrite it as the author's observation rather than a cited fact.</div>
+        </div>
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 3</div>
+          <div class="voice-rule-title">Follow the publication's structural conventions exactly</div>
+          <div class="voice-rule-desc">If the publication uses short paragraphs, use short paragraphs. If it doesn't use bullet points, don't use bullet points. You documented these in Step 1. Apply them in the draft.</div>
+        </div>
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 4</div>
+          <div class="voice-rule-title">The draft is publish-ready when you submit it</div>
+          <div class="voice-rule-desc">Your draft should need no copyediting for language. Proofread it before you send. Check: no typos, no broken sentence structures, no placeholder text, no unverified claims, no structural deviations from the outline.</div>
+        </div>
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 5</div>
+          <div class="voice-rule-title">ProofHub mentions, where included, must be natural</div>
+          <div class="voice-rule-desc">If ProofHub is referenced, it must fit the context and not read as a forced insertion. A mention that feels promotional in an educational article undermines the piece and the author's credibility on that publication.</div>
+        </div>
+        <div class="voice-rule">
+          <div class="voice-rule-label">Rule 6</div>
+          <div class="voice-rule-title">Stay within the publication's word count range</div>
+          <div class="voice-rule-desc">You established this in Step 1. Do not submit a 2,000-word article to a publication that publishes 800-word pieces. Length is a structural convention, not a preference.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- STEP 7: PLATFORM REFERENCE -->
+  <div class="step">
+    <div class="step-num">
+      <span class="step-num-digit">07</span>
+      <span class="step-num-label">Reference</span>
+    </div>
+    <div class="step-body">
+      <h2 class="step-title">Platform Reference</h2>
+      <div class="step-subtitle">Format and convention facts for LinkedIn, Medium, and guest posts</div>
+      <p class="step-intro">Keep this section open while drafting to check platform-specific requirements. These are the constraints that don't change regardless of the publication or content type.</p>
+
+      <div class="platform-grid">
+
+        <!-- LINKEDIN -->
+        <div class="platform-card" style="--platform-color: #1a3a5c;">
+          <div class="platform-header">
+            <div class="platform-name">LinkedIn</div>
+            <div class="platform-type">Social Long-Form</div>
+          </div>
+          <div class="platform-body">
+            <div class="platform-row">
+              <div class="platform-row-label">Length</div>
+              <div class="platform-row-value">Posts: 150–300 words. Articles: 800–1,500 words. Long posts get cut off at ~210 characters — the first two lines must hook.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Structure</div>
+              <div class="platform-row-value">Short paragraphs — one to two sentences each. Single line breaks between paragraphs. No horizontal rules. Bullet points are acceptable but use sparingly.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Opening</div>
+              <div class="platform-row-value">The first sentence must stand alone as a reason to keep reading. It will appear in the preview. Questions, bold claims, or unexpected statements perform best.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Tone</div>
+              <div class="platform-row-value">First-person, direct, conversational but professional. LinkedIn rewards personal framing — "I learned," "we decided," "here's what changed."</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Closing</div>
+              <div class="platform-row-value">End with a direct statement or a single open question to encourage comments. Do not end with a list of hashtags in the body text.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Links</div>
+              <div class="platform-row-value">LinkedIn suppresses reach on posts with external links. Place any link in the first comment, not in the post itself.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MEDIUM -->
+        <div class="platform-card" style="--platform-color: #2a5c3a;">
+          <div class="platform-header">
+            <div class="platform-name">Medium</div>
+            <div class="platform-type">Long-Form Article</div>
+          </div>
+          <div class="platform-body">
+            <div class="platform-row">
+              <div class="platform-row-label">Length</div>
+              <div class="platform-row-value">800–2,000 words for most articles. Aim for a 5–7 minute read. Medium shows estimated read time — use it as your calibration.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Structure</div>
+              <div class="platform-row-value">Subheadings (H2) every 300–400 words. Short paragraphs. Medium renders markdown — use it. Pull quotes work well for key statements.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Opening</div>
+              <div class="platform-row-value">No subheading in the first section — begin with a paragraph directly. Medium readers decide in the first two paragraphs. Get to the point.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Tone</div>
+              <div class="platform-row-value">Conversational but substantive. Medium readers are educated and will notice vague generalisations. Back claims with specifics.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Images</div>
+              <div class="platform-row-value">One cover image is expected. In-body images are optional. Caption all images. Do not use stock photos without checking licensing.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Links</div>
+              <div class="platform-row-value">Link naturally within the text where relevant. Medium does not penalise external links. Avoid linking to low-authority or promotional-only pages.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GUEST POSTS -->
+        <div class="platform-card" style="--platform-color: #5a3a1a;">
+          <div class="platform-header">
+            <div class="platform-name">Guest Posts</div>
+            <div class="platform-type">External Publication</div>
+          </div>
+          <div class="platform-body">
+            <div class="platform-row">
+              <div class="platform-row-label">Length</div>
+              <div class="platform-row-value">Determined by the publication — check their guidelines page first. If no guidelines exist, match the length of their existing articles (Step 1).</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Structure</div>
+              <div class="platform-row-value">Follow the publication's conventions exactly. Do not impose your own structure on a publication with an established editorial style.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Author bio</div>
+              <div class="platform-row-value">Most publications require a short author bio (50–100 words) on submission. Use the relevant author profile from Step 3 — condense it to fit the publication's limit.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Links</div>
+              <div class="platform-row-value">Most publications allow one to two links back to ProofHub. Place them where they add genuine context — not as sign-off links or forced insertions. Check the publication's link policy before submitting.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Submission</div>
+              <div class="platform-row-value">Follow the publication's submission format exactly — Google Doc, Word, or their own CMS. Formatting errors in submission create a poor first impression.</div>
+            </div>
+            <div class="platform-row">
+              <div class="platform-row-label">Originality</div>
+              <div class="platform-row-value">Guest posts must be original and unpublished. Do not repurpose or substantially reuse content from ProofHub's own blog or another submission.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="footer-org">ProofHub Content Team — Internal Use Only</div>
+  <div class="footer-note">Offsite Content Production Guide · Reference Document</div>
+</div>
+
+</body>
+</html>
