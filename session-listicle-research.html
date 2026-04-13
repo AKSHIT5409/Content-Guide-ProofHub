@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Researching Tools for Listicles — ProofHub Writer Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0e0c;
+  --bg2: #141310;
+  --paper: #f0ebe3;
+  --paper-dim: rgba(240,235,227,0.65);
+  --paper-muted: rgba(240,235,227,0.35);
+  --slate: #6b6560;
+  --rule: rgba(240,235,227,0.07);
+  --rule-vis: rgba(240,235,227,0.12);
+  --accent: #e8956a;
+  --accent-dim: rgba(232,149,106,0.12);
+  --accent-border: rgba(232,149,106,0.25);
+  --green: #7ecfa8;
+  --green-dim: rgba(126,207,168,0.1);
+  --green-border: rgba(126,207,168,0.25);
+  --red: #e07070;
+  --red-dim: rgba(224,112,112,0.1);
+  --red-border: rgba(224,112,112,0.22);
+  --blue: #7ab3d4;
+  --blue-dim: rgba(122,179,212,0.1);
+  --serif: 'Lora', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── COVER ─────────────────────────────────────────── */
+.cover {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3rem;
+  border-bottom: 1px solid var(--rule-vis);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(232,149,106,0.055) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(126,207,168,0.035) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.cover-org {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.cover-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  text-align: right;
+}
+.cover-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: 4rem 0 2rem;
+  max-width: 820px;
+}
+.cover-session-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cover-session-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--paper-muted);
+}
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--paper);
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.cover-desc {
+  font-size: 1.05rem;
+  color: var(--paper-dim);
+  max-width: 560px;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.cover-objective {
+  border-left: 2px solid var(--accent);
+  padding: 1.25rem 1.75rem;
+  background: var(--accent-dim);
+  max-width: 600px;
+}
+.cover-objective-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.cover-objective p {
+  font-size: 0.92rem;
+  color: var(--paper-dim);
+  line-height: 1.7;
+}
+.cover-footer {
+  display: flex;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+.cover-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.cover-stat-num {
+  font-family: var(--mono);
+  font-size: 1.4rem;
+  color: var(--paper);
+  line-height: 1;
+}
+.cover-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────── */
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ─── SECTION ─────────────────────────────────────────── */
+.section {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section:last-child {
+  border-bottom: none;
+}
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  margin-bottom: 1.5rem;
+}
+.section-eyebrow span {
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--paper-muted);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.section-intro {
+  font-size: 1rem;
+  color: var(--paper-dim);
+  line-height: 1.85;
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+
+/* ─── RISK CALLOUTS ─────────────────────────────────────── */
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--rule-vis);
+  border: 1px solid var(--rule-vis);
+  margin-bottom: 2.5rem;
+}
+.risk-cell {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+.risk-cell-num {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.risk-cell-label {
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+  line-height: 1.6;
+}
+.risk-cell-label strong {
+  display: block;
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 0.25rem;
+  font-size: 0.88rem;
+}
+
+.alert-block {
+  border: 1px solid var(--red-border);
+  background: var(--red-dim);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.5rem;
+}
+.alert-block-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.6rem;
+}
+.alert-block p {
+  font-size: 0.92rem;
+  color: var(--paper-dim);
+  line-height: 1.75;
+}
+.alert-block strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+/* ─── PATTERN TABLE ─────────────────────────────────────── */
+.pattern-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2.5rem;
+  font-size: 0.88rem;
+}
+.pattern-table thead tr {
+  border-bottom: 1px solid var(--rule-vis);
+}
+.pattern-table thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  padding: 0.75rem 1.25rem;
+  text-align: left;
+  font-weight: 400;
+}
+.pattern-table thead th:first-child {
+  color: var(--red);
+}
+.pattern-table thead th:last-child {
+  color: var(--green);
+}
+.pattern-table tbody tr {
+  border-bottom: 1px solid var(--rule);
+}
+.pattern-table tbody tr:last-child {
+  border-bottom: none;
+}
+.pattern-table td {
+  padding: 1rem 1.25rem;
+  vertical-align: top;
+  line-height: 1.7;
+  color: var(--paper-dim);
+}
+.pattern-table td:first-child {
+  color: rgba(224,112,112,0.75);
+}
+.pattern-table td:last-child {
+  color: rgba(126,207,168,0.85);
+}
+
+/* ─── TRIAL CHECKLIST ─────────────────────────────────────── */
+.trial-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--rule-vis);
+  border: 1px solid var(--rule-vis);
+  margin-bottom: 2.5rem;
+}
+.trial-item {
+  background: var(--bg);
+  padding: 1.75rem 2rem;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  transition: background 0.2s;
+}
+.trial-item:hover {
+  background: var(--bg2);
+}
+.trial-num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  padding-top: 0.15rem;
+  letter-spacing: 0.05em;
+}
+.trial-content {}
+.trial-title {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--paper);
+  margin-bottom: 0.35rem;
+}
+.trial-desc {
+  font-size: 0.875rem;
+  color: var(--paper-dim);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+.trial-example {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--green);
+  background: var(--green-dim);
+  border-left: 2px solid var(--green);
+  padding: 0.6rem 0.9rem;
+  line-height: 1.7;
+}
+.trial-example-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  margin-bottom: 0.3rem;
+}
+
+/* ─── BEFORE / AFTER ─────────────────────────────────────── */
+.ba-wrapper {
+  margin-bottom: 3rem;
+}
+.ba-rule {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule-vis);
+}
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule-vis);
+  border: 1px solid var(--rule-vis);
+  margin-bottom: 0.75rem;
+}
+.ba-panel {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+.ba-panel-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.ba-panel.bad .ba-panel-label { color: var(--red); }
+.ba-panel.good .ba-panel-label { color: var(--green); }
+.ba-panel-body {
+  font-size: 0.875rem;
+  line-height: 1.85;
+}
+.ba-panel.bad .ba-panel-body { color: rgba(240,235,227,0.45); }
+.ba-panel.good .ba-panel-body { color: var(--paper-dim); }
+.ba-annotation {
+  font-size: 0.82rem;
+  color: var(--paper-muted);
+  line-height: 1.7;
+  font-style: italic;
+  padding: 0.75rem 0 0 0.25rem;
+}
+.ba-annotation strong {
+  color: var(--green);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ─── FULL EXAMPLE ─────────────────────────────────────── */
+.full-example {
+  border: 1px solid var(--accent-border);
+  background: rgba(232,149,106,0.04);
+  margin-bottom: 2.5rem;
+}
+.full-example-header {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--accent-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.full-example-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.full-example-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+.full-example-body {
+  padding: 2rem 1.75rem;
+}
+.full-example-tool-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 0.25rem;
+}
+.full-example-tool-tagline {
+  font-size: 0.82rem;
+  color: var(--paper-muted);
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+.full-example-body p {
+  font-size: 0.9rem;
+  color: var(--paper-dim);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+.full-example-body p:last-child {
+  margin-bottom: 0;
+}
+.insight-marker {
+  display: inline;
+  background: rgba(126,207,168,0.15);
+  border-bottom: 1px solid var(--green);
+  color: inherit;
+  cursor: default;
+}
+.insight-marker:hover::after {
+  content: attr(data-note);
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  background: var(--bg2);
+  border: 1px solid var(--green-border);
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+.annotation-legend {
+  border-top: 1px solid var(--accent-border);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.annotation-legend-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  flex-shrink: 0;
+}
+.annotation-key {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--paper-muted);
+}
+.annotation-key-swatch {
+  width: 16px;
+  height: 3px;
+  background: var(--green);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ─── INSIGHT ANNOTATIONS ─────────────────────────────────── */
+.annotations {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ann-item {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+.ann-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 0.45rem;
+  flex-shrink: 0;
+}
+.ann-text {
+  font-size: 0.82rem;
+  color: var(--paper-muted);
+  line-height: 1.7;
+}
+.ann-text strong {
+  color: var(--green);
+  font-weight: 500;
+}
+
+/* ─── SCOPE TABLE ─────────────────────────────────────────── */
+.scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule-vis);
+  border: 1px solid var(--rule-vis);
+  margin-bottom: 2rem;
+}
+.scope-panel {
+  background: var(--bg);
+  padding: 1.75rem;
+}
+.scope-panel-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.scope-panel.ok .scope-panel-label { color: var(--green); }
+.scope-panel.own .scope-panel-label { color: var(--accent); }
+.scope-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.scope-list li {
+  font-size: 0.875rem;
+  color: var(--paper-dim);
+  line-height: 1.65;
+  padding-left: 1.1rem;
+  position: relative;
+}
+.scope-panel.ok .scope-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-family: var(--mono);
+}
+.scope-panel.own .scope-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: var(--mono);
+}
+.scope-list li span {
+  font-weight: 500;
+  color: var(--paper);
+}
+
+/* ─── THE RULE ─────────────────────────────────────────── */
+.the-rule {
+  border: 1px solid var(--rule-vis);
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+  margin-bottom: 2.5rem;
+  background: var(--bg2);
+}
+.the-rule-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+  margin-bottom: 1rem;
+}
+.the-rule-text {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  font-style: italic;
+  color: var(--paper);
+  line-height: 1.6;
+  max-width: 580px;
+  margin: 0 auto;
+}
+.the-rule-text em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ─── HANDOFF ─────────────────────────────────────────── */
+.handoff {
+  padding: 5rem 0 4rem;
+}
+.handoff-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.handoff-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  max-width: 560px;
+  line-height: 1.2;
+}
+.handoff-body {
+  font-size: 0.9rem;
+  color: var(--paper-dim);
+  max-width: 540px;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+.handoff-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+  max-width: 560px;
+}
+.hc {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--paper-dim);
+  line-height: 1.65;
+}
+.hc-mark {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+.doc-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 680px) {
+  .cover { padding: 2rem; }
+  .page { padding: 0 1.5rem; }
+  .ba-grid { grid-template-columns: 1fr; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .risk-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-header">
+    <div class="cover-org">ProofHub — Writer Onboarding Program</div>
+    <div class="cover-meta">Listicle Series<br>Research &amp; Integrity</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-session-label">Session — Listicle Research</div>
+    <h1 class="cover-title">How to <em>Actually</em><br>Research a Tool</h1>
+    <p class="cover-desc">
+      Listicle credibility doesn't come from how many sources you cite or how long your intro runs.
+      It comes from whether you were inside the product. This session is about what to look for
+      during the 20–30 minutes that separates a trustworthy description from a rewrapped vendor page.
+    </p>
+    <div class="cover-objective">
+      <div class="cover-objective-label">Session Objective</div>
+      <p>Know exactly what to find during a free trial that couldn't appear on any marketing page — and how to let that detail do the credibility work inside the article, without announcing it.</p>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-stat">
+      <div class="cover-stat-num">4</div>
+      <div class="cover-stat-label">Sections</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num">6</div>
+      <div class="cover-stat-label">Trial signals</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num">1</div>
+      <div class="cover-stat-label">Full example</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 1 — The Risk ═══════════════════════════════ -->
+<div class="page">
+<div class="section">
+  <div class="section-eyebrow"><span></span>Section 01</div>
+  <h2 class="section-title">Why the Standard Exists</h2>
+  <p class="section-intro">
+    "Best of" listicles became one of the dominant content tactics in B2B SaaS over 2024–2025, largely
+    because they perform well in search and get picked up by AI-generated answers. The problem isn't
+    the format — it's what most of these articles contain. The pattern became predictable enough that
+    Google and the FTC are now both paying attention.
+  </p>
+
+  <div class="risk-grid">
+    <div class="risk-cell">
+      <div class="risk-cell-num">−49%</div>
+      <div class="risk-cell-label"><strong>Organic visibility drop</strong>A well-known $8B B2B brand lost nearly half its search visibility between January 21 and February 2, 2026. Its blog, built largely on self-promotional listicles, accounted for most of the loss.</div>
+    </div>
+    <div class="risk-cell">
+      <div class="risk-cell-num">267</div>
+      <div class="risk-cell-label"><strong>Self-promotional articles</strong>One SaaS company had 267 "best" listicles on its blog where it ranked itself or its own products as #1. 76 of them had been freshly timestamped with "2026" in the title.</div>
+    </div>
+    <div class="risk-cell">
+      <div class="risk-cell-num">FTC</div>
+      <div class="risk-cell-label"><strong>Regulatory exposure</strong>Before the SEO penalties, at least one company faced legal action for publishing fabricated competitor reviews and ranking its own services #1. The Better Business Bureau censured the company for unsubstantiated claims.</div>
+    </div>
+  </div>
+
+  <div class="alert-block">
+    <div class="alert-block-label">What triggered the penalties</div>
+    <p>
+      Google's reviews system targets content that implies firsthand evaluation when none exists. The signal
+      isn't the format — it's the absence of detail that could only come from someone who used the product.
+      <strong>AI detection tools returned 100% confidence scores on the affected articles.</strong>
+      When all eight tools in a listicle sound like their own feature pages, the article fails that test.
+    </p>
+  </div>
+
+  <p style="font-size:0.9rem; color: var(--paper-muted); line-height:1.8;">
+    This doesn't mean "best of" listicles are off the table. It means the credibility bar has been raised
+    to where it should have been all along. The writers who were doing real research before this happened
+    are not the ones being penalized.
+  </p>
+</div>
+
+<!-- ═══ SECTION 2 — The Pattern ═══════════════════════════ -->
+<div class="section">
+  <div class="section-eyebrow"><span></span>Section 02</div>
+  <h2 class="section-title">The Pattern We <em>Don't</em> Follow</h2>
+  <p class="section-intro">
+    Here is what most listicle research actually looks like, mapped against what it produces. This isn't
+    about other companies — it's a checklist for recognizing these habits in your own draft before it leaves your hands.
+  </p>
+
+  <table class="pattern-table">
+    <thead>
+      <tr>
+        <th>What it looks like</th>
+        <th>What it actually is</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"I pulled the feature list from their pricing page and their G2 reviews."</td>
+        <td>You've assembled marketing claims. Nothing in the description required you to have used the product.</td>
+      </tr>
+      <tr>
+        <td>"I found the tool listed in two other 'best of' articles, so I included it."</td>
+        <td>Circular sourcing. Both of those articles may have done the same thing. None of you have been inside it.</td>
+      </tr>
+      <tr>
+        <td>"I gave it a score of 8.5/10 based on features, ease of use, and pricing."</td>
+        <td>An invented score with no methodology. If you didn't use it, there's no basis for any number.</td>
+      </tr>
+      <tr>
+        <td>"I described their integrations using the list on their integrations page."</td>
+        <td>Marketing copy. The integrations page says "integrates with Slack." It doesn't say what the Slack integration actually does.</td>
+      </tr>
+      <tr>
+        <td>"I put our product at #1 because it's what we're writing for."</td>
+        <td>That call isn't the writer's to make without basis. Placement requires evidence. The evidence is the writer's job to produce.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="the-rule">
+    <div class="the-rule-label">The line</div>
+    <div class="the-rule-text">
+      If the detail could appear on the vendor's homepage, it needs a source citation.
+      If it <em>couldn't</em> — it means you were there.
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3 — The Trial ═════════════════════════════ -->
+<div class="section">
+  <div class="section-eyebrow"><span></span>Section 03</div>
+  <h2 class="section-title">What 20–30 Minutes<br><em>Inside</em> a Tool Tells You</h2>
+  <p class="section-intro">
+    You don't need to run a full product evaluation. You need to find the handful of observations
+    per tool that no one who didn't use it could reproduce. These are the six places to look.
+    Sign up for the free trial. The following is what you're there to find.
+  </p>
+
+  <div class="trial-list">
+
+    <div class="trial-item">
+      <div class="trial-num">01</div>
+      <div class="trial-content">
+        <div class="trial-title">The onboarding experience</div>
+        <div class="trial-desc">What is the first screen after signup? Does the tool walk you through a setup wizard, drop you into an empty project, or prompt you to import data? What does the empty state look like before you've added anything? This is almost never documented outside the product itself.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"After signup, Asana walks you through building your first project with a short wizard — you choose a template or start blank, invite teammates, and add a few tasks before the setup completes. The empty state is cleaner than most tools at this stage."</div>
+      </div>
+    </div>
+
+    <div class="trial-item">
+      <div class="trial-num">02</div>
+      <div class="trial-content">
+        <div class="trial-title">Where key features actually live</div>
+        <div class="trial-desc">Not where the marketing page says they are — where they actually are inside the UI. The gap between "has task dependencies" and "dependencies are in the three-dot menu inside the task panel, not in the main toolbar" is the difference between a vendor claim and a firsthand observation.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"Task dependencies in Asana live inside the task detail panel — click the three-dot menu, then 'Mark as dependent on.' It's not surfaced on the main task view, so new users sometimes miss it."</div>
+      </div>
+    </div>
+
+    <div class="trial-item">
+      <div class="trial-num">03</div>
+      <div class="trial-content">
+        <div class="trial-title">The gap between the feature name and what it does</div>
+        <div class="trial-desc">"Advanced reporting" might be three pre-built charts with no export. "Unlimited guests" might have a condition buried in the upgrade prompt. "AI assistant" might only work on the enterprise tier. These gaps are invisible from outside the product. They are not on any pricing page. They are what readers actually want to know.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"Asana's reporting on the free plan is limited to the 'My Tasks' summary view. The actual dashboard builder — where you create custom charts across projects — is a Premium feature, and the upgrade prompt appears when you first click into the Reporting tab."</div>
+      </div>
+    </div>
+
+    <div class="trial-item">
+      <div class="trial-num">04</div>
+      <div class="trial-content">
+        <div class="trial-title">What the paywall looks like mid-workflow</div>
+        <div class="trial-desc">Where does a free-tier user hit the limit? Does the tool lock the feature entirely, show a greyed-out button, or let you start the action and then block it partway through? This is the most honest signal of how the product treats trial users, and it affects the recommendation directly.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"When you try to switch from Board to Timeline view on a free account, Asana shows a full-page upgrade prompt — the Timeline is completely locked rather than grayed out. You'll hit this quickly if you're evaluating the tool for project scheduling."</div>
+      </div>
+    </div>
+
+    <div class="trial-item">
+      <div class="trial-num">05</div>
+      <div class="trial-content">
+        <div class="trial-title">Performance and friction</div>
+        <div class="trial-desc">Does a Gantt view lag when you have more than 20 tasks? Does drag-and-drop in the board view work cleanly? Does the mobile app let you create tasks with the same fields as desktop, or does it drop custom fields? These observations cannot come from a feature list. They require presence.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"The mobile app carries most of Asana's core functionality — task creation, comment threads, and due dates are all accessible. Custom fields and rules, however, are view-only on mobile; you can't create or modify them from the app."</div>
+      </div>
+    </div>
+
+    <div class="trial-item">
+      <div class="trial-num">06</div>
+      <div class="trial-content">
+        <div class="trial-title">Integration behavior — not just integration names</div>
+        <div class="trial-desc">The integrations page says "integrates with Slack." That's not useful information. Does the Slack integration create tasks from messages? Does it post status updates back to channels? Does it sync both ways, or is it one-directional? Connect the integration and spend five minutes with it. That's the detail that earns trust.</div>
+        <div class="trial-example-label">What this produces in copy</div>
+        <div class="trial-example">"The Slack integration lets you create Asana tasks directly from a Slack message using a shortcut. Status updates from Asana can be configured to post back to a designated channel. It doesn't sync in real time — updates post when triggered manually or by a rule."</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="font-size:0.875rem; color:var(--paper-muted); line-height:1.8; max-width:640px;">
+    For most tools, you won't find all six in a single session. Two or three solid observations per tool
+    is the working standard. The article doesn't need to announce what you found — it just needs to contain it.
+  </p>
+</div>
+
+<!-- ═══ SECTION 3B — Full Example ══════════════════════════ -->
+<div class="section">
+  <div class="section-eyebrow"><span></span>Section 03 — Applied</div>
+  <h2 class="section-title">What This Looks Like<br>in a <em>Full Description</em></h2>
+  <p class="section-intro">
+    The same tool, Asana, written two ways. The first is assembled from public sources.
+    The second includes the same public information plus observations that could only come
+    from someone who opened the product. The tested details are marked.
+  </p>
+
+  <!-- BEFORE -->
+  <div class="ba-wrapper">
+    <div class="ba-rule">Before — sourced from vendor page and G2</div>
+    <div class="ba-grid">
+      <div class="ba-panel bad" style="grid-column:1/-1;">
+        <div class="ba-panel-label">Assembled version — not tested</div>
+        <div class="ba-panel-body">
+          <p><strong style="color:rgba(240,235,227,0.5);">Asana</strong> is a project management tool used by teams of all sizes. It offers task management, timeline views, board views, and integrations with popular tools like Slack, Google Drive, and Microsoft Teams. The platform supports task dependencies, custom fields, and automated workflows. Asana has a free plan for up to 15 users and paid plans starting at $10.99 per user per month. It scores 4.3 out of 5 on G2 based on over 9,000 reviews, with users praising its interface and noting a learning curve for more advanced features.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ba-annotation">
+      Every sentence in this description could have been written by someone who has never opened Asana. It's accurate. It's useful as a summary. But it is entirely reproducible from the Asana website and G2. Nothing here signals that the writer has an opinion formed by use.
+    </div>
+  </div>
+
+  <!-- AFTER — Full Example -->
+  <div class="full-example">
+    <div class="full-example-header">
+      <div class="full-example-title">Tested version — full example</div>
+      <div class="full-example-sub">Highlighted text = only-from-testing detail</div>
+    </div>
+    <div class="full-example-body">
+      <div class="full-example-tool-name">Asana</div>
+      <div class="full-example-tool-tagline">Best for: teams that need structured task ownership and cross-project visibility</div>
+
+      <p>
+        Asana is one of the most mature task management platforms available, and the free plan is
+        genuinely usable — up to 15 users, unlimited tasks and projects, list and board views, and
+        basic integrations including Slack and Google Drive.
+        <span class="insight-marker" data-note="Onboarding experience — not on any page">After you sign up, a short setup wizard walks you through creating your first project before you reach the workspace — you pick a template or start blank, add a few tasks, and optionally invite teammates. The empty state is more guided than most tools at this tier.</span>
+      </p>
+
+      <p>
+        The feature most teams evaluate Asana for is its timeline view — the Gantt-style layout
+        that makes dependencies and deadlines visible across a project.
+        <span class="insight-marker" data-note="Paywall behavior — requires being in the product to observe">It is locked entirely on the free plan, not grayed out. When you click the Timeline tab on a free account, Asana shows a full-screen upgrade prompt before you reach the view.</span>
+        The same applies to task dependencies:
+        <span class="insight-marker" data-note="Feature location — invisible from the outside">they're available from the Premium plan upward, and the setting lives inside the task detail panel under the three-dot menu rather than on the main task row, which means new users sometimes miss it during setup.</span>
+      </p>
+
+      <p>
+        Reporting follows the same pattern.
+        <span class="insight-marker" data-note="Gap between feature name and reality">The dashboard builder — where you create custom charts across multiple projects — is a Premium feature. On the free plan, the Reporting tab is accessible but shows only a summary of your personal task status.</span>
+        The upgrade prompt appears the first time you try to create a custom chart.
+      </p>
+
+      <p>
+        The Slack integration does more than send notifications.
+        <span class="insight-marker" data-note="Integration behavior — tested, not pulled from integrations page">You can create Asana tasks directly from a Slack message using the shortcut menu. Status updates can be configured to post back to a channel, though they post when triggered rather than syncing in real time.</span>
+        The mobile app is solid for task management and comment threads, but
+        <span class="insight-marker" data-note="Mobile parity observation — only visible through actual use">custom fields and automation rules are view-only on mobile; you can read them but can't create or modify them from the app.</span>
+      </p>
+
+      <p>
+        For teams comparing Asana with flat-rate tools: at scale, Asana's per-user pricing adds up quickly. A 25-person team on the Premium plan runs approximately $275/month. The feature set justifies the cost for teams that need cross-project reporting and structured workflows, but the pricing model means smaller or budget-conscious teams will hit the ceiling sooner than the feature ceiling.
+      </p>
+    </div>
+    <div class="annotation-legend">
+      <div class="annotation-legend-label">Key</div>
+      <div class="annotation-key">
+        <div class="annotation-key-swatch"></div>
+        <span>Detail that could only come from testing the product</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations">
+    <div class="ann-item">
+      <div class="ann-dot"></div>
+      <div class="ann-text"><strong>Onboarding wizard detail</strong> — The setup flow is not described on Asana's marketing pages. It reads as an observation, not a claim.</div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot"></div>
+      <div class="ann-text"><strong>Paywall behavior</strong> — "Locked entirely, not grayed out" is a distinction that requires being there. It's also the detail a buyer wants.</div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot"></div>
+      <div class="ann-text"><strong>Feature location</strong> — Where a setting lives in the UI is only known from use. It's also genuinely useful to a reader evaluating the tool.</div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot"></div>
+      <div class="ann-text"><strong>Integration behavior</strong> — "Creates tasks from Slack messages via shortcut" vs. "integrates with Slack" is the difference between tested and assembled. Both are brief. Only one is credible.</div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot"></div>
+      <div class="ann-text"><strong>Mobile parity</strong> — Custom fields being view-only on mobile is not on Asana's features page. It's the kind of detail that decides a purchase for a mobile-first team.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ SECTION 4 — Scope ══════════════════════════════════ -->
+<div class="section">
+  <div class="section-eyebrow"><span></span>Section 04</div>
+  <h2 class="section-title">What You <em>Don't</em> Need<br>to Test Yourself</h2>
+  <p class="section-intro">
+    The standard is not to personally verify everything. It is to own what you claim. If it comes from
+    the vendor's site or public reviews, cite the source and move on. If it implies firsthand evaluation,
+    it needs to be firsthand.
+  </p>
+
+  <div class="scope-grid">
+    <div class="scope-panel ok">
+      <div class="scope-panel-label">Pull from public sources — cite them</div>
+      <ul class="scope-list">
+        <li><span>Pricing tiers and plan names</span> — Use the vendor's pricing page. Link it or note it as the source.</li>
+        <li><span>Feature list by tier</span> — Vendor's comparison table. Accurate as of the article date.</li>
+        <li><span>Integration names</span> — The integrations page is fine for what tools connect. Not for what they do.</li>
+        <li><span>Customer count and company scale</span> — Press releases, About pages, or verified third-party sources only.</li>
+        <li><span>Overall sentiment and common complaints</span> — G2, Capterra, GetApp. Note the review count and recency.</li>
+        <li><span>Founding year, funding, company background</span> — Crunchbase, press coverage, or the vendor's About page.</li>
+      </ul>
+    </div>
+    <div class="scope-panel own">
+      <div class="scope-panel-label">Own it — this requires actual testing</div>
+      <ul class="scope-list">
+        <li><span>How the onboarding experience works</span> — You have to sign up and go through it.</li>
+        <li><span>Where specific features are located in the UI</span> — Marketing pages describe features, not navigation.</li>
+        <li><span>What the paywall looks like mid-workflow</span> — This requires hitting it during a trial session.</li>
+        <li><span>What integrations actually do vs. what they're named</span> — Connect it. Spend five minutes with it.</li>
+        <li><span>Mobile app feature parity</span> — Download and check. Don't describe it from the App Store listing.</li>
+        <li><span>Performance and friction observations</span> — Load times, drag behavior, editor responsiveness. Presence only.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert-block" style="border-color:var(--accent-border); background:var(--accent-dim);">
+    <div class="alert-block-label" style="color:var(--accent);">On ProofHub's placement in the article</div>
+    <p>
+      When ProofHub appears in the list, apply the same research lens you'd apply to any other tool.
+      <strong>Placement is not the writer's call</strong> — that decision sits with editorial. But the
+      evidence supporting that placement is the writer's responsibility. If you haven't verified a claim
+      about ProofHub from inside the product, treat it the same way you'd treat an unverified claim
+      about any competitor. The fact that we are the publisher is a reason to be more rigorous, not less.
+      That relationship must be disclosed — either in a methodology note or in the article's framing.
+      The goal isn't to hide the bias. It's to produce work strong enough that the bias doesn't
+      undermine the reader's trust.
+    </p>
+  </div>
+</div>
+
+<!-- ═══ HANDOFF ═══════════════════════════════════════════ -->
+<div class="handoff">
+  <div class="handoff-label">Session complete</div>
+  <h2 class="handoff-title">Before you move to writing the description</h2>
+  <p class="handoff-body">
+    For each tool in your listicle, you should be able to point to at least two or three
+    observations that came from being inside the product — not from its marketing page.
+    They don't need to be long. They just need to be yours.
+  </p>
+  <div class="handoff-checks">
+    <div class="hc"><div class="hc-mark">✓</div><div>I signed up for a free trial or used an existing account. Not a YouTube walkthrough or a feature overview article.</div></div>
+    <div class="hc"><div class="hc-mark">✓</div><div>I can name where at least one key feature actually lives in the UI — not where the marketing page says it lives.</div></div>
+    <div class="hc"><div class="hc-mark">✓</div><div>I know what the paywall looks like for this tool and where a free-tier user hits it in normal use.</div></div>
+    <div class="hc"><div class="hc-mark">✓</div><div>Any integration I've described, I've connected — even briefly. I haven't described it from the integrations page name alone.</div></div>
+    <div class="hc"><div class="hc-mark">✓</div><div>Every claim that implies firsthand evaluation is firsthand. Everything else has a source I can point to.</div></div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="doc-footer">ProofHub Content Team — Writer Onboarding Program · Listicle Research</div>
+
+</body>
+</html>
