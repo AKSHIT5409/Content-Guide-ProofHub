@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 — Step 1: Gemini | Researching with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --page-raised: #ffffff;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning {
+    background: var(--warn-light);
+    border-color: var(--warn-rule);
+    color: var(--warn);
+  }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip {
+    background: var(--tip-light);
+    border-color: var(--tip-rule);
+    color: var(--tip);
+  }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note {
+    background: var(--accent-light);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Prompt block */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header .prompt-number {
+    background: var(--accent-mid);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li .check {
+    color: var(--accent-mid);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Prompt component anatomy */
+  .anatomy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .anatomy-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 16px 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .anatomy-table td {
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .anatomy-table td:first-child {
+    font-weight: 500;
+    color: var(--accent);
+    width: 110px;
+    white-space: nowrap;
+  }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 3 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 1</div>
+<h1>Gemini: Mapping the Landscape</h1>
+<p class="chapter-lede">Most people start researching by reading. The problem is they have no map. Before you open a single article, you need to understand the terrain — what already exists, who's covering it, and where the gaps are.</p>
+
+<div class="step-badge">Tool: Gemini Advanced / Deep Research</div>
+
+<p>Reading feels productive. You find an article, read it, find another one, read that. Understanding accumulates. The trouble is that you have no sense of proportion — you don't know whether what you're reading is representative of the full landscape, or whether you're missing the most important angle entirely. You are building a picture without knowing how big the canvas is.</p>
+
+<p>The first thing you do in Gemini is not reading. It's surveying. You want to understand the terrain before you enter it: what's already ranking on this topic, who's covering it, what they're covering, and where the gaps are. This changes everything that follows. You stop reading randomly and start reading with purpose.</p>
+
+<h2>Why this step matters strategically</h2>
+
+<p>Before touching any prompts, you need to understand why this step exists — not just for the research process, but for the ranking outcome.</p>
+
+<p>There is a concept in SEO called Information Gain. The version that matters for your work is this: Google rewards content that adds something new to the conversation. Not content that covers the same ground as the top ten results in different words. Content that provides data points, angles, or insights that don't already exist in what's ranking.</p>
+
+<blockquote>Your research objective is not to summarise what exists. It's to find what no one has said yet.</blockquote>
+
+<p>That means the goal of your competitive research is to understand what's already been said, so you can identify what hasn't. You're looking for the gap before you look for the sources.</p>
+
+<div class="callout warning">
+  <div class="callout-label">What happens if you skip this step</div>
+  If you go straight to reading without surveying the landscape first, you'll produce an article that covers the same ground as everything already ranking. It may be well-written and well-researched. It will not rank, because it gives Google no reason to surface it over what's already there. This step is what prevents that outcome.
+</div>
+
+<p>If you've heard people talk about Information Gain and wondered what it actually means in practice — this is it. Before you write a word, you need to know what already exists and where it falls short. That knowledge is the foundation your article's competitive advantage is built on.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>Before you prompt: how to talk to Gemini</h2>
+
+<p>If you've used Gemini and found the output too generic to be useful, the problem is almost always in how the prompt was written. The most effective Gemini prompts average around 21 words. Most people's prompts are under 9 words. That gap matters enormously.</p>
+
+<p>"Tell me about AI in project management" gets you a generic overview. A prompt that specifies who you are, what you need, what context is relevant, and what format you want gets you something you can actually use. Specificity is not optional. It's the variable that determines output quality.</p>
+
+<p>Every prompt in this chapter is built on four components. You don't need to memorise them as a framework — just understand what each one contributes:</p>
+
+<table class="anatomy-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Persona</td>
+      <td>Tells Gemini who is asking. "I'm a content writer at a B2B SaaS company" filters the response toward what's relevant for your context — not for a researcher, not for a student, not for an executive.</td>
+    </tr>
+    <tr>
+      <td>Task</td>
+      <td>What you need done. Always starts with a verb. "Research," "identify," "compare," "summarise." Vague tasks produce vague outputs.</td>
+    </tr>
+    <tr>
+      <td>Context</td>
+      <td>The details that make this specific rather than general. The topic, the angle, any constraints on what you do or don't need.</td>
+    </tr>
+    <tr>
+      <td>Format</td>
+      <td>How you want the output structured. A table, a list, a paragraph. Specifying format forces the output into something you can immediately work with.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You'll see these components at work in each prompt below. The rationale after each prompt explains exactly why it's written the way it is.</p>
+
+<div class="callout note">
+  <div class="callout-label">Setup</div>
+  Go to gemini.google.com. Use Gemini Advanced, or any version with Deep Research enabled — look for "Deep Research" in the left sidebar. If you don't have access, run the prompts on the standard interface for now. All three prompts in this chapter work on either version.
+</div>
+
+<h2>The three prompts</h2>
+
+<h3>Prompt 1 — Competitive overview</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">1</div>
+    Competitive Overview
+  </div>
+  <div class="prompt-block-body">
+    "I'm a content writer at a B2B SaaS company. Research the top-ranking articles on 'impact of AI on project management.' For each article: what is the main argument, what topics do they cover, and what questions do they leave unanswered? Organise this into a table."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Type this exactly as written.</strong> Don't paraphrase it. Don't simplify it. The specificity is doing work here. The persona tells Gemini you're a B2B content writer, which changes what counts as relevant. The task specifies three distinct things to extract from each article, not just a general summary. The format request — a table — structures the output so you can compare articles side by side instead of reading paragraphs about each one individually.<br><br>
+    What you get back is a map of the existing landscape. Not a summary of the topic. A picture of what's already been said, from which angles, and where the coverage falls short. Read it as a strategist. What angles appear across three or four results? That's the saturated ground. What questions keep being raised but not answered? That's your gap.
+  </div>
+</div>
+
+<p>When the output comes back, don't skim it. Spend a few minutes identifying two things: the angles that appear in multiple top results (these are already well-covered — you need to go beyond them, not avoid them), and the questions that seem to surface repeatedly without being answered properly. Write both down before moving to the next prompt.</p>
+
+<h3>Prompt 2 — Intent and gap analysis</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">2</div>
+    Intent and Gap Analysis
+  </div>
+  <div class="prompt-block-body">
+    "Based on the top-ranking content on 'impact of AI on project management': what is the dominant search intent behind this topic? What kind of reader are these articles written for? And what is the most significant gap — the angle or question that none of the top results address properly?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this as a follow-up in the same conversation.</strong> Do not start a new chat. Gemini holds context within a conversation, so it's building on what it already retrieved. Starting fresh loses that context and forces Gemini to do the competitive research again from scratch.<br><br>
+    This prompt asks Gemini to do something specific: tell you who your competition thinks they're writing for, and where they've all fallen short at the same time. The gap Gemini identifies here is the most valuable single output of this entire step. Write that sentence down exactly as Gemini phrases it. It is going to shape the angle of your article.
+  </div>
+</div>
+
+<div class="callout tip">
+  <div class="callout-label">If Gemini is vague</div>
+  If the gap it identifies feels too broad to be useful, follow up with: "Be more specific. What exact question about AI and project management do the top results fail to answer properly?" Push it. The useful output usually comes from the second or third follow-up, not the first response.
+</div>
+
+<h3>Prompt 3 — Search intent mapping</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">3</div>
+    Search Intent Mapping
+  </div>
+  <div class="prompt-block-body">
+    "For the topic 'impact of AI on project management': what is the primary search intent? Is this informational, commercial, or mixed? What does someone searching this term actually want to walk away knowing? What would make them feel like they found the right article?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This prompt is quick, but don't skip it.</strong> Search intent tells you what job the article needs to do. If the intent is informational — the reader wants to understand what's happening — the article's job is to educate. If the intent is mixed or leans commercial — the reader is evaluating whether to adopt AI tools — the article also needs to address decision-making.<br><br>
+    Getting intent wrong at the research stage means writing the right content for the wrong reader. It happens more often than you'd expect, and it's almost impossible to fix in editing. This prompt makes intent explicit before you write a word.
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>On pushing back when output is generic</h2>
+
+<p>Gemini is a conversation, not a search engine. If what comes back is generic, don't accept it. Push it. This is the habit that separates people who get consistently good AI output from people who don't.</p>
+
+<p>Most people run one prompt, decide the response isn't useful, and give up. But the first response is almost always a starting point, not a finished answer. The useful output usually lives in the second or third follow-up in the same conversation.</p>
+
+<p>Three follow-ups worth keeping in your back pocket:</p>
+
+<ul class="checklist">
+  <li><span class="check">→</span> "That's too general. Give me three specific examples."</li>
+  <li><span class="check">→</span> "Focus only on [X aspect]. Ignore everything else."</li>
+  <li><span class="check">→</span> "What you gave me covers what's obvious. What's the non-obvious answer?"</li>
+</ul>
+
+<p>That last one in particular — "what's the non-obvious answer?" — is the most consistently effective. Use it whenever the first response feels like something you already knew.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you should have before moving on</h2>
+
+<p>Before leaving this step, you should be able to write down one clear sentence for each of the following:</p>
+
+<ul class="checklist">
+  <li><span class="check">✓</span> What the top-ranking articles cover and how they're structured</li>
+  <li><span class="check">✓</span> The dominant search intent behind the topic</li>
+  <li><span class="check">✓</span> The gap — the specific angle or question no existing article answers properly</li>
+  <li><span class="check">✓</span> The format and depth level the top results use</li>
+</ul>
+
+<p>If you can't write a clear sentence for any of those four, go back into Gemini and keep pushing. These are not optional context — they are the foundations the rest of your research is built on. Vagueness here compounds through every step that follows.</p>
+
+<div class="callout note">
+  <div class="callout-label">Time check</div>
+  This step should take 15 to 20 minutes. If you're spending longer, you're likely overcomplicating the prompts or trying to cover too much in a single question. Break it up. One question at a time.
+</div>
+
+<p>At this point you know what the landscape looks like. You know what exists, where the gaps are, and what kind of article needs to be written. What you don't yet have is the body of evidence that will make your article credible, specific, and defensible. The next step — still in Gemini — is building that reading list.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 4 — Step 2: Building Your Source List →</span>
+</footer>
+
+</body>
+</html>

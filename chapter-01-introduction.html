@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 — Why This Playbook Exists | Researching with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --page-raised: #ffffff;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  /* ---- Book header ---- */
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* ---- Chapter opening ---- */
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---- Body prose ---- */
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+
+  /* ---- Callout boxes ---- */
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning {
+    background: var(--warn-light);
+    border-color: var(--warn-rule);
+    color: var(--warn);
+  }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip {
+    background: var(--tip-light);
+    border-color: var(--tip-rule);
+    color: var(--tip);
+  }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note {
+    background: var(--accent-light);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* ---- Tool table ---- */
+  .tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 36px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .tool-table thead tr {
+    border-bottom: 2px solid var(--rule);
+  }
+  .tool-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 16px 12px 0;
+  }
+  .tool-table td {
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .tool-table td:first-child {
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--accent);
+    width: 130px;
+  }
+
+  /* ---- Section divider ---- */
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  /* ---- Pull quote ---- */
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  /* ---- Chapter end ---- */
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 1 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Introduction</div>
+<h1>Why This Playbook Exists</h1>
+<p class="chapter-lede">Before we get into any tools or prompts, it's worth being honest about why this workflow had to be written at all — and what breaks when research has no system behind it.</p>
+
+<p>Think about the last time you were assigned a content topic. Something like: <em>write about the impact of AI on project management.</em> What did you actually do first? Not what you think you should have done. What you actually did.</p>
+
+<p>Most people's answer falls into one of two patterns. Either you opened Google and started reading whatever came up — saving tabs as you went, building a vague picture from ten sources you half-read. Or you opened an AI chatbot, typed the topic in, let it hand you a structure and some talking points, and started writing from there.</p>
+
+<p>Both of these are completely understandable. And both of them have a serious problem.</p>
+
+<h2>The two failure modes</h2>
+
+<h3>Failure mode one: the tab hoarder</h3>
+
+<p>Reading is good. The Googling approach isn't wrong in principle. But without a system, it produces a specific kind of problem: you end up with a lot of information and no synthesis.</p>
+
+<p>You've read eight articles. You have six tabs open. You have notes in a doc that are basically quotes you copied and pasted. Three days later, when you sit down to write, you can't remember which source said what, you're not sure which statistics are credible, and you've lost the thread of what the topic actually means. You spend the first hour of writing re-reading things you already read.</p>
+
+<blockquote>This is not a laziness problem. It is a systems problem. Reading without a method for synthesising what you've read will always produce this result.</blockquote>
+
+<h3>Failure mode two: the AI trust fall</h3>
+
+<p>The second approach has the opposite problem. You get structure quickly. The output sounds coherent, sometimes even impressive. But look closely and you'll notice: there are no real sources. The statistics are either made up, unverifiable, or pulled from training data that could be years out of date. The expert opinions don't come from actual experts who said those things.</p>
+
+<p>This doesn't mean AI is useless for research. It means AI <em>without source grounding</em> is the wrong tool for this job. Using a general-purpose AI chatbot to research a topic and then writing from its output is like asking someone who has read a lot of books to tell you what's happening in your industry right now. They might sound credible. They're guessing.</p>
+
+<div class="callout warning">
+  <div class="callout-label">Warning</div>
+  For content that needs to rank — and for content that carries ProofHub's name — guessing is not good enough. AI without source grounding produces hallucinated statistics, misattributed quotes, and claims you cannot defend if a reader challenges them.
+</div>
+
+<h2>What weak research actually costs</h2>
+
+<p>When research is weak, it shows up in the work. It shows up as articles that cover the same ground as the ten pieces already ranking on that topic, because you never found out what was missing. It shows up as pieces where every claim is slightly vague — benefit language, no specifics, nothing you could point to and say <em>this came from here.</em> It shows up as content a reader finishes and feels like they didn't learn anything they couldn't have found elsewhere.</p>
+
+<p>That's the output of an unstructured research process. And here's the part that matters: it's not about effort. The tab hoarder often works hard. The AI trust faller often iterates a lot. The problem isn't effort. It's the absence of a workflow.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What this playbook gives you</h2>
+
+<p>This playbook walks you through a three-tool research workflow. Use it every time you're assigned a content topic. It is not a survey of every AI research tool available — there are dozens, and most of them will waste your time. This is one workflow, built around three tools chosen for specific reasons, and it works.</p>
+
+<p>Every chapter covers one step in the workflow. You'll see exactly what to open, what to type, and what you're looking for at each stage. More importantly, you'll understand <em>why</em> each step happens in this order, and why each tool is doing its particular job instead of a different tool. Understanding the logic is what lets you adapt when something doesn't behave exactly as expected.</p>
+
+<div class="callout note">
+  <div class="callout-label">How to use this playbook</div>
+  Work through it once with the example topic provided — the impact of AI on project management. Then apply the workflow to your next real assignment. The goal is that after one full run-through, you can execute this independently without referring back to these pages.
+</div>
+
+<h2>The three tools and what each one does</h2>
+
+<p>Three tools. Each one has a distinct job, and the jobs do not overlap. This matters because one of the most common mistakes people make with AI is using the same tool for everything — asking one chatbot to find sources, summarise them, and help them write, all in a single conversation. That produces mediocre results at every stage.</p>
+
+<table class="tool-table">
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Its job in this workflow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini</td>
+      <td>Find what's already ranking. Identify credible sources worth reading. Map the landscape before you go deeper.</td>
+    </tr>
+    <tr>
+      <td>NotebookLM</td>
+      <td>Synthesise from your sources only. It cannot pull from the internet or invent information — it works entirely with what you load into it. That constraint is the point.</td>
+    </tr>
+    <tr>
+      <td>Claude</td>
+      <td>Fill gaps, stress-test your understanding, and organise your research into a working brief. By the time you get here, you know the topic. Claude's job is to sharpen what you already have.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>That sequence — map, synthesise, sharpen — is the spine of the workflow. Each tool hands off to the next. Nothing is skipped.</p>
+
+<div class="callout tip">
+  <div class="callout-label">On tool choice</div>
+  If you're wondering why Gemini and not Perplexity, or why NotebookLM and not another summarisation tool — the answer is what each tool does specifically. Gemini has real-time web access and handles broad landscape mapping well. NotebookLM is source-grounded by design; it will not fabricate. Claude handles analytical pressure-testing at a depth the other two don't. You'll see why as you work through each chapter.
+</div>
+
+<p>That's the overview. Chapter 2 lays out the full workflow at a glance before we go step by step. Turn the page when you're ready.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 2 — The Workflow at a Glance →</span>
+</footer>
+
+</body>
+</html>

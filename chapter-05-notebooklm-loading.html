@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 — Step 3: NotebookLM, Curating and Loading | Researching with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Source type grid */
+  .source-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 32px 0;
+    font-family: var(--font-ui);
+  }
+  .source-type-item {
+    background: var(--page);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .source-type-item .type-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .source-type-item .type-how {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .source-type-item .type-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  /* Loading order */
+  .loading-order {
+    list-style: none;
+    margin: 28px 0;
+    counter-reset: loading;
+  }
+  .loading-order li {
+    counter-increment: loading;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .loading-order li:last-child { border-bottom: none; }
+  .loading-order li::before {
+    content: counter(loading);
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    color: var(--page);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .loading-order li .order-title {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .loading-order li .order-reason {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  /* Well-loaded checklist */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  /* NotebookLM concept box */
+  .concept-box {
+    margin: 40px -8px;
+    padding: 32px;
+    background: var(--ink);
+    border-radius: 6px;
+    color: var(--page);
+    font-family: var(--font-ui);
+  }
+  .concept-box .concept-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  .concept-box .concept-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #f4f2ec;
+    margin-bottom: 16px;
+    font-family: var(--font-body);
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .concept-box p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c8c5bc;
+    margin-bottom: 1em;
+  }
+  .concept-box p:last-child { margin-bottom: 0; }
+  .concept-box strong { color: #f4f2ec; font-weight: 500; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 5 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 3</div>
+<h1>NotebookLM: Curating and Loading</h1>
+<p class="chapter-lede">Before you load a single source, you need the right mental model of what NotebookLM is. The tool only works as well as the decisions you make before you open it.</p>
+
+<div class="step-badge">Tool: NotebookLM</div>
+
+<h2>What NotebookLM actually is</h2>
+
+<p>NotebookLM is not ChatGPT. It is not Gemini. It does not draw from the internet. It does not use training data to fill in gaps it doesn't have. When you ask it a question, it answers exclusively from the sources you have loaded into that specific notebook. If the answer isn't in your sources, it will tell you. It will not make something up to fill the silence.</p>
+
+<div class="concept-box">
+  <div class="concept-label">The core principle</div>
+  <div class="concept-title">"Only your sources. Only what's in the notebook."</div>
+  <p>This is the feature, not a limitation. You've spent the last 40 minutes selecting credible, authoritative sources. NotebookLM is going to let you have a conversation with those sources — ask them questions, find patterns across them, identify contradictions between them — without any noise from the wider internet getting in the way.</p>
+  <p><strong>The quality of that conversation depends entirely on what you load.</strong> Which is why the decisions you make in this chapter matter as much as the prompts you'll run in the next one.</p>
+</div>
+
+<h2>Setting up your notebook</h2>
+
+<p>Go to notebooklm.google.com. Sign in with your Google account and click "New Notebook." Name it clearly — include the topic, your name, and the date. Not "research" or "AI stuff." Something like: <em>AI in Project Management — Research — May 2025.</em></p>
+
+<p>This matters because you may come back to this notebook weeks later, or someone else on the team may need to reference it. A descriptive name costs you ten seconds now and saves real confusion later.</p>
+
+<p>When the notebook opens, you'll see the source panel on the left and the chat interface on the right. Everything in this chapter happens in the source panel. The chat comes in the next chapter.</p>
+
+<h2>What NotebookLM can accept</h2>
+
+<p>Five source types, each loaded slightly differently:</p>
+
+<div class="source-type-grid">
+  <div class="source-type-item">
+    <div class="type-icon">🔗</div>
+    <div class="type-label">Website URLs</div>
+    <div class="type-how">Paste the link directly into "Add source." NotebookLM pulls the page content automatically.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📄</div>
+    <div class="type-label">PDFs</div>
+    <div class="type-how">Upload the file. Research reports and whitepapers you downloaded go here.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📝</div>
+    <div class="type-label">Google Docs</div>
+    <div class="type-how">Connect directly via Google Drive. Useful for internal documents or previous research.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📋</div>
+    <div class="type-label">Copied text</div>
+    <div class="type-how">Paste any text content as a new source. Use for paywalled excerpts or SME notes.</div>
+  </div>
+  <div class="source-type-item" style="grid-column: 1 / -1;">
+    <div class="type-icon">🎥</div>
+    <div class="type-label">YouTube URLs</div>
+    <div class="type-how">Paste the video link. NotebookLM extracts the transcript automatically — you don't need to copy it yourself.</div>
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>One final curation pass</h2>
+
+<p>You already ran a version of this at the end of Chapter 4. Do it again now, source by source, as you load each one. This is not being overly cautious. It's being disciplined about what goes into the notebook.</p>
+
+<p>The reason for doing it twice is that the first pass happened when you had the full list in front of you and were making relative judgements — is this source better than that one? The second pass happens in isolation, as you look at each source individually before committing it. Sometimes a source that seemed useful in a list of twelve looks less essential when you're about to give it a dedicated slot.</p>
+
+<blockquote>A notebook with eight excellent sources will outperform one with fifteen mixed ones. Every time.</blockquote>
+
+<p>The three questions remain the same: Does this add something the other sources don't? Is it original research or is it summarising someone else? Would I cite it in the published article? Two no answers means it stays out. You can always add a source later if you find you need it.</p>
+
+<div class="callout warning">
+  <div class="callout-label">Hard limit</div>
+  If you find yourself loading more than fifteen sources, stop. Remove the weakest ones before continuing. More than fifteen is noise, not depth. The chat interface becomes harder to work with, and NotebookLM's synthesis quality drops when it's pulling from too many overlapping sources.
+</div>
+
+<h2>The loading order</h2>
+
+<p>Load your sources in this sequence. The order matters because the first sources you load anchor NotebookLM's initial understanding of the topic.</p>
+
+<ol class="loading-order">
+  <li>
+    <div>
+      <span class="order-title">PDFs and whitepapers</span>
+      <span class="order-reason">Your densest, most substantive sources — research reports, industry publications, academic papers. Loading these first means that when you start prompting, answers are anchored in the most credible material you have.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">Key web URLs</span>
+      <span class="order-reason">Expert commentary, authoritative articles, and credible sources that didn't come as PDFs. These complement the formal research with more accessible framing.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">YouTube transcripts</span>
+      <span class="order-reason">Practitioner voices and conference talks. These add the candid, specific insight that rarely appears in formal publications — and that your competitors almost certainly haven't used.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">Top-ranking competitor articles</span>
+      <span class="order-reason">Load these last and treat them differently from your authoritative sources. They are in the notebook for one purpose: to understand what the competitive landscape looks like from the inside. You are not going to cite these in your article.</span>
+    </div>
+  </li>
+</ol>
+
+<h2>After loading: checking your notebook</h2>
+
+<p>When all sources are loaded, each one will show a short auto-generated summary in the left panel. Read those summaries. They're a quick health check on what NotebookLM was actually able to extract.</p>
+
+<p>If a source's summary is thin — a single vague sentence that tells you almost nothing — that's a warning sign. A paywalled article that only showed NotebookLM its preview won't be useful in the chat session. Remove it and find an alternative you can access in full.</p>
+
+<p>A well-loaded notebook looks like this:</p>
+
+<ul class="checklist">
+  <li><span class="check">✓</span> 8–12 sources, each with a clear, substantive summary visible in the panel</li>
+  <li><span class="check">✓</span> A genuine mix of source types — not ten versions of the same report</li>
+  <li><span class="check">✓</span> Sources that span different dimensions of the topic: technology, human adoption, strategy, data</li>
+  <li><span class="check">✓</span> No source you couldn't explain why it's there in one sentence</li>
+</ul>
+
+<div class="callout tip">
+  <div class="callout-label">The most common notebook problem</div>
+  Repetition. People load ten sources that all make the same point from slightly different angles, which gives the chat session very little to work with when you ask about gaps or contradictions. If your sources are too similar in scope, go back to Gemini and find something that covers an angle you don't yet have — the human side versus the technology side, the optimistic case versus the sceptical one, the strategic overview versus the practitioner experience.
+</div>
+
+<p>Loading is done. In the next chapter, you'll have a conversation with what you've built.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 6 — Step 4: Interacting With Your Sources →</span>
+</footer>
+
+</body>
+</html>

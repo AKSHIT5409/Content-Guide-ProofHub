@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 7 — Step 5: Claude Projects | Researching with AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Project setup steps */
+  .setup-steps {
+    list-style: none;
+    margin: 28px 0;
+    counter-reset: setup;
+  }
+  .setup-steps li {
+    counter-increment: setup;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .setup-steps li:last-child { border-bottom: none; }
+  .setup-steps li::before {
+    content: counter(setup);
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    color: var(--page);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .setup-steps li .step-title {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .setup-steps li .step-detail {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  /* Project instructions template */
+  .instructions-template {
+    margin: 40px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .instructions-template-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .instructions-template-header .copy-note {
+    font-size: 11px;
+    color: var(--accent-mid);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .instructions-template-body {
+    padding: 24px 28px;
+    background: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+    white-space: pre-wrap;
+  }
+  .instructions-template-body em { font-style: normal; color: var(--accent-mid); }
+  .instructions-annotation {
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .annotation-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .annotation-row:last-child { border-bottom: none; }
+  .annotation-line {
+    padding: 12px 20px;
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 13px;
+    border-right: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+  .annotation-why {
+    padding: 12px 20px;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .annotation-why strong { font-weight: 500; }
+
+  /* Upload checklist */
+  .upload-list {
+    list-style: none;
+    margin: 24px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .upload-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .upload-list li:last-child { border-bottom: none; }
+  .upload-list li .icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+  .upload-list li .item-label { font-weight: 500; display: block; margin-bottom: 2px; }
+  .upload-list li .item-note { color: var(--ink-muted); font-size: 13px; }
+
+  /* Prompt blocks */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header .prompt-number {
+    background: var(--accent-mid);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong { color: var(--ink); font-weight: 500; }
+
+  /* Brief structure */
+  .brief-structure {
+    margin: 32px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+  }
+  .brief-structure-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+  }
+  .brief-section-row {
+    display: grid;
+    grid-template-columns: 28px 160px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .brief-section-row:last-child { border-bottom: none; }
+  .brief-section-num {
+    padding: 14px 0 14px 16px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    align-self: flex-start;
+  }
+  .brief-section-name {
+    padding: 14px 16px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--rule);
+    line-height: 1.4;
+    align-self: flex-start;
+  }
+  .brief-section-why {
+    padding: 14px 16px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  /* Limits panel */
+  .limits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 32px 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .limits-item {
+    background: var(--warn-light);
+    padding: 16px 20px;
+    color: var(--warn);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .limits-item .x { font-weight: 500; flex-shrink: 0; color: var(--warn-rule); }
+
+  /* Outcome list */
+  .outcome-list {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .outcome-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .outcome-list li:last-child { border-bottom: none; }
+  .outcome-list li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 7 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 5</div>
+<h1>Claude Projects: Pressure-Testing and the Brief</h1>
+<p class="chapter-lede">You've collected. You've synthesised. You have a candidate angle and a draft structure. Now someone needs to push back — and then help you organise everything you've built into something you can write from.</p>
+
+<div class="step-badge">Tool: Claude Projects (claude.ai)</div>
+
+<p>Every step of the research process so far has been additive. Finding more, understanding more, organising more. Nobody has challenged what you're building. Nobody has asked: is this actually the right angle? Is this argument as strong as you think? What are you missing that you don't know you're missing?</p>
+
+<p>That's what Claude does here. Not finding information — that work is done. Not synthesising sources — that's done too. Claude's job in this step is to interrogate your understanding, identify gaps you haven't seen, and organise everything into a research brief that makes your writing session focused and efficient.</p>
+
+<p>But the way you set Claude up for this work matters as much as the prompts you run inside it.</p>
+
+<h2>What a Claude Project is — and why it changes everything</h2>
+
+<p>Most people use Claude the way they use a search engine: open it, type a question, get an answer, close it. Every session starts from zero. Claude has no memory of what you worked on yesterday, what your audience is, what angle you're pursuing, what you've already found. You have to re-explain everything every time. That's not a workflow. That's a tool you're underusing.</p>
+
+<blockquote>Think of it as the difference between briefing a colleague from scratch every meeting, versus having a colleague who was in every meeting.</blockquote>
+
+<p>A Claude Project is a persistent workspace. It remembers everything you upload to it. It holds context across every conversation you have inside it. You set it up once — who you are, what you're working on, how Claude should behave — and it knows that every time you open it. For research work, this means you don't spend the first ten minutes of every session re-explaining your context. You set that up once. Claude carries it forward.</p>
+
+<h2>Setting up your project</h2>
+
+<p>Go to claude.ai. Look for Projects in the left sidebar, click "New Project," and name it clearly. Same naming logic as your NotebookLM notebook: topic, purpose, date. <em>AI in Project Management — Research — May 2025,</em> not <em>research</em> or <em>new project.</em></p>
+
+<p>When the project opens, you'll see two areas: a Project Instructions panel and a chat window. Fill in the Project Instructions first. This is the most important step in the entire Claude section.</p>
+
+<div class="callout note">
+  <div class="callout-label">Project Instructions</div>
+  The Project Instructions are a standing brief that Claude reads before every single conversation inside this project. Whatever you put here, Claude knows — every time, without you repeating it. Write them carefully. They determine the quality of everything that follows.
+</div>
+
+<h2>Writing your Project Instructions</h2>
+
+<p>Copy the template below. Replace the bracketed sections with your actual topic and context. Paste it into the Project Instructions panel before you start any conversation.</p>
+
+<div class="instructions-template">
+  <div class="instructions-template-header">
+    <span>Project Instructions Template</span>
+    <span class="copy-note">Copy, adapt, paste — do not skip this step</span>
+  </div>
+  <div class="instructions-template-body">I am a content writer at ProofHub, a B2B SaaS project management platform. I am researching and developing an article on <em>[your topic]</em>.
+
+My target audience is: team leads and project managers at mid-size companies. They are experienced professionals, not beginners. They are sceptical of hype and respond to specific, evidence-based claims.
+
+Your role in this project is: research partner and critical editor. Your job is to challenge my thinking, identify gaps in my research, stress-test my arguments, and help me build a research brief I can write from.
+
+You are not here to write the article. You are not here to validate my ideas. You are here to make the research stronger.
+
+Never invent statistics or sources. If I ask for evidence you don't see in the materials I've shared, tell me that rather than generating it.
+
+When I share research findings, notes, or draft thinking: read them critically. Point out what's weak. Point out what's missing. Point out what a sceptical reader would push back on.
+
+Keep your responses direct. Don't over-explain. Don't pad. Get to the point.</div>
+  <div class="instructions-annotation">
+    <div class="annotation-row">
+      <div class="annotation-line">"Experienced professionals, not beginners, sceptical of hype"</div>
+      <div class="annotation-why">Sets the standard for what counts as a good argument. Claude will calibrate its challenges to this audience. If your research wouldn't convince a sceptical senior PM, it will tell you.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Research partner and critical editor"</div>
+      <div class="annotation-why">Establishes the relationship. Claude is not an assistant completing tasks. It's a colleague challenging your work. That framing produces harder, more useful feedback.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Not here to write the article. Not here to validate."</div>
+      <div class="annotation-why">Without this, Claude drifts toward being helpful in the wrong direction — encouraging you, summarising what you've said, offering to draft sections. This keeps it in its lane.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Never invent statistics or sources"</div>
+      <div class="annotation-why">The guardrail that keeps Claude honest about the limits of what it knows. Claude will respect this instruction. Include it every time.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Direct. Don't over-explain. Don't pad."</div>
+      <div class="annotation-why">Claude defaults to structured, thorough responses with headers and bullets. For a working session, you want lean, direct output. This suppresses the padding.</div>
+    </div>
+  </div>
+</div>
+
+<h2>Uploading your research</h2>
+
+<p>With the Project Instructions set, compile everything you built in Gemini and NotebookLM into a single document. Name it <em>Research Findings — [Topic] — [Date]</em> and upload it to the project.</p>
+
+<ul class="upload-list">
+  <li>
+    <span class="icon">📊</span>
+    <div>
+      <span class="item-label">Competitive landscape summary</span>
+      <span class="item-note">What the top-ranking articles cover, their gaps, the dominant search intent</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">📋</span>
+    <div>
+      <span class="item-label">Source list</span>
+      <span class="item-note">The documented source log from Chapter 4 — names, URLs, dates, contribution notes</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">🗺️</span>
+    <div>
+      <span class="item-label">Coverage map and gap analysis</span>
+      <span class="item-note">The topic coverage table and identified gaps from your NotebookLM SEO session</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">📈</span>
+    <div>
+      <span class="item-label">Statistics and evidence inventory</span>
+      <span class="item-note">Every data point flagged in NotebookLM, with source and date</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">💡</span>
+    <div>
+      <span class="item-label">Candidate angle</span>
+      <span class="item-note">The one-sentence argument you're considering building the article around</span>
+    </div>
+  </li>
+</ul>
+
+<p>This document does not need to be polished. It is internal notes. Bullet points are fine. Incomplete sentences are fine. It just needs to be there. Once uploaded, Claude can reference it throughout every conversation in the project. You won't need to paste your research into every prompt.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>The six prompts</h2>
+
+<p>With the Project Instructions set and your research uploaded, every prompt you write can be short and direct. The background is already there. Claude knows your context, your audience, and its role. You're not briefing it from scratch — you're working.</p>
+
+<h3>Prompt 1 — Gap audit</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">1</div>
+    What Am I Missing?
+  </div>
+  <div class="prompt-block-body">
+    "Read my research findings document. Based on what I've found: what important questions does this research not answer? What angles haven't I explored? What would a thorough senior editor say is missing before I write?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this first, before any other prompt.</strong> The framing "what would a thorough senior editor say is missing" does more work than simply asking "what's missing?" It forces Claude to adopt the perspective of someone whose job is to ensure an article is complete before publication — someone with no investment in making you feel good about what you've already done. That framing produces harder, more specific feedback.<br><br>
+    Expect two types of output. A knowledge gap is something your research genuinely hasn't covered — you'll need to go back to Gemini or your sources to address it. A reasoning gap is something your research might be able to answer, but where you haven't yet made the connection. Address each one before moving to the next prompt.<br><br>
+    If the gaps feel generic, push: "Be more specific. Which exact section of my research is weakest? What specific question am I not answering that a PM would want answered?"
+  </div>
+</div>
+
+<h3>Prompt 2 — Stress-test the argument</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">2</div>
+    Challenge My Angle
+  </div>
+  <div class="prompt-block-body">
+    "My candidate argument is: [your one sentence]. Argue against it. Give me the strongest case a well-informed sceptic would make. Don't be balanced — commit to the opposing position and make it as strong as possible."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>"Argue against it" rather than "give me counterarguments" is deliberate.</strong> Counterarguments can be presented as a neat list you acknowledge and move past. Arguing against your position requires Claude to commit to the opposing view and build a real case for it. That case is far more useful for stress-testing.<br><br>
+    "Don't be balanced — commit to the opposing position" removes Claude's natural tendency to hedge. By default, it gives you both sides. You don't want both sides right now. You want the strongest version of the case against you, so you know exactly what your article needs to defeat.<br><br>
+    When the response comes back, don't look for reasons to abandon your angle. Look for the objections that need to be addressed inside the article itself. Every strong objection Claude raises becomes either a section you write to head it off, or a concession you build into your argument to make it more honest. Either way, the article is stronger for it.<br><br>
+    If the pushback feels weak: "That's too easy to dismiss. What would someone who has actually tried implementing AI tools on a project team say? Make it more grounded and more specific."
+  </div>
+</div>
+
+<h3>Prompt 3 — Plain language translation</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">3</div>
+    Plain Language Translation
+  </div>
+  <div class="prompt-block-body">
+    "There's a concept in my research I can follow but couldn't explain clearly to a reader without jargon. Here it is: [paste the specific passage or concept]. Explain it in plain language as if you're speaking to an experienced project manager who is unfamiliar with this specific terminology. No jargon. No hedging. One clear explanation."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Every research session produces at least one concept you understand at the level of having read it, but couldn't explain if someone asked.</strong> This prompt fixes that.<br><br>
+    "Experienced project manager unfamiliar with this terminology" sets the exact register you need. Not a beginner — your audience is experienced. But not a specialist in this particular concept either. The explanation should be the kind a smart colleague gives you in a hallway conversation: direct, clear, no academic scaffolding.<br><br>
+    "No jargon. No hedging. One clear explanation" closes the door on the qualified, caveated responses Claude tends toward with complex topics. Run this for every concept in your research that feels fuzzy. Each time you do, you're not just getting an explanation for your article — you're building your own understanding. By the end of this session, you should be able to explain every major concept in plain language. If you can't, you're not ready to write.
+  </div>
+</div>
+
+<h3>Prompt 4 — Finding the defensible angle</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">4</div>
+    The Most Defensible Position
+  </div>
+  <div class="prompt-block-body">
+    "Based on my research findings: what is the most defensible, differentiated angle for this article? I don't want the most obvious angle — every article already covers that. I want the position that is both supported by the evidence and not already saturated in the existing content on this topic. Give me three options, ranked by how defensible and differentiated each one is."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this after the gap audit and stress-test, not before.</strong> By this point, Claude has interrogated your research and you've responded to its challenges. You have a clearer picture of what your research actually supports. Now you're asking it to find the angle that emerges from all of that.<br><br>
+    "Most defensible and differentiated" sets two conditions simultaneously. Defensible means the evidence in your research supports the position — you're not choosing an angle because it sounds interesting, but because your source library can back it up. Differentiated means it's not already the angle of every other article on the topic. Both conditions must be met.<br><br>
+    Asking for three options rather than one is deliberate. Claude's first suggestion is often the most obvious defensible angle — differentiated from generic content but not yet truly distinctive. The second and third options tend to be more interesting and more committed to a position. Look at all three. Then push back on the one you're most drawn to: "For option two — what's the weakest point in that argument? What evidence in my research would a critic point to?" The angle that survives that question is the one worth building on.
+  </div>
+</div>
+
+<h3>Prompt 5 — Evidence standard check</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">5</div>
+    Evidence Standard Check
+  </div>
+  <div class="prompt-block-body">
+    "Read through my research findings. Flag every benefit claim or assertion that isn't supported by a specific statistic, a named example, or a concrete mechanism. For each one: quote the claim, tell me why it doesn't meet the standard, and tell me what kind of evidence would make it credible."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Every benefit claim in your research needs one of the following to support it: a statistic, a named feature that explains the mechanism, a real-world example, or a specific user outcome.</strong> This prompt applies that standard to your research before you write — not to the draft, but to the research itself.<br><br>
+    If your findings contain vague claims — "AI improves project outcomes," "teams that use AI tools see better results" — those claims will flow straight into your draft and produce exactly the kind of weak writing that gets caught in a final editorial pass. The earlier you flag them, the easier they are to fix. At the research stage, fixing a vague claim means going back to your sources and finding the specific evidence. At the draft stage, it means rewriting.<br><br>
+    When Claude flags a claim, don't argue with the flag. Go back to your NotebookLM sources and find the specific evidence that supports it. If you can't find it, the claim either doesn't belong in the article or needs to be reframed as an open question rather than an assertion.
+  </div>
+</div>
+
+<h3>Prompt 6 — The research brief</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">6</div>
+    Build the Research Brief
+  </div>
+  <div class="prompt-block-body">
+    "Based on everything in this project — my research findings, the gaps we've identified, the stress-tested argument, and the angle we've settled on — build me a research brief with the following structure:
+1. The core argument (one sentence)
+2. The audience and what they need from this article
+3. The content gap this article fills
+4. Key evidence — the strongest statistics and findings, each with its source
+5. Counterarguments the article needs to address
+6. Sections and structure — recommended outline
+7. Knowledge gaps still open — what I still need to find before writing
+8. Sources to cite — the most important ones from my source list"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this last, only after working through all five preceding prompts.</strong> The brief is the output of all that work — it's not a starting point, it's a destination.
+  </div>
+</div>
+
+<h2>Why the brief is structured this way</h2>
+
+<p>The eight sections are in this order for a reason. Each one serves the next.</p>
+
+<div class="brief-structure">
+  <div class="brief-structure-header">Research Brief — Section Purpose</div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">1</div>
+    <div class="brief-section-name">Core argument</div>
+    <div class="brief-section-why">One sentence. Everything else serves this. If it's vague, the rest of the brief will be vague.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">2</div>
+    <div class="brief-section-name">Audience</div>
+    <div class="brief-section-why">Determines the register, depth, and specific emphasis of everything that follows.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">3</div>
+    <div class="brief-section-name">Content gap</div>
+    <div class="brief-section-why">The strategic reason the article exists. Not "here's a topic" but "here's the specific thing not yet in the conversation."</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">4</div>
+    <div class="brief-section-name">Key evidence</div>
+    <div class="brief-section-why">Only the strongest, only with sources. Keeps the article grounded. When you reach for a claim while writing, this tells you what you have.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">5</div>
+    <div class="brief-section-name">Counterarguments</div>
+    <div class="brief-section-why">Must be in the structure from the start — not retrofitted after the article is drafted.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">6</div>
+    <div class="brief-section-name">Sections and structure</div>
+    <div class="brief-section-why">Not just section titles — each section with a note on what it needs to accomplish.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">7</div>
+    <div class="brief-section-name">Open knowledge gaps</div>
+    <div class="brief-section-why">Honest accounting of what you still don't know. Some gaps get closed before writing. Others become acknowledged open questions inside the article.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">8</div>
+    <div class="brief-section-name">Sources to cite</div>
+    <div class="brief-section-why">A reference list for the writing session, compiled after everything else is settled.</div>
+  </div>
+</div>
+
+<div class="callout tip">
+  <div class="callout-label">Before you share the brief</div>
+  Read it in full before doing anything with it. Not skimming — checking. Does the core argument feel like something you're genuinely prepared to defend? Are the counterarguments addressed in the structure? Is there anything in the knowledge gaps section that needs to be closed before writing starts? If your team has a review step before writing, this is the document you share. Not your notes. Not your NotebookLM outputs. This brief.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>The project stays open</h2>
+
+<p>Your Claude Project doesn't close when this session ends. Every conversation inside it is saved. The context is still there tomorrow, and the day after.</p>
+
+<p>When you're writing the article and get stuck on how to frame a counterargument, open the project and ask. When you're not sure whether a statistic is strong enough to use, open the project and ask. When a colleague sends you a new study that just came out, upload it to the project and ask Claude how it changes your argument.</p>
+
+<p>The project is a working environment through the entire article production cycle, not a single-session tool. The brief you built today is the starting point, not the end point.</p>
+
+<h2>What Claude does not replace</h2>
+
+<p>Claude has helped you stress-test your argument, identify gaps, simplify dense concepts, and build a brief. It has not verified a single statistic. It has not confirmed that the sources you're planning to cite are accurate. It has not made the editorial decision about what the article should say. Those remain yours.</p>
+
+<div class="limits-grid">
+  <div class="limits-item"><span class="x">✗</span> Verifying facts, statistics, or claims — that is your responsibility, traceable to sources you actually read</div>
+  <div class="limits-item"><span class="x">✗</span> Replacing your editorial judgment about what the article needs to say and what it should leave out</div>
+  <div class="limits-item"><span class="x">✗</span> Sourcing material — every claim must trace back to your NotebookLM source library, not to something Claude mentioned</div>
+  <div class="limits-item"><span class="x">✗</span> Writing the article — the thinking, the decisions, the voice are still yours</div>
+</div>
+
+<p>Claude is a capable thinking partner. It is not a replacement for the judgment that makes you a writer rather than a prompt operator. The thinking has to be yours. Claude makes it sharper.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you have at the end of this step</h2>
+
+<ul class="outcome-list">
+  <li><span class="check">✓</span> A gap audit — what your research didn't cover, now identified and addressed</li>
+  <li><span class="check">✓</span> A stress-tested argument — you know where it's vulnerable and how to handle it</li>
+  <li><span class="check">✓</span> Plain language explanations of every complex concept in your research</li>
+  <li><span class="check">✓</span> A defensible, differentiated angle — supported by evidence, not already saturated</li>
+  <li><span class="check">✓</span> A claims check — every vague assertion identified and grounded or removed</li>
+  <li><span class="check">✓</span> A complete eight-section research brief, ready to write from</li>
+  <li><span class="check">✓</span> A persistent Claude Project that stays open through the writing process</li>
+</ul>
+
+<p>This is what 90 minutes of disciplined research with this workflow produces. Not a collection of tabs. Not an AI-generated outline you're not sure you trust. A research brief built on verified sources, challenged thinking, and a clear argument you can defend. The blank page is not blank anymore.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 8 — What You Have When You're Done →</span>
+</footer>
+
+</body>
+</html>
