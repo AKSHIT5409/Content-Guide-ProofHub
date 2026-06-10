@@ -1,0 +1,3833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Researching with AI — ProofHub Content Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* === chapter-01-introduction.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --page-raised: #ffffff;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  /* ---- Book header ---- */
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* ---- Chapter opening ---- */
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---- Body prose ---- */
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+
+  /* ---- Callout boxes ---- */
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning {
+    background: var(--warn-light);
+    border-color: var(--warn-rule);
+    color: var(--warn);
+  }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip {
+    background: var(--tip-light);
+    border-color: var(--tip-rule);
+    color: var(--tip);
+  }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note {
+    background: var(--accent-light);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* ---- Tool table ---- */
+  .tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 36px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .tool-table thead tr {
+    border-bottom: 2px solid var(--rule);
+  }
+  .tool-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 16px 12px 0;
+  }
+  .tool-table td {
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .tool-table td:first-child {
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--accent);
+    width: 130px;
+  }
+
+  /* ---- Section divider ---- */
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  /* ---- Pull quote ---- */
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  /* ---- Chapter end ---- */
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-03-gemini-landscape.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --page-raised: #ffffff;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning {
+    background: var(--warn-light);
+    border-color: var(--warn-rule);
+    color: var(--warn);
+  }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip {
+    background: var(--tip-light);
+    border-color: var(--tip-rule);
+    color: var(--tip);
+  }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note {
+    background: var(--accent-light);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Prompt block */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header .prompt-number {
+    background: var(--accent-mid);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li .check {
+    color: var(--accent-mid);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Prompt component anatomy */
+  .anatomy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .anatomy-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 16px 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .anatomy-table td {
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .anatomy-table td:first-child {
+    font-weight: 500;
+    color: var(--accent);
+    width: 110px;
+    white-space: nowrap;
+  }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-04-gemini-sources.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning {
+    background: var(--warn-light);
+    border-color: var(--warn-rule);
+    color: var(--warn);
+  }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip {
+    background: var(--tip-light);
+    border-color: var(--tip-rule);
+    color: var(--tip);
+  }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note {
+    background: var(--accent-light);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Prompt blocks */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header .prompt-number {
+    background: var(--accent-mid);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Source filter checklist */
+  .filter-list {
+    list-style: none;
+    margin: 24px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .filter-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .filter-list li:last-child { border-bottom: none; }
+  .filter-list li .tick {
+    color: var(--accent-mid);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .filter-list li .filter-label {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .filter-list li .filter-desc {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  /* Three-question filter */
+  .question-block {
+    margin: 32px 0;
+    counter-reset: questions;
+  }
+  .question-item {
+    counter-increment: questions;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .question-item:last-child { border-bottom: none; }
+  .question-item::before {
+    content: counter(questions);
+    background: var(--ink);
+    color: var(--page);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Source log template */
+  .log-template {
+    margin: 32px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .log-template-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+  }
+  .log-template-body {
+    padding: 20px 24px;
+    background: #f4f2ec;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+  .log-template-body .field {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .log-template-body .field:last-child { border-bottom: none; }
+  .log-template-body .field-label {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* Sidebar / source type highlight */
+  .source-type-highlight {
+    margin: 40px -8px;
+    padding: 28px 32px;
+    background: var(--ink);
+    border-radius: 6px;
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+  }
+  .source-type-highlight .highlight-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 12px;
+  }
+  .source-type-highlight p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #d8d6ce;
+    margin-bottom: 1em;
+  }
+  .source-type-highlight p:last-child { margin-bottom: 0; }
+  .source-type-highlight strong { color: #f4f2ec; font-weight: 500; }
+
+  /* Final checklist */
+  .outcome-list {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .outcome-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .outcome-list li:last-child { border-bottom: none; }
+  .outcome-list li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-05-notebooklm-loading.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Source type grid */
+  .source-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 32px 0;
+    font-family: var(--font-ui);
+  }
+  .source-type-item {
+    background: var(--page);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .source-type-item .type-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .source-type-item .type-how {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .source-type-item .type-icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  /* Loading order */
+  .loading-order {
+    list-style: none;
+    margin: 28px 0;
+    counter-reset: loading;
+  }
+  .loading-order li {
+    counter-increment: loading;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .loading-order li:last-child { border-bottom: none; }
+  .loading-order li::before {
+    content: counter(loading);
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    color: var(--page);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .loading-order li .order-title {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .loading-order li .order-reason {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  /* Well-loaded checklist */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  /* NotebookLM concept box */
+  .concept-box {
+    margin: 40px -8px;
+    padding: 32px;
+    background: var(--ink);
+    border-radius: 6px;
+    color: var(--page);
+    font-family: var(--font-ui);
+  }
+  .concept-box .concept-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  .concept-box .concept-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #f4f2ec;
+    margin-bottom: 16px;
+    font-family: var(--font-body);
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .concept-box p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c8c5bc;
+    margin-bottom: 1em;
+  }
+  .concept-box p:last-child { margin-bottom: 0; }
+  .concept-box strong { color: #f4f2ec; font-weight: 500; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-06-notebooklm-interacting.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --seo-accent: #3a2a5c;
+    --seo-light: #f0eef8;
+    --seo-rule: #9a8ad4;
+    --sme-accent: #3a1a1a;
+    --sme-light: #fdf4f0;
+    --sme-rule: #d48a6a;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Lens dividers */
+  .lens-header {
+    margin: 60px 0 32px;
+    padding: 24px 28px;
+    border-radius: 6px;
+    font-family: var(--font-ui);
+  }
+  .lens-header.seo {
+    background: var(--seo-light);
+    border-left: 4px solid var(--seo-rule);
+  }
+  .lens-header.sme {
+    background: var(--sme-light);
+    border-left: 4px solid var(--sme-rule);
+  }
+  .lens-header .lens-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .lens-header.seo .lens-tag { color: var(--seo-rule); }
+  .lens-header.sme .lens-tag { color: var(--sme-rule); }
+  .lens-header .lens-question {
+    font-size: 17px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .lens-header.seo .lens-question { color: var(--seo-accent); }
+  .lens-header.sme .lens-question { color: var(--sme-accent); }
+
+  /* Prompt blocks */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header.seo-header { background: var(--seo-accent); }
+  .prompt-block-header.sme-header { background: var(--sme-accent); }
+  .prompt-block-header .prompt-number {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong { color: var(--ink); font-weight: 500; }
+
+  /* Citation habit box */
+  .citation-box {
+    margin: 48px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+  }
+  .citation-box-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+  }
+  .citation-box-steps {
+    list-style: none;
+    counter-reset: cite-steps;
+  }
+  .citation-box-steps li {
+    counter-increment: cite-steps;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .citation-box-steps li:last-child { border-bottom: none; }
+  .citation-box-steps li::before {
+    content: counter(cite-steps);
+    background: var(--accent-mid);
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Outcome list */
+  .outcome-list {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .outcome-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .outcome-list li:last-child { border-bottom: none; }
+  .outcome-list li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-07-claude-projects.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Project setup steps */
+  .setup-steps {
+    list-style: none;
+    margin: 28px 0;
+    counter-reset: setup;
+  }
+  .setup-steps li {
+    counter-increment: setup;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .setup-steps li:last-child { border-bottom: none; }
+  .setup-steps li::before {
+    content: counter(setup);
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    color: var(--page);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .setup-steps li .step-title {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .setup-steps li .step-detail {
+    color: var(--ink-muted);
+    font-size: 14px;
+  }
+
+  /* Project instructions template */
+  .instructions-template {
+    margin: 40px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .instructions-template-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .instructions-template-header .copy-note {
+    font-size: 11px;
+    color: var(--accent-mid);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .instructions-template-body {
+    padding: 24px 28px;
+    background: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+    white-space: pre-wrap;
+  }
+  .instructions-template-body em { font-style: normal; color: var(--accent-mid); }
+  .instructions-annotation {
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .annotation-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .annotation-row:last-child { border-bottom: none; }
+  .annotation-line {
+    padding: 12px 20px;
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 13px;
+    border-right: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+  .annotation-why {
+    padding: 12px 20px;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .annotation-why strong { font-weight: 500; }
+
+  /* Upload checklist */
+  .upload-list {
+    list-style: none;
+    margin: 24px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .upload-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .upload-list li:last-child { border-bottom: none; }
+  .upload-list li .icon { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+  .upload-list li .item-label { font-weight: 500; display: block; margin-bottom: 2px; }
+  .upload-list li .item-note { color: var(--ink-muted); font-size: 13px; }
+
+  /* Prompt blocks */
+  .prompt-block {
+    margin: 40px 0;
+    background: #f4f2ec;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .prompt-block-header .prompt-number {
+    background: var(--accent-mid);
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .prompt-block-body {
+    padding: 20px 24px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    font-style: italic;
+    border-bottom: 1px solid var(--rule);
+  }
+  .prompt-block-rationale {
+    padding: 16px 24px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+  .prompt-block-rationale strong { color: var(--ink); font-weight: 500; }
+
+  /* Brief structure */
+  .brief-structure {
+    margin: 32px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+  }
+  .brief-structure-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+  }
+  .brief-section-row {
+    display: grid;
+    grid-template-columns: 28px 160px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .brief-section-row:last-child { border-bottom: none; }
+  .brief-section-num {
+    padding: 14px 0 14px 16px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    align-self: flex-start;
+  }
+  .brief-section-name {
+    padding: 14px 16px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--rule);
+    line-height: 1.4;
+    align-self: flex-start;
+  }
+  .brief-section-why {
+    padding: 14px 16px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  /* Limits panel */
+  .limits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 32px 0;
+    font-family: var(--font-ui);
+    font-size: 14px;
+  }
+  .limits-item {
+    background: var(--warn-light);
+    padding: 16px 20px;
+    color: var(--warn);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .limits-item .x { font-weight: 500; flex-shrink: 0; color: var(--warn-rule); }
+
+  /* Outcome list */
+  .outcome-list {
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .outcome-list li {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .outcome-list li:last-child { border-bottom: none; }
+  .outcome-list li .check { color: var(--accent-mid); font-weight: 500; flex-shrink: 0; }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+  .step-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- merged from individual chapters ---- */
+
+/* === chapter-08-what-you-have.html === */
+:root {
+    --ink: #1a1a18;
+    --ink-muted: #5a5a55;
+    --ink-faint: #9a9a94;
+    --page: #faf9f6;
+    --rule: #e2e0d8;
+    --accent: #2a5c45;
+    --accent-light: #e8f2ed;
+    --accent-mid: #4a8c6a;
+    --warn: #7a3a1a;
+    --warn-light: #fdf0e8;
+    --warn-rule: #d4825a;
+    --tip: #1a3a5c;
+    --tip-light: #eaf2fb;
+    --tip-rule: #5a9fd4;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+  }
+  .book-header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .book-header .book-title {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .book-header .chapter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .chapter-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-body);
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-lede {
+    font-size: 20px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 1.4em; }
+  p:last-child { margin-bottom: 0; }
+  h2 {
+    font-family: var(--font-body);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 40px 0 14px;
+  }
+  .callout {
+    margin: 40px 0;
+    padding: 24px 28px;
+    border-radius: 4px;
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .callout.warning { background: var(--warn-light); border-color: var(--warn-rule); color: var(--warn); }
+  .callout.warning .callout-label { color: var(--warn-rule); }
+  .callout.tip { background: var(--tip-light); border-color: var(--tip-rule); color: var(--tip); }
+  .callout.tip .callout-label { color: var(--tip-rule); }
+  .callout.note { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .callout.note .callout-label { color: var(--accent-mid); }
+
+  /* Workflow summary */
+  .workflow-summary {
+    margin: 40px 0;
+    font-family: var(--font-ui);
+  }
+  .workflow-stage {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .workflow-stage-tool {
+    background: var(--ink);
+    color: #f4f2ec;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .workflow-stage-tool .tool-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .workflow-stage-tool .tool-time {
+    font-size: 12px;
+    color: var(--accent-mid);
+  }
+  .workflow-stage-outputs {
+    padding: 14px 20px;
+    background: var(--page);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+  }
+  .workflow-stage-outputs .output-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .workflow-stage-outputs .output-item .dot {
+    color: var(--accent-mid);
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 3px;
+  }
+  .workflow-arrow {
+    text-align: center;
+    font-size: 18px;
+    color: var(--ink-faint);
+    padding: 4px 0;
+    margin-bottom: 4px;
+  }
+  .workflow-total {
+    margin-top: 12px;
+    text-align: right;
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+  .workflow-total strong { color: var(--ink); font-weight: 500; font-style: normal; }
+
+  /* Brief example */
+  .brief-example {
+    margin: 40px 0;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: var(--font-ui);
+  }
+  .brief-example-header {
+    background: var(--ink);
+    color: #f4f2ec;
+    padding: 14px 24px;
+  }
+  .brief-example-header .brief-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .brief-example-header .brief-subtitle {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+  }
+  .brief-section {
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 24px;
+  }
+  .brief-section:last-child { border-bottom: none; }
+  .brief-section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .brief-section-content {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .brief-section-content.argument {
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+  .brief-evidence-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .brief-evidence-item:last-child { border-bottom: none; }
+  .brief-evidence-item .source-tag {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .brief-counter-item {
+    display: flex;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+  .brief-counter-item::before {
+    content: "—";
+    color: var(--ink-faint);
+    flex-shrink: 0;
+  }
+  .brief-gap-item {
+    display: flex;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--warn);
+  }
+  .brief-gap-item::before {
+    content: "○";
+    color: var(--warn-rule);
+    flex-shrink: 0;
+  }
+
+  /* What the workflow doesn't replace */
+  .limits-list {
+    list-style: none;
+    margin: 28px 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
+  .limits-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .limits-list li:last-child { border-bottom: none; }
+  .limits-list li .x { color: var(--warn-rule); font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+  .limits-list li .limit-title { font-weight: 500; display: block; margin-bottom: 2px; }
+  .limits-list li .limit-detail { color: var(--ink-muted); font-size: 14px; }
+
+  /* Closing seven steps */
+  .seven-steps {
+    list-style: none;
+    margin: 28px 0;
+    counter-reset: seven;
+  }
+  .seven-steps li {
+    counter-increment: seven;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .seven-steps li:last-child { border-bottom: none; }
+  .seven-steps li::before {
+    content: counter(seven);
+    width: 28px;
+    height: 28px;
+    background: var(--ink);
+    color: var(--page);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  blockquote {
+    margin: 48px 0;
+    padding: 0 0 0 28px;
+    border-left: 3px solid var(--accent);
+    font-size: 21px;
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+  .section-break {
+    text-align: center;
+    color: var(--rule);
+    font-size: 22px;
+    letter-spacing: 0.5em;
+    margin: 60px 0;
+    user-select: none;
+  }
+
+  /* Closing statement */
+  .closing-statement {
+    margin: 60px -8px 0;
+    padding: 40px 44px;
+    background: var(--ink);
+    border-radius: 6px;
+    color: #f4f2ec;
+    font-family: var(--font-body);
+  }
+  .closing-statement p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: #c8c5bc;
+    margin-bottom: 1.2em;
+  }
+  .closing-statement p:last-child { margin-bottom: 0; }
+  .closing-statement strong { color: #f4f2ec; font-weight: 600; }
+
+  .chapter-end {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 1 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Introduction</div>
+<h1>Why This Playbook Exists</h1>
+<p class="chapter-lede">Before we get into any tools or prompts, it's worth being honest about why this workflow had to be written at all — and what breaks when research has no system behind it.</p>
+
+<p>Think about the last time you were assigned a content topic. Something like: <em>write about the impact of AI on project management.</em> What did you actually do first? Not what you think you should have done. What you actually did.</p>
+
+<p>Most people's answer falls into one of two patterns. Either you opened Google and started reading whatever came up — saving tabs as you went, building a vague picture from ten sources you half-read. Or you opened an AI chatbot, typed the topic in, let it hand you a structure and some talking points, and started writing from there.</p>
+
+<p>Both of these are completely understandable. And both of them have a serious problem.</p>
+
+<h2>The two failure modes</h2>
+
+<h3>Failure mode one: the tab hoarder</h3>
+
+<p>Reading is good. The Googling approach isn't wrong in principle. But without a system, it produces a specific kind of problem: you end up with a lot of information and no synthesis.</p>
+
+<p>You've read eight articles. You have six tabs open. You have notes in a doc that are basically quotes you copied and pasted. Three days later, when you sit down to write, you can't remember which source said what, you're not sure which statistics are credible, and you've lost the thread of what the topic actually means. You spend the first hour of writing re-reading things you already read.</p>
+
+<blockquote>This is not a laziness problem. It is a systems problem. Reading without a method for synthesising what you've read will always produce this result.</blockquote>
+
+<h3>Failure mode two: the AI trust fall</h3>
+
+<p>The second approach has the opposite problem. You get structure quickly. The output sounds coherent, sometimes even impressive. But look closely and you'll notice: there are no real sources. The statistics are either made up, unverifiable, or pulled from training data that could be years out of date. The expert opinions don't come from actual experts who said those things.</p>
+
+<p>This doesn't mean AI is useless for research. It means AI <em>without source grounding</em> is the wrong tool for this job. Using a general-purpose AI chatbot to research a topic and then writing from its output is like asking someone who has read a lot of books to tell you what's happening in your industry right now. They might sound credible. They're guessing.</p>
+
+<div class="callout warning">
+  <div class="callout-label">Warning</div>
+  For content that needs to rank — and for content that carries ProofHub's name — guessing is not good enough. AI without source grounding produces hallucinated statistics, misattributed quotes, and claims you cannot defend if a reader challenges them.
+</div>
+
+<h2>What weak research actually costs</h2>
+
+<p>When research is weak, it shows up in the work. It shows up as articles that cover the same ground as the ten pieces already ranking on that topic, because you never found out what was missing. It shows up as pieces where every claim is slightly vague — benefit language, no specifics, nothing you could point to and say <em>this came from here.</em> It shows up as content a reader finishes and feels like they didn't learn anything they couldn't have found elsewhere.</p>
+
+<p>That's the output of an unstructured research process. And here's the part that matters: it's not about effort. The tab hoarder often works hard. The AI trust faller often iterates a lot. The problem isn't effort. It's the absence of a workflow.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What this playbook gives you</h2>
+
+<p>This playbook walks you through a three-tool research workflow. Use it every time you're assigned a content topic. It is not a survey of every AI research tool available — there are dozens, and most of them will waste your time. This is one workflow, built around three tools chosen for specific reasons, and it works.</p>
+
+<p>Every chapter covers one step in the workflow. You'll see exactly what to open, what to type, and what you're looking for at each stage. More importantly, you'll understand <em>why</em> each step happens in this order, and why each tool is doing its particular job instead of a different tool. Understanding the logic is what lets you adapt when something doesn't behave exactly as expected.</p>
+
+<div class="callout note">
+  <div class="callout-label">How to use this playbook</div>
+  Work through it once with the example topic provided — the impact of AI on project management. Then apply the workflow to your next real assignment. The goal is that after one full run-through, you can execute this independently without referring back to these pages.
+</div>
+
+<h2>The three tools and what each one does</h2>
+
+<p>Three tools. Each one has a distinct job, and the jobs do not overlap. This matters because one of the most common mistakes people make with AI is using the same tool for everything — asking one chatbot to find sources, summarise them, and help them write, all in a single conversation. That produces mediocre results at every stage.</p>
+
+<table class="tool-table">
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Its job in this workflow</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gemini</td>
+      <td>Find what's already ranking. Identify credible sources worth reading. Map the landscape before you go deeper.</td>
+    </tr>
+    <tr>
+      <td>NotebookLM</td>
+      <td>Synthesise from your sources only. It cannot pull from the internet or invent information — it works entirely with what you load into it. That constraint is the point.</td>
+    </tr>
+    <tr>
+      <td>Claude</td>
+      <td>Fill gaps, stress-test your understanding, and organise your research into a working brief. By the time you get here, you know the topic. Claude's job is to sharpen what you already have.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>That sequence — map, synthesise, sharpen — is the spine of the workflow. Each tool hands off to the next. Nothing is skipped.</p>
+
+<div class="callout tip">
+  <div class="callout-label">On tool choice</div>
+  If you're wondering why Gemini and not Perplexity, or why NotebookLM and not another summarisation tool — the answer is what each tool does specifically. Gemini has real-time web access and handles broad landscape mapping well. NotebookLM is source-grounded by design; it will not fabricate. Claude handles analytical pressure-testing at a depth the other two don't. You'll see why as you work through each chapter.
+</div>
+
+<p>That's the overview. Chapter 2 lays out the full workflow at a glance before we go step by step. Turn the page when you're ready.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 2 — The Workflow at a Glance →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 3 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 1</div>
+<h1>Gemini: Mapping the Landscape</h1>
+<p class="chapter-lede">Most people start researching by reading. The problem is they have no map. Before you open a single article, you need to understand the terrain — what already exists, who's covering it, and where the gaps are.</p>
+
+<div class="step-badge">Tool: Gemini Advanced / Deep Research</div>
+
+<p>Reading feels productive. You find an article, read it, find another one, read that. Understanding accumulates. The trouble is that you have no sense of proportion — you don't know whether what you're reading is representative of the full landscape, or whether you're missing the most important angle entirely. You are building a picture without knowing how big the canvas is.</p>
+
+<p>The first thing you do in Gemini is not reading. It's surveying. You want to understand the terrain before you enter it: what's already ranking on this topic, who's covering it, what they're covering, and where the gaps are. This changes everything that follows. You stop reading randomly and start reading with purpose.</p>
+
+<h2>Why this step matters strategically</h2>
+
+<p>Before touching any prompts, you need to understand why this step exists — not just for the research process, but for the ranking outcome.</p>
+
+<p>There is a concept in SEO called Information Gain. The version that matters for your work is this: Google rewards content that adds something new to the conversation. Not content that covers the same ground as the top ten results in different words. Content that provides data points, angles, or insights that don't already exist in what's ranking.</p>
+
+<blockquote>Your research objective is not to summarise what exists. It's to find what no one has said yet.</blockquote>
+
+<p>That means the goal of your competitive research is to understand what's already been said, so you can identify what hasn't. You're looking for the gap before you look for the sources.</p>
+
+<div class="callout warning">
+  <div class="callout-label">What happens if you skip this step</div>
+  If you go straight to reading without surveying the landscape first, you'll produce an article that covers the same ground as everything already ranking. It may be well-written and well-researched. It will not rank, because it gives Google no reason to surface it over what's already there. This step is what prevents that outcome.
+</div>
+
+<p>If you've heard people talk about Information Gain and wondered what it actually means in practice — this is it. Before you write a word, you need to know what already exists and where it falls short. That knowledge is the foundation your article's competitive advantage is built on.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>Before you prompt: how to talk to Gemini</h2>
+
+<p>If you've used Gemini and found the output too generic to be useful, the problem is almost always in how the prompt was written. The most effective Gemini prompts average around 21 words. Most people's prompts are under 9 words. That gap matters enormously.</p>
+
+<p>"Tell me about AI in project management" gets you a generic overview. A prompt that specifies who you are, what you need, what context is relevant, and what format you want gets you something you can actually use. Specificity is not optional. It's the variable that determines output quality.</p>
+
+<p>Every prompt in this chapter is built on four components. You don't need to memorise them as a framework — just understand what each one contributes:</p>
+
+<table class="anatomy-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Persona</td>
+      <td>Tells Gemini who is asking. "I'm a content writer at a B2B SaaS company" filters the response toward what's relevant for your context — not for a researcher, not for a student, not for an executive.</td>
+    </tr>
+    <tr>
+      <td>Task</td>
+      <td>What you need done. Always starts with a verb. "Research," "identify," "compare," "summarise." Vague tasks produce vague outputs.</td>
+    </tr>
+    <tr>
+      <td>Context</td>
+      <td>The details that make this specific rather than general. The topic, the angle, any constraints on what you do or don't need.</td>
+    </tr>
+    <tr>
+      <td>Format</td>
+      <td>How you want the output structured. A table, a list, a paragraph. Specifying format forces the output into something you can immediately work with.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You'll see these components at work in each prompt below. The rationale after each prompt explains exactly why it's written the way it is.</p>
+
+<div class="callout note">
+  <div class="callout-label">Setup</div>
+  Go to gemini.google.com. Use Gemini Advanced, or any version with Deep Research enabled — look for "Deep Research" in the left sidebar. If you don't have access, run the prompts on the standard interface for now. All three prompts in this chapter work on either version.
+</div>
+
+<h2>The three prompts</h2>
+
+<h3>Prompt 1 — Competitive overview</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">1</div>
+    Competitive Overview
+  </div>
+  <div class="prompt-block-body">
+    "I'm a content writer at a B2B SaaS company. Research the top-ranking articles on 'impact of AI on project management.' For each article: what is the main argument, what topics do they cover, and what questions do they leave unanswered? Organise this into a table."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Type this exactly as written.</strong> Don't paraphrase it. Don't simplify it. The specificity is doing work here. The persona tells Gemini you're a B2B content writer, which changes what counts as relevant. The task specifies three distinct things to extract from each article, not just a general summary. The format request — a table — structures the output so you can compare articles side by side instead of reading paragraphs about each one individually.<br><br>
+    What you get back is a map of the existing landscape. Not a summary of the topic. A picture of what's already been said, from which angles, and where the coverage falls short. Read it as a strategist. What angles appear across three or four results? That's the saturated ground. What questions keep being raised but not answered? That's your gap.
+  </div>
+</div>
+
+<p>When the output comes back, don't skim it. Spend a few minutes identifying two things: the angles that appear in multiple top results (these are already well-covered — you need to go beyond them, not avoid them), and the questions that seem to surface repeatedly without being answered properly. Write both down before moving to the next prompt.</p>
+
+<h3>Prompt 2 — Intent and gap analysis</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">2</div>
+    Intent and Gap Analysis
+  </div>
+  <div class="prompt-block-body">
+    "Based on the top-ranking content on 'impact of AI on project management': what is the dominant search intent behind this topic? What kind of reader are these articles written for? And what is the most significant gap — the angle or question that none of the top results address properly?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this as a follow-up in the same conversation.</strong> Do not start a new chat. Gemini holds context within a conversation, so it's building on what it already retrieved. Starting fresh loses that context and forces Gemini to do the competitive research again from scratch.<br><br>
+    This prompt asks Gemini to do something specific: tell you who your competition thinks they're writing for, and where they've all fallen short at the same time. The gap Gemini identifies here is the most valuable single output of this entire step. Write that sentence down exactly as Gemini phrases it. It is going to shape the angle of your article.
+  </div>
+</div>
+
+<div class="callout tip">
+  <div class="callout-label">If Gemini is vague</div>
+  If the gap it identifies feels too broad to be useful, follow up with: "Be more specific. What exact question about AI and project management do the top results fail to answer properly?" Push it. The useful output usually comes from the second or third follow-up, not the first response.
+</div>
+
+<h3>Prompt 3 — Search intent mapping</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">3</div>
+    Search Intent Mapping
+  </div>
+  <div class="prompt-block-body">
+    "For the topic 'impact of AI on project management': what is the primary search intent? Is this informational, commercial, or mixed? What does someone searching this term actually want to walk away knowing? What would make them feel like they found the right article?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This prompt is quick, but don't skip it.</strong> Search intent tells you what job the article needs to do. If the intent is informational — the reader wants to understand what's happening — the article's job is to educate. If the intent is mixed or leans commercial — the reader is evaluating whether to adopt AI tools — the article also needs to address decision-making.<br><br>
+    Getting intent wrong at the research stage means writing the right content for the wrong reader. It happens more often than you'd expect, and it's almost impossible to fix in editing. This prompt makes intent explicit before you write a word.
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>On pushing back when output is generic</h2>
+
+<p>Gemini is a conversation, not a search engine. If what comes back is generic, don't accept it. Push it. This is the habit that separates people who get consistently good AI output from people who don't.</p>
+
+<p>Most people run one prompt, decide the response isn't useful, and give up. But the first response is almost always a starting point, not a finished answer. The useful output usually lives in the second or third follow-up in the same conversation.</p>
+
+<p>Three follow-ups worth keeping in your back pocket:</p>
+
+<ul class="checklist">
+  <li><span class="check">→</span> "That's too general. Give me three specific examples."</li>
+  <li><span class="check">→</span> "Focus only on [X aspect]. Ignore everything else."</li>
+  <li><span class="check">→</span> "What you gave me covers what's obvious. What's the non-obvious answer?"</li>
+</ul>
+
+<p>That last one in particular — "what's the non-obvious answer?" — is the most consistently effective. Use it whenever the first response feels like something you already knew.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you should have before moving on</h2>
+
+<p>Before leaving this step, you should be able to write down one clear sentence for each of the following:</p>
+
+<ul class="checklist">
+  <li><span class="check">✓</span> What the top-ranking articles cover and how they're structured</li>
+  <li><span class="check">✓</span> The dominant search intent behind the topic</li>
+  <li><span class="check">✓</span> The gap — the specific angle or question no existing article answers properly</li>
+  <li><span class="check">✓</span> The format and depth level the top results use</li>
+</ul>
+
+<p>If you can't write a clear sentence for any of those four, go back into Gemini and keep pushing. These are not optional context — they are the foundations the rest of your research is built on. Vagueness here compounds through every step that follows.</p>
+
+<div class="callout note">
+  <div class="callout-label">Time check</div>
+  This step should take 15 to 20 minutes. If you're spending longer, you're likely overcomplicating the prompts or trying to cover too much in a single question. Break it up. One question at a time.
+</div>
+
+<p>At this point you know what the landscape looks like. You know what exists, where the gaps are, and what kind of article needs to be written. What you don't yet have is the body of evidence that will make your article credible, specific, and defensible. The next step — still in Gemini — is building that reading list.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 4 — Step 2: Building Your Source List →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 4 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 2</div>
+<h1>Gemini: Building Your Source List</h1>
+<p class="chapter-lede">You've mapped the terrain. Now you need the raw material — the reports, papers, and expert voices that will make your article credible, specific, and defensible. This is still Gemini. The job has completely changed.</p>
+
+<div class="step-badge">Tool: Gemini Advanced / Deep Research</div>
+
+<p>In the previous step, you were asking Gemini to tell you what already exists. You were looking outward at the competitive landscape. That work is done.</p>
+
+<p>Now you're asking Gemini to find the sources your article will be built on. These are the documents you'll load into NotebookLM — the raw material that everything downstream depends on. This step is where most content writers take a shortcut that costs them later.</p>
+
+<p>The shortcut is using the top-ranking articles you just analysed as your sources. Reading your competition is useful for understanding the landscape. It is not the same as building an authoritative evidence base. The ranking articles are downstream of the real sources — they're citing reports, papers, and expert research that exist somewhere upstream. That's what you want: the original work those articles drew from, not the articles themselves.</p>
+
+<blockquote>Your sources should be upstream of the articles that are ranking, not the articles themselves.</blockquote>
+
+<h2>What makes a source worth loading</h2>
+
+<p>Before you run any prompts, establish your filter. Every source you find in this step goes through it before it earns a place in your source list. There are no exceptions.</p>
+
+<ul class="filter-list">
+  <li>
+    <span class="tick">✓</span>
+    <span>
+      <span class="filter-label">Published by a credible institution</span>
+      <span class="filter-desc">Research firms, academic journals, industry bodies, major consultancies. Not content marketing disguised as research.</span>
+    </span>
+  </li>
+  <li>
+    <span class="tick">✓</span>
+    <span>
+      <span class="filter-label">Recent enough</span>
+      <span class="filter-desc">For AI topics, no older than 18–24 months unless it's foundational. This field moves fast. An outdated source actively harms your article's credibility.</span>
+    </span>
+  </li>
+  <li>
+    <span class="tick">✓</span>
+    <span>
+      <span class="filter-label">Original</span>
+      <span class="filter-desc">It contains research, data, or expert analysis that didn't exist somewhere else first. It is not summarising other articles.</span>
+    </span>
+  </li>
+  <li>
+    <span class="tick">✓</span>
+    <span>
+      <span class="filter-label">Substantive</span>
+      <span class="filter-desc">More than 1,000 words with real depth. Thin content — a short blog post, a press release, a listicle — is not a source.</span>
+    </span>
+  </li>
+  <li>
+    <span class="tick">✓</span>
+    <span>
+      <span class="filter-label">Citable</span>
+      <span class="filter-desc">You could reference this in the published article and a reader — especially a professional reader — would respect the source.</span>
+    </span>
+  </li>
+</ul>
+
+<p>For the example topic — the impact of AI on project management — sources that pass this filter include: reports from the Project Management Institute, research from Gartner or McKinsey on AI adoption, academic papers on AI in knowledge work, usage data published by credible software research firms, and expert commentary from practitioners with verifiable credentials. Opinion pieces from unverifiable sources do not pass this filter, regardless of how credible they sound.</p>
+
+<div class="callout warning">
+  <div class="callout-label">The most common mistake at this stage</div>
+  Loading everything you find. People treat NotebookLM like a dump for research — the more the better. That's the wrong mental model. The quality of what goes in directly determines the quality of what you get out. Curate ruthlessly now, before you load anything. Ask yourself: would I cite this in the published article? If the answer is no, it does not go in.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>The five prompts</h2>
+
+<h3>Prompt 4 — Primary source discovery</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">4</div>
+    Primary Source Discovery
+  </div>
+  <div class="prompt-block-body">
+    "I'm writing a detailed article on the impact of AI on project management for a B2B SaaS audience. Find me high-authority sources on this topic: academic papers, industry reports, research from credible institutions like PMI, Gartner, McKinsey, or MIT. For each source, include: the title, the publishing organisation, the publication date, and a one-sentence summary of the key finding relevant to my topic."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Three things are doing specific work here.</strong> First, the audience context — "B2B SaaS audience" filters out consumer-facing content and lifestyle articles. Gemini uses this to calibrate what counts as relevant. Second, the institution names. If you just ask for "good sources," Gemini returns whatever is prominent, which is often the ranking articles you've already seen. Naming PMI, Gartner, McKinsey, and MIT tells it to go upstream of that content. Third, the output format — title, organisation, date, and a one-sentence summary — means you can scan the output and make quick decisions without reading each source in full at this stage.<br><br>
+    When the output comes back, check each source against the filter above. Flag anything that doesn't pass before moving on.
+  </div>
+</div>
+
+<h3>Prompt 5 — Authority mapping</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">5</div>
+    Authority Mapping
+  </div>
+  <div class="prompt-block-body">
+    "Which researchers, practitioners, or institutions are considered most credible on the topic of AI's impact on project management? I'm looking for people or organisations whose perspective carries weight with professional project managers and business leaders. Include why each one is considered authoritative on this specific topic."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This is a different type of source discovery from Prompt 4.</strong> That prompt was looking for documents. This one is looking for voices — the people and organisations whose names carry authority in this space.<br><br>
+    Expert perspective is some of the most valuable content you can bring into an article. A claim about AI and project management carries more weight when it comes from a published researcher at MIT or the PMI's chief analyst than when it comes from a content writer summarising a blog. The "why each one is credible" instruction is doing something specific: it forces Gemini to surface the reason behind the authority, not just the name. A name on its own doesn't help you judge whether to use that source. Understanding why that person is considered an authority tells you whether their perspective is relevant to your specific angle.<br><br>
+    When you see names come back, search for their published work, their research, any interviews or talks they've given. Those are potential sources worth loading.
+  </div>
+</div>
+
+<h3>Prompt 6 — Digging for original research</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">6</div>
+    Digging for Original Research
+  </div>
+  <div class="prompt-block-body">
+    "Find research reports, whitepapers, or academic papers on AI adoption in project management published in the last two years. Focus specifically on sources that contain original data — surveys, case studies, or empirical findings. Prioritise PDF documents from research institutions, consulting firms, or industry bodies."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This is where you find the statistics that will make your article specific and defensible.</strong> Not statistics borrowed from a ranking article that borrowed them from somewhere else — original data from primary research.<br><br>
+    The emphasis on PDFs matters. Research reports, whitepapers, and academic papers almost always come as PDFs. They're longer, denser, and more likely to contain original data. They're also written by researchers for researchers, not optimised for search — which means the information inside them is more likely to be original and less likely to appear in the articles already ranking on your topic.<br><br>
+    If the output links to web articles rather than PDF documents, follow up with: "Focus specifically on downloadable research documents, not web articles. I'm looking for whitepapers and reports I can read in full."
+  </div>
+</div>
+
+<div class="callout tip">
+  <div class="callout-label">Using the filetype operator</div>
+  In Gemini Deep Research's source search bar, you can use the operator <strong>filetype:pdf</strong> combined with your topic to filter results to PDF documents specifically. For a topic with a lot of available research — which AI and project management certainly is — this surfaces reports that don't appear in a standard web search.
+</div>
+
+<h3>Prompt 7 — Video source discovery</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">7</div>
+    Video Source Discovery
+  </div>
+  <div class="prompt-block-body">
+    "Find credible YouTube videos, conference talks, or recorded interviews on the impact of AI on project management. I'm looking for content from practitioners, researchers, or industry experts — not explainer videos or promotional content. Include the speaker's name, their credentials, and why the content is worth watching."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This prompt surfaces a source type most content writers never think to use.</strong> YouTube has thousands of hours of content from credible practitioners — PMI conference talks, interviews with AI researchers, project management leaders describing real adoption experiences at real companies. Almost none of this has been turned into indexed web content. Which means the writers of every article already ranking on your topic almost certainly haven't used it.<br><br>
+    The distinction between "practitioners, researchers, or industry experts" and "explainer videos or promotional content" is doing the filtering work. Without that instruction, Gemini returns tutorials, product demos, and YouTube content optimised for views — not what you want. The request for credentials matters for the same reason: a video from a certified PMP who led AI adoption at a major firm is a credible source; a video from someone with "AI Expert" in their bio and no verifiable track record is not.<br><br>
+    The insight inside practitioner talks is often more candid than anything in a formal report. People say things in a conference presentation that would never make it into a whitepaper. And because almost no one else in your competitive space is looking here, it's yours to use.
+  </div>
+</div>
+
+<div class="source-type-highlight">
+  <div class="highlight-label">On using YouTube transcripts</div>
+  <p>Every YouTube video has a transcript. When you find a relevant talk — a PMI keynote, an interview with a CTO who's rolled out AI tools, a recorded conference panel — that transcript is a usable source.</p>
+  <p>To access it: open the video on YouTube, click the three-dot menu below the video, and select "Show transcript." Copy the full text. Or paste the YouTube URL directly into NotebookLM — it extracts the transcript automatically.</p>
+  <p><strong>The credibility test applies here the same as anywhere else.</strong> A PMI conference keynote from a certified practitioner with 20 years of experience is a credible source. A YouTube tutorial from a productivity influencer is not. The filter does not change because the medium does.</p>
+</div>
+
+<h3>Prompt 8 — Recency check</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">8</div>
+    Recency Check
+  </div>
+  <div class="prompt-block-body">
+    "Of the sources we've identified so far on AI and project management: which are at risk of being out of date? AI is a fast-moving field — flag any sources older than 18 months and suggest more recent alternatives where they exist."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this as a follow-up in the same conversation, after your source list is assembled.</strong> AI is one of the fastest-moving topics in technology. A report published two years ago is describing a world that has already changed — different tools, different adoption rates, different practical implications for project managers. If your sources are from 2022 and you're writing in 2025, your article is outdated before it's published.<br><br>
+    This prompt audits everything you've found and flags recency problems — and because it also asks for alternatives, you're solving the problem in the same step rather than just identifying it. Freshness is a signal Google uses. An article citing recent research will be treated as more current than one citing older reports, all else being equal.
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>Documenting your sources before you move on</h2>
+
+<p>Don't jump straight from Gemini to NotebookLM. Before you load anything, document what you've collected. This feels like admin. It isn't.</p>
+
+<p>When you're inside NotebookLM working across ten or twelve sources, you need to know which source said what. A simple log — kept in a Google Doc alongside the article brief — means you can track claims, attribute statistics correctly, and answer questions later about where something came from. It also becomes part of the research brief you hand off at the end of the project.</p>
+
+<div class="log-template">
+  <div class="log-template-header">Source Log — One Entry Per Source</div>
+  <div class="log-template-body">
+    <div class="field"><span class="field-label">Source name</span><span>Full title of the document or video</span></div>
+    <div class="field"><span class="field-label">URL or link</span><span>Direct link to the source or PDF</span></div>
+    <div class="field"><span class="field-label">Publishing body</span><span>Who produced this — institution, journal, firm</span></div>
+    <div class="field"><span class="field-label">Publication date</span><span>Month and year</span></div>
+    <div class="field"><span class="field-label">Why it passed</span><span>One sentence on what makes this source credible</span></div>
+    <div class="field"><span class="field-label">What it contributes</span><span>One sentence on what this adds that other sources don't</span></div>
+  </div>
+</div>
+
+<p>You're not writing summaries at this stage. You're logging decisions. One entry per source, six fields each. It takes two minutes per source and saves significantly more than that later.</p>
+
+<h2>The final filter before loading</h2>
+
+<p>Once the log is complete, go through it one more time. For each source, ask three questions:</p>
+
+<div class="question-block">
+  <div class="question-item">Does this add something the other sources on the list don't already cover?</div>
+  <div class="question-item">Is this original research, or is it summarising someone else's work?</div>
+  <div class="question-item">Would I confidently cite this in the published article by name?</div>
+</div>
+
+<p>If the answer to any of those is no — remove it. This curation step happens before you load anything into NotebookLM, not after. Once sources are loaded and you've spent time interacting with them, it becomes much harder to remove one and redo the work.</p>
+
+<div class="callout note">
+  <div class="callout-label">How many sources is enough</div>
+  For a broad topic like the impact of AI on project management, eight to twelve sources is the right target. A mix of industry reports, academic papers, expert interviews or transcripts, and two or three of the top-ranking articles for competitive context. More than fifteen and you're adding noise. For a narrower topic, six strong sources may be more than enough. Quality over quantity, not a fixed number.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you should have before moving on</h2>
+
+<p>Check your source list against these five points before opening NotebookLM:</p>
+
+<ul class="outcome-list">
+  <li><span class="check">✓</span> 8–12 vetted sources — reports, papers, transcripts, credible expert content</li>
+  <li><span class="check">✓</span> A documented source log with names, URLs, dates, and contribution notes</li>
+  <li><span class="check">✓</span> Every source confirmed as original, recent, and citable</li>
+  <li><span class="check">✓</span> At least one non-obvious source — a YouTube transcript, a PDF whitepaper, or a conference talk that a standard Google search wouldn't surface</li>
+  <li><span class="check">✓</span> Everything ready to load into NotebookLM</li>
+</ul>
+
+<p>If you don't have at least one non-obvious source, go back into Gemini and push harder. That's where differentiation comes from. This step, start to finish, should take 20 to 25 minutes. If you're spending longer, you're probably reading sources at this stage rather than collecting them. Reading comes later, inside NotebookLM. Right now you're building the list.</p>
+
+<p>You have the map. You have the reading list. The next step is where synthesis begins — and it happens in a completely different tool.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 5 — Step 3: NotebookLM, Curating and Loading →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 5 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 3</div>
+<h1>NotebookLM: Curating and Loading</h1>
+<p class="chapter-lede">Before you load a single source, you need the right mental model of what NotebookLM is. The tool only works as well as the decisions you make before you open it.</p>
+
+<div class="step-badge">Tool: NotebookLM</div>
+
+<h2>What NotebookLM actually is</h2>
+
+<p>NotebookLM is not ChatGPT. It is not Gemini. It does not draw from the internet. It does not use training data to fill in gaps it doesn't have. When you ask it a question, it answers exclusively from the sources you have loaded into that specific notebook. If the answer isn't in your sources, it will tell you. It will not make something up to fill the silence.</p>
+
+<div class="concept-box">
+  <div class="concept-label">The core principle</div>
+  <div class="concept-title">"Only your sources. Only what's in the notebook."</div>
+  <p>This is the feature, not a limitation. You've spent the last 40 minutes selecting credible, authoritative sources. NotebookLM is going to let you have a conversation with those sources — ask them questions, find patterns across them, identify contradictions between them — without any noise from the wider internet getting in the way.</p>
+  <p><strong>The quality of that conversation depends entirely on what you load.</strong> Which is why the decisions you make in this chapter matter as much as the prompts you'll run in the next one.</p>
+</div>
+
+<h2>Setting up your notebook</h2>
+
+<p>Go to notebooklm.google.com. Sign in with your Google account and click "New Notebook." Name it clearly — include the topic, your name, and the date. Not "research" or "AI stuff." Something like: <em>AI in Project Management — Research — May 2025.</em></p>
+
+<p>This matters because you may come back to this notebook weeks later, or someone else on the team may need to reference it. A descriptive name costs you ten seconds now and saves real confusion later.</p>
+
+<p>When the notebook opens, you'll see the source panel on the left and the chat interface on the right. Everything in this chapter happens in the source panel. The chat comes in the next chapter.</p>
+
+<h2>What NotebookLM can accept</h2>
+
+<p>Five source types, each loaded slightly differently:</p>
+
+<div class="source-type-grid">
+  <div class="source-type-item">
+    <div class="type-icon">🔗</div>
+    <div class="type-label">Website URLs</div>
+    <div class="type-how">Paste the link directly into "Add source." NotebookLM pulls the page content automatically.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📄</div>
+    <div class="type-label">PDFs</div>
+    <div class="type-how">Upload the file. Research reports and whitepapers you downloaded go here.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📝</div>
+    <div class="type-label">Google Docs</div>
+    <div class="type-how">Connect directly via Google Drive. Useful for internal documents or previous research.</div>
+  </div>
+  <div class="source-type-item">
+    <div class="type-icon">📋</div>
+    <div class="type-label">Copied text</div>
+    <div class="type-how">Paste any text content as a new source. Use for paywalled excerpts or SME notes.</div>
+  </div>
+  <div class="source-type-item" style="grid-column: 1 / -1;">
+    <div class="type-icon">🎥</div>
+    <div class="type-label">YouTube URLs</div>
+    <div class="type-how">Paste the video link. NotebookLM extracts the transcript automatically — you don't need to copy it yourself.</div>
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>One final curation pass</h2>
+
+<p>You already ran a version of this at the end of Chapter 4. Do it again now, source by source, as you load each one. This is not being overly cautious. It's being disciplined about what goes into the notebook.</p>
+
+<p>The reason for doing it twice is that the first pass happened when you had the full list in front of you and were making relative judgements — is this source better than that one? The second pass happens in isolation, as you look at each source individually before committing it. Sometimes a source that seemed useful in a list of twelve looks less essential when you're about to give it a dedicated slot.</p>
+
+<blockquote>A notebook with eight excellent sources will outperform one with fifteen mixed ones. Every time.</blockquote>
+
+<p>The three questions remain the same: Does this add something the other sources don't? Is it original research or is it summarising someone else? Would I cite it in the published article? Two no answers means it stays out. You can always add a source later if you find you need it.</p>
+
+<div class="callout warning">
+  <div class="callout-label">Hard limit</div>
+  If you find yourself loading more than fifteen sources, stop. Remove the weakest ones before continuing. More than fifteen is noise, not depth. The chat interface becomes harder to work with, and NotebookLM's synthesis quality drops when it's pulling from too many overlapping sources.
+</div>
+
+<h2>The loading order</h2>
+
+<p>Load your sources in this sequence. The order matters because the first sources you load anchor NotebookLM's initial understanding of the topic.</p>
+
+<ol class="loading-order">
+  <li>
+    <div>
+      <span class="order-title">PDFs and whitepapers</span>
+      <span class="order-reason">Your densest, most substantive sources — research reports, industry publications, academic papers. Loading these first means that when you start prompting, answers are anchored in the most credible material you have.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">Key web URLs</span>
+      <span class="order-reason">Expert commentary, authoritative articles, and credible sources that didn't come as PDFs. These complement the formal research with more accessible framing.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">YouTube transcripts</span>
+      <span class="order-reason">Practitioner voices and conference talks. These add the candid, specific insight that rarely appears in formal publications — and that your competitors almost certainly haven't used.</span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="order-title">Top-ranking competitor articles</span>
+      <span class="order-reason">Load these last and treat them differently from your authoritative sources. They are in the notebook for one purpose: to understand what the competitive landscape looks like from the inside. You are not going to cite these in your article.</span>
+    </div>
+  </li>
+</ol>
+
+<h2>After loading: checking your notebook</h2>
+
+<p>When all sources are loaded, each one will show a short auto-generated summary in the left panel. Read those summaries. They're a quick health check on what NotebookLM was actually able to extract.</p>
+
+<p>If a source's summary is thin — a single vague sentence that tells you almost nothing — that's a warning sign. A paywalled article that only showed NotebookLM its preview won't be useful in the chat session. Remove it and find an alternative you can access in full.</p>
+
+<p>A well-loaded notebook looks like this:</p>
+
+<ul class="checklist">
+  <li><span class="check">✓</span> 8–12 sources, each with a clear, substantive summary visible in the panel</li>
+  <li><span class="check">✓</span> A genuine mix of source types — not ten versions of the same report</li>
+  <li><span class="check">✓</span> Sources that span different dimensions of the topic: technology, human adoption, strategy, data</li>
+  <li><span class="check">✓</span> No source you couldn't explain why it's there in one sentence</li>
+</ul>
+
+<div class="callout tip">
+  <div class="callout-label">The most common notebook problem</div>
+  Repetition. People load ten sources that all make the same point from slightly different angles, which gives the chat session very little to work with when you ask about gaps or contradictions. If your sources are too similar in scope, go back to Gemini and find something that covers an angle you don't yet have — the human side versus the technology side, the optimistic case versus the sceptical one, the strategic overview versus the practitioner experience.
+</div>
+
+<p>Loading is done. In the next chapter, you'll have a conversation with what you've built.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 6 — Step 4: Interacting With Your Sources →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 6 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 4</div>
+<h1>NotebookLM: Interacting With Your Sources</h1>
+<p class="chapter-lede">The notebook is loaded. Now you have a conversation with it. This is the longest step in the workflow — and deliberately so. The research session is where articles are won or lost.</p>
+
+<div class="step-badge">Tool: NotebookLM — Chat Interface</div>
+
+<h2>Two lenses, one notebook</h2>
+
+<p>This chapter splits into two distinct phases. They can happen in either order, and they will overlap naturally as you work. But keeping them mentally separate ensures you do both — rather than spending the entire session in whichever one comes more naturally to you.</p>
+
+<p>The <strong>SEO strategist lens</strong> asks: what do I need to know to outperform what's already ranking? These questions help you understand what the sources say in aggregate, where the gaps are, what data exists, and how to structure an article that justifies outranking what's already there.</p>
+
+<p>The <strong>subject matter expert lens</strong> asks: what do I need to understand to write this from genuine knowledge? These questions are about your comprehension — not just collecting information, but understanding the topic well enough that when you write, you're writing from knowledge, not from notes.</p>
+
+<blockquote>An article built only on SEO strategy is technically positioned but hollow. An article built only on personal understanding may be deeply written but structurally wrong for what the reader needs. You need both.</blockquote>
+
+<div class="callout note">
+  <div class="callout-label">Before you start prompting</div>
+  When NotebookLM answers a question, you'll see small numbered citation tags in the response. These link to the exact source — and often the exact passage — the answer is drawn from. Click them. Every time. Don't just read the answer. Read the original passage it came from. This is not optional — it is covered in detail at the end of this chapter.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<div class="lens-header seo">
+  <div class="lens-tag">The SEO Strategist Lens</div>
+  <div class="lens-question">"What do I need to know to outrank what's already out there?"</div>
+</div>
+
+<h3>SEO Prompt 1 — Topic coverage map</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header seo-header">
+    <div class="prompt-number">SEO 1</div>
+    Topic Coverage Map
+  </div>
+  <div class="prompt-block-body">
+    "Look across all the sources in this notebook. What topics and subtopics related to AI and project management do they collectively cover? Build me a structured table: main topic, subtopics covered, which sources cover each one, and how thoroughly."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this first.</strong> It gives you a map of everything your source library collectively covers before you ask any more specific questions.<br><br>
+    The instruction to "look across all sources" matters — without it, NotebookLM may anchor its answer on the first source or two rather than synthesising across everything loaded. The table format makes the output immediately actionable: when you see a subtopic with only one source covering it, that's either a gap in your research or a gap in the published landscape. The convergence points — where multiple sources agree — are the established consensus. The single-source points are either frontier territory or underexplored angles.
+  </div>
+</div>
+
+<h3>SEO Prompt 2 — Gap identification</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header seo-header">
+    <div class="prompt-number">SEO 2</div>
+    Gap Identification
+  </div>
+  <div class="prompt-block-body">
+    "Based on these sources, what important questions about AI's impact on project management do the sources raise but don't fully answer? What angles are touched on but not explored in depth? List these as specific questions, not general themes."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>The phrase "specific questions, not general themes" is doing critical work.</strong> Without that instruction, the output will be vague — things like "more research is needed on adoption barriers." That's a theme, not something you can build an article around. What you want is specific: "None of the sources address how AI tools affect project managers' accountability when an AI-generated estimate proves wrong." That's a question you could structure a section around.<br><br>
+    The distinction between "raises but doesn't fully answer" and "doesn't mention at all" is also deliberate. You're looking for questions the sources themselves identify as important but leave open. That is a genuine gap — and it's the kind that produces Information Gain. Write down the top three gaps it identifies. These are your candidate angles.
+  </div>
+</div>
+
+<h3>SEO Prompt 3 — Evidence inventory</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header seo-header">
+    <div class="prompt-number">SEO 3</div>
+    Evidence Inventory
+  </div>
+  <div class="prompt-block-body">
+    "List every specific statistic, data point, or research finding mentioned across these sources that is relevant to AI's impact on project management. For each one, include: the specific number or finding, the source it came from, the date of the research, and the context in which it was cited."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Statistics are the currency of credible B2B content.</strong> A claim without a number is an opinion. A claim with a dated, sourced statistic is evidence. This prompt creates an inventory of every piece of hard evidence in your source library.<br><br>
+    The date and context alongside each statistic matter because not all statistics are equal. For AI, where adoption has accelerated dramatically in recent years, the gap between a 2021 figure and a 2024 figure can be enormous. By capturing date and source, you make informed decisions about which numbers to use as current evidence and which to treat as historical context.<br><br>
+    Watch for the same figure appearing across multiple sources. When that happens, trace it back to the original study. It tells you the statistic is well-established — but also that it's not differentiated. Every competitor article probably uses it too. The statistics that came from your PDF whitepapers and reports are more likely to be genuinely original.
+  </div>
+</div>
+
+<h3>SEO Prompt 4 — What competitors are missing</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header seo-header">
+    <div class="prompt-number">SEO 4</div>
+    What Competitors Are Missing
+  </div>
+  <div class="prompt-block-body">
+    "I've included several of the top-ranking articles on this topic as sources. Compared to the research reports and expert sources also in this notebook, what important information do the ranking articles fail to include? What do the authoritative sources say that the ranking articles don't?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This is where loading competitor articles last — and treating them as a separate category — pays off.</strong> You're asking NotebookLM to do a direct comparison between two tiers of sources: the ranking articles and the authoritative research.<br><br>
+    The ranking articles tell you what's already in the conversation. The research reports and expert sources tell you what's available but not yet in the conversation. The gap between those two sets is your opportunity. Whatever the research says that the ranking articles don't include — that's what you can add to make a legitimate claim to being more authoritative than what's already ranking. Read the output carefully. The specific points identified as missing from the competitor articles are the structural backbone of your competitive advantage.
+  </div>
+</div>
+
+<h3>SEO Prompt 5 — Structure recommendation</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header seo-header">
+    <div class="prompt-number">SEO 5</div>
+    Structure Recommendation
+  </div>
+  <div class="prompt-block-body">
+    "Based on all the sources in this notebook — the research, the expert perspectives, and the ranking articles — what structure would best serve a reader who wants a comprehensive understanding of AI's impact on project management? What sections should this article have, in what order, and what is the core argument that should run through all of them?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this last in the SEO sequence.</strong> This is where strategic research converts into a structural direction.<br><br>
+    By asking NotebookLM to recommend a structure based on your sources, you're letting the research determine the outline — not intuition, not what every other article does, but what your specific body of evidence suggests the article needs to contain. The request for a "core argument that should run through all of them" is asking for a spine. Not just a list of topics, but a through-line. An article organised around a clear argument — say, "AI is changing what project managers are responsible for, not just how they execute tasks" — is more coherent and more memorable than one that's simply a sequence of subtopics. This output is your draft outline. The core argument it identifies is the position your research brief will be built around.
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<div class="lens-header sme">
+  <div class="lens-tag">The Subject Matter Expert Lens</div>
+  <div class="lens-question">"What do I need to understand to write this from genuine knowledge?"</div>
+</div>
+
+<p>Collecting information is not the same as understanding a topic. You can have twelve sources loaded and still not be able to explain the subject in your own words. There is a specific quality problem that comes from writing an article you don't genuinely understand: it shows up as writing that's accurate but shallow, that moves through information without explaining it, where sentences are correct but no individual sentence could only have been written by someone who actually knows what they're talking about. Readers feel this, even when they can't articulate it.</p>
+
+<p>These prompts fix that.</p>
+
+<h3>SME Prompt 1 — Foundation understanding</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header sme-header">
+    <div class="prompt-number">SME 1</div>
+    Foundation Understanding
+  </div>
+  <div class="prompt-block-body">
+    "Based on these sources, explain the core impact of AI on project management in plain language — as if you're explaining it to an experienced project manager who is sceptical about AI and wants to understand what's actually changing in their job, not what's being hyped."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>The sceptical project manager framing removes promotional noise.</strong> It forces a more grounded explanation: what is actually changing, according to the evidence in your sources, not what vendors are claiming or what enthusiasts are predicting.<br><br>
+    Reading this answer is a test of your own understanding. If you can follow the explanation — if you could say the same thing back in your own words — your foundation is solid. If parts of it are still fuzzy, those are the exact areas to explore with follow-up questions. Don't move on from this prompt until you genuinely understand what it's explaining. Ask follow-up questions in the same chat thread. Keep going until you own the understanding, not just the information.
+  </div>
+</div>
+
+<h3>SME Prompt 2 — Expert disagreement</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header sme-header">
+    <div class="prompt-number">SME 2</div>
+    Expert Disagreement
+  </div>
+  <div class="prompt-block-body">
+    "Where do the sources in this notebook disagree with each other? What is genuinely debated or unresolved among researchers and practitioners about AI's impact on project management? I want to understand where the field has open questions, not just settled consensus."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Disagreement is what makes an article interesting and credible.</strong> Most content presents a unified view: here is what AI does, here are the benefits, here is how to adapt. What it almost never includes is the genuine disagreement within the field — because acknowledging debate feels like weakness, and most content is written to sound confident.<br><br>
+    When you can say "some researchers argue X, while practitioners who have implemented these systems report something different" — that signals you've read widely enough to know the field isn't unanimous. It signals you're reporting on what's actually true, not just what's comfortable to say. The significant disagreements you find here are potential angles for your article. Choosing a position in a genuine debate is more interesting than summarising consensus.
+  </div>
+</div>
+
+<h3>SME Prompt 3 — The sceptic's case</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header sme-header">
+    <div class="prompt-number">SME 3</div>
+    The Sceptic's Case
+  </div>
+  <div class="prompt-block-body">
+    "What is the strongest case that AI has negative consequences for project management — or that its benefits are overstated? I want the most credible counterarguments from these sources, not strawmen. What would a well-informed sceptic say?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>If you write an article that only presents the positive case for AI, two things happen.</strong> First, experienced project managers who have actually tried to implement these tools will read it and conclude you haven't. The reality of AI adoption is complicated and often frustrating, and content that ignores this loses the trust of readers who know. Second, you can't defend an argument you haven't stress-tested. If you don't know the counterarguments, you can't address them. If you can't address them, a reader who holds those objections will put your article down.<br><br>
+    The instruction "not strawmen" is asking for the real objections — the credible, difficult ones, not the easy ones you can dismiss. Those are the ones your article needs to engage with, even if your position ultimately disagrees with them.
+  </div>
+</div>
+
+<h3>SME Prompt 4 — Making it concrete</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header sme-header">
+    <div class="prompt-number">SME 4</div>
+    Making It Concrete
+  </div>
+  <div class="prompt-block-body">
+    "Give me a specific, realistic scenario from these sources that illustrates the most significant change AI has brought to how project managers work. I want something concrete — a situation, a decision, a workflow — not a general description of capabilities."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>One of the most consistent weaknesses in B2B content is the gap between high-level claim and concrete illustration.</strong> "AI improves resource allocation" is a claim. A specific scenario — a project manager who used AI-generated risk analysis to reallocate developer time mid-sprint and what actually happened — is an illustration. The illustration is what makes the claim believable.<br><br>
+    Your sources — particularly the practitioner interviews, conference transcripts, and case-study sections of research reports — contain these scenarios. When one comes back from NotebookLM, write it down. It may become your article's opening, a section anchor, or the example that grounds an otherwise abstract point. If the scenario is still too general, follow up: "Be more specific. What exactly was the situation? What decision was made? What was the outcome?"
+  </div>
+</div>
+
+<h3>SME Prompt 5 — Core insight</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header sme-header">
+    <div class="prompt-number">SME 5</div>
+    Core Insight
+  </div>
+  <div class="prompt-block-body">
+    "If a project manager reads only one thing from all of these sources — the single most important insight about how AI is changing their job — what is it? Not the most discussed point. The most important one, even if it's underemphasised in the sources."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>This prompt asks NotebookLM to distinguish between what is most discussed and what is most important.</strong> These are not the same thing. The most discussed points in your sources are probably the ones already saturating the competitive landscape. The most important insight may be mentioned in one source, in one paragraph, and never picked up anywhere else.<br><br>
+    When NotebookLM answers this, read it with genuine attention. Ask yourself: do I agree? If you disagree, say so directly: "I'd argue the most important insight is actually [X]. Does the evidence in these sources support that? What evidence would push back against it?" This exchange — where you challenge the synthesis with your own developing judgment and it responds with evidence — is the closest thing to a genuine thinking session this workflow produces. Use it.
+  </div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>The citation habit</h2>
+
+<p>This is worth stating again, because it matters enough to have its own section.</p>
+
+<div class="citation-box">
+  <div class="citation-box-header">After every significant answer — do this</div>
+  <ul class="citation-box-steps">
+    <li>Click the numbered citation tags in the response</li>
+    <li>Read the original passage in the source, not just the summary</li>
+    <li>Ask yourself: has NotebookLM represented this accurately, at the level of nuance?</li>
+    <li>Note the source name and passage for your brief</li>
+  </ul>
+</div>
+
+<p>NotebookLM is generally accurate. This habit is not about distrust. It's about two things.</p>
+
+<p>First, accuracy at the level of nuance. NotebookLM might correctly summarise the main finding of a research paper while slightly misrepresenting the conditions under which that finding applies. The original passage will tell you. The summary won't.</p>
+
+<p>Second, building your own relationship with the sources. If you're going to write about this topic with authority, you need to be able to say "I read this" — not just "an AI told me this." Reading the original passage is the minimum standard for having actually engaged with a source.</p>
+
+<div class="callout warning">
+  <div class="callout-label">If an answer has no citations</div>
+  Treat it with caution. It means NotebookLM is either drawing very broadly from the sources without a specific passage to point to, or it's hedging. Follow up with: "Which specific source is this based on?" and see what it says.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you should have before moving on</h2>
+
+<p>Check this list honestly — not "have I run these prompts?" but "do I actually have these things?"</p>
+
+<ul class="outcome-list">
+  <li><span class="check">✓</span> A coverage map of your sources — what's there and where it's thin</li>
+  <li><span class="check">✓</span> A clear content gap — the specific angle no existing article addresses properly</li>
+  <li><span class="check">✓</span> An inventory of the strongest statistics and data points, with sources and dates</li>
+  <li><span class="check">✓</span> A draft structure for the article, grounded in your sources rather than convention</li>
+  <li><span class="check">✓</span> Genuine comprehension of the topic — you could explain the core argument to someone who hasn't read any of this</li>
+  <li><span class="check">✓</span> The counterarguments your article needs to engage with</li>
+  <li><span class="check">✓</span> At least one concrete scenario or illustration</li>
+  <li><span class="check">✓</span> A candidate for the article's core argument</li>
+</ul>
+
+<div class="callout note">
+  <div class="callout-label">Time check</div>
+  This step should take 30 to 40 minutes. It is the longest step in the workflow. If you can't clearly articulate the content gap, go back and run the gap prompt again and push harder. If you couldn't explain the core argument in one sentence to someone who hasn't seen any of your sources, spend more time in the SME lens before moving to Claude.
+</div>
+
+<p>At this point in the workflow, you have something most content writers never build: a grounded, verifiable understanding of a topic, with the competitive landscape mapped and the gaps identified. What you don't yet have is a tight, organised research brief you can write from. That's Claude's job. It comes next.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 7 — Step 5: Claude Projects, Pressure-Testing and the Brief →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 7 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">Step 5</div>
+<h1>Claude Projects: Pressure-Testing and the Brief</h1>
+<p class="chapter-lede">You've collected. You've synthesised. You have a candidate angle and a draft structure. Now someone needs to push back — and then help you organise everything you've built into something you can write from.</p>
+
+<div class="step-badge">Tool: Claude Projects (claude.ai)</div>
+
+<p>Every step of the research process so far has been additive. Finding more, understanding more, organising more. Nobody has challenged what you're building. Nobody has asked: is this actually the right angle? Is this argument as strong as you think? What are you missing that you don't know you're missing?</p>
+
+<p>That's what Claude does here. Not finding information — that work is done. Not synthesising sources — that's done too. Claude's job in this step is to interrogate your understanding, identify gaps you haven't seen, and organise everything into a research brief that makes your writing session focused and efficient.</p>
+
+<p>But the way you set Claude up for this work matters as much as the prompts you run inside it.</p>
+
+<h2>What a Claude Project is — and why it changes everything</h2>
+
+<p>Most people use Claude the way they use a search engine: open it, type a question, get an answer, close it. Every session starts from zero. Claude has no memory of what you worked on yesterday, what your audience is, what angle you're pursuing, what you've already found. You have to re-explain everything every time. That's not a workflow. That's a tool you're underusing.</p>
+
+<blockquote>Think of it as the difference between briefing a colleague from scratch every meeting, versus having a colleague who was in every meeting.</blockquote>
+
+<p>A Claude Project is a persistent workspace. It remembers everything you upload to it. It holds context across every conversation you have inside it. You set it up once — who you are, what you're working on, how Claude should behave — and it knows that every time you open it. For research work, this means you don't spend the first ten minutes of every session re-explaining your context. You set that up once. Claude carries it forward.</p>
+
+<h2>Setting up your project</h2>
+
+<p>Go to claude.ai. Look for Projects in the left sidebar, click "New Project," and name it clearly. Same naming logic as your NotebookLM notebook: topic, purpose, date. <em>AI in Project Management — Research — May 2025,</em> not <em>research</em> or <em>new project.</em></p>
+
+<p>When the project opens, you'll see two areas: a Project Instructions panel and a chat window. Fill in the Project Instructions first. This is the most important step in the entire Claude section.</p>
+
+<div class="callout note">
+  <div class="callout-label">Project Instructions</div>
+  The Project Instructions are a standing brief that Claude reads before every single conversation inside this project. Whatever you put here, Claude knows — every time, without you repeating it. Write them carefully. They determine the quality of everything that follows.
+</div>
+
+<h2>Writing your Project Instructions</h2>
+
+<p>Copy the template below. Replace the bracketed sections with your actual topic and context. Paste it into the Project Instructions panel before you start any conversation.</p>
+
+<div class="instructions-template">
+  <div class="instructions-template-header">
+    <span>Project Instructions Template</span>
+    <span class="copy-note">Copy, adapt, paste — do not skip this step</span>
+  </div>
+  <div class="instructions-template-body">I am a content writer at ProofHub, a B2B SaaS project management platform. I am researching and developing an article on <em>[your topic]</em>.
+
+My target audience is: team leads and project managers at mid-size companies. They are experienced professionals, not beginners. They are sceptical of hype and respond to specific, evidence-based claims.
+
+Your role in this project is: research partner and critical editor. Your job is to challenge my thinking, identify gaps in my research, stress-test my arguments, and help me build a research brief I can write from.
+
+You are not here to write the article. You are not here to validate my ideas. You are here to make the research stronger.
+
+Never invent statistics or sources. If I ask for evidence you don't see in the materials I've shared, tell me that rather than generating it.
+
+When I share research findings, notes, or draft thinking: read them critically. Point out what's weak. Point out what's missing. Point out what a sceptical reader would push back on.
+
+Keep your responses direct. Don't over-explain. Don't pad. Get to the point.</div>
+  <div class="instructions-annotation">
+    <div class="annotation-row">
+      <div class="annotation-line">"Experienced professionals, not beginners, sceptical of hype"</div>
+      <div class="annotation-why">Sets the standard for what counts as a good argument. Claude will calibrate its challenges to this audience. If your research wouldn't convince a sceptical senior PM, it will tell you.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Research partner and critical editor"</div>
+      <div class="annotation-why">Establishes the relationship. Claude is not an assistant completing tasks. It's a colleague challenging your work. That framing produces harder, more useful feedback.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Not here to write the article. Not here to validate."</div>
+      <div class="annotation-why">Without this, Claude drifts toward being helpful in the wrong direction — encouraging you, summarising what you've said, offering to draft sections. This keeps it in its lane.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Never invent statistics or sources"</div>
+      <div class="annotation-why">The guardrail that keeps Claude honest about the limits of what it knows. Claude will respect this instruction. Include it every time.</div>
+    </div>
+    <div class="annotation-row">
+      <div class="annotation-line">"Direct. Don't over-explain. Don't pad."</div>
+      <div class="annotation-why">Claude defaults to structured, thorough responses with headers and bullets. For a working session, you want lean, direct output. This suppresses the padding.</div>
+    </div>
+  </div>
+</div>
+
+<h2>Uploading your research</h2>
+
+<p>With the Project Instructions set, compile everything you built in Gemini and NotebookLM into a single document. Name it <em>Research Findings — [Topic] — [Date]</em> and upload it to the project.</p>
+
+<ul class="upload-list">
+  <li>
+    <span class="icon">📊</span>
+    <div>
+      <span class="item-label">Competitive landscape summary</span>
+      <span class="item-note">What the top-ranking articles cover, their gaps, the dominant search intent</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">📋</span>
+    <div>
+      <span class="item-label">Source list</span>
+      <span class="item-note">The documented source log from Chapter 4 — names, URLs, dates, contribution notes</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">🗺️</span>
+    <div>
+      <span class="item-label">Coverage map and gap analysis</span>
+      <span class="item-note">The topic coverage table and identified gaps from your NotebookLM SEO session</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">📈</span>
+    <div>
+      <span class="item-label">Statistics and evidence inventory</span>
+      <span class="item-note">Every data point flagged in NotebookLM, with source and date</span>
+    </div>
+  </li>
+  <li>
+    <span class="icon">💡</span>
+    <div>
+      <span class="item-label">Candidate angle</span>
+      <span class="item-note">The one-sentence argument you're considering building the article around</span>
+    </div>
+  </li>
+</ul>
+
+<p>This document does not need to be polished. It is internal notes. Bullet points are fine. Incomplete sentences are fine. It just needs to be there. Once uploaded, Claude can reference it throughout every conversation in the project. You won't need to paste your research into every prompt.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>The six prompts</h2>
+
+<p>With the Project Instructions set and your research uploaded, every prompt you write can be short and direct. The background is already there. Claude knows your context, your audience, and its role. You're not briefing it from scratch — you're working.</p>
+
+<h3>Prompt 1 — Gap audit</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">1</div>
+    What Am I Missing?
+  </div>
+  <div class="prompt-block-body">
+    "Read my research findings document. Based on what I've found: what important questions does this research not answer? What angles haven't I explored? What would a thorough senior editor say is missing before I write?"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this first, before any other prompt.</strong> The framing "what would a thorough senior editor say is missing" does more work than simply asking "what's missing?" It forces Claude to adopt the perspective of someone whose job is to ensure an article is complete before publication — someone with no investment in making you feel good about what you've already done. That framing produces harder, more specific feedback.<br><br>
+    Expect two types of output. A knowledge gap is something your research genuinely hasn't covered — you'll need to go back to Gemini or your sources to address it. A reasoning gap is something your research might be able to answer, but where you haven't yet made the connection. Address each one before moving to the next prompt.<br><br>
+    If the gaps feel generic, push: "Be more specific. Which exact section of my research is weakest? What specific question am I not answering that a PM would want answered?"
+  </div>
+</div>
+
+<h3>Prompt 2 — Stress-test the argument</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">2</div>
+    Challenge My Angle
+  </div>
+  <div class="prompt-block-body">
+    "My candidate argument is: [your one sentence]. Argue against it. Give me the strongest case a well-informed sceptic would make. Don't be balanced — commit to the opposing position and make it as strong as possible."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>"Argue against it" rather than "give me counterarguments" is deliberate.</strong> Counterarguments can be presented as a neat list you acknowledge and move past. Arguing against your position requires Claude to commit to the opposing view and build a real case for it. That case is far more useful for stress-testing.<br><br>
+    "Don't be balanced — commit to the opposing position" removes Claude's natural tendency to hedge. By default, it gives you both sides. You don't want both sides right now. You want the strongest version of the case against you, so you know exactly what your article needs to defeat.<br><br>
+    When the response comes back, don't look for reasons to abandon your angle. Look for the objections that need to be addressed inside the article itself. Every strong objection Claude raises becomes either a section you write to head it off, or a concession you build into your argument to make it more honest. Either way, the article is stronger for it.<br><br>
+    If the pushback feels weak: "That's too easy to dismiss. What would someone who has actually tried implementing AI tools on a project team say? Make it more grounded and more specific."
+  </div>
+</div>
+
+<h3>Prompt 3 — Plain language translation</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">3</div>
+    Plain Language Translation
+  </div>
+  <div class="prompt-block-body">
+    "There's a concept in my research I can follow but couldn't explain clearly to a reader without jargon. Here it is: [paste the specific passage or concept]. Explain it in plain language as if you're speaking to an experienced project manager who is unfamiliar with this specific terminology. No jargon. No hedging. One clear explanation."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Every research session produces at least one concept you understand at the level of having read it, but couldn't explain if someone asked.</strong> This prompt fixes that.<br><br>
+    "Experienced project manager unfamiliar with this terminology" sets the exact register you need. Not a beginner — your audience is experienced. But not a specialist in this particular concept either. The explanation should be the kind a smart colleague gives you in a hallway conversation: direct, clear, no academic scaffolding.<br><br>
+    "No jargon. No hedging. One clear explanation" closes the door on the qualified, caveated responses Claude tends toward with complex topics. Run this for every concept in your research that feels fuzzy. Each time you do, you're not just getting an explanation for your article — you're building your own understanding. By the end of this session, you should be able to explain every major concept in plain language. If you can't, you're not ready to write.
+  </div>
+</div>
+
+<h3>Prompt 4 — Finding the defensible angle</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">4</div>
+    The Most Defensible Position
+  </div>
+  <div class="prompt-block-body">
+    "Based on my research findings: what is the most defensible, differentiated angle for this article? I don't want the most obvious angle — every article already covers that. I want the position that is both supported by the evidence and not already saturated in the existing content on this topic. Give me three options, ranked by how defensible and differentiated each one is."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this after the gap audit and stress-test, not before.</strong> By this point, Claude has interrogated your research and you've responded to its challenges. You have a clearer picture of what your research actually supports. Now you're asking it to find the angle that emerges from all of that.<br><br>
+    "Most defensible and differentiated" sets two conditions simultaneously. Defensible means the evidence in your research supports the position — you're not choosing an angle because it sounds interesting, but because your source library can back it up. Differentiated means it's not already the angle of every other article on the topic. Both conditions must be met.<br><br>
+    Asking for three options rather than one is deliberate. Claude's first suggestion is often the most obvious defensible angle — differentiated from generic content but not yet truly distinctive. The second and third options tend to be more interesting and more committed to a position. Look at all three. Then push back on the one you're most drawn to: "For option two — what's the weakest point in that argument? What evidence in my research would a critic point to?" The angle that survives that question is the one worth building on.
+  </div>
+</div>
+
+<h3>Prompt 5 — Evidence standard check</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">5</div>
+    Evidence Standard Check
+  </div>
+  <div class="prompt-block-body">
+    "Read through my research findings. Flag every benefit claim or assertion that isn't supported by a specific statistic, a named example, or a concrete mechanism. For each one: quote the claim, tell me why it doesn't meet the standard, and tell me what kind of evidence would make it credible."
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Every benefit claim in your research needs one of the following to support it: a statistic, a named feature that explains the mechanism, a real-world example, or a specific user outcome.</strong> This prompt applies that standard to your research before you write — not to the draft, but to the research itself.<br><br>
+    If your findings contain vague claims — "AI improves project outcomes," "teams that use AI tools see better results" — those claims will flow straight into your draft and produce exactly the kind of weak writing that gets caught in a final editorial pass. The earlier you flag them, the easier they are to fix. At the research stage, fixing a vague claim means going back to your sources and finding the specific evidence. At the draft stage, it means rewriting.<br><br>
+    When Claude flags a claim, don't argue with the flag. Go back to your NotebookLM sources and find the specific evidence that supports it. If you can't find it, the claim either doesn't belong in the article or needs to be reframed as an open question rather than an assertion.
+  </div>
+</div>
+
+<h3>Prompt 6 — The research brief</h3>
+
+<div class="prompt-block">
+  <div class="prompt-block-header">
+    <div class="prompt-number">6</div>
+    Build the Research Brief
+  </div>
+  <div class="prompt-block-body">
+    "Based on everything in this project — my research findings, the gaps we've identified, the stress-tested argument, and the angle we've settled on — build me a research brief with the following structure:
+1. The core argument (one sentence)
+2. The audience and what they need from this article
+3. The content gap this article fills
+4. Key evidence — the strongest statistics and findings, each with its source
+5. Counterarguments the article needs to address
+6. Sections and structure — recommended outline
+7. Knowledge gaps still open — what I still need to find before writing
+8. Sources to cite — the most important ones from my source list"
+  </div>
+  <div class="prompt-block-rationale">
+    <strong>Run this last, only after working through all five preceding prompts.</strong> The brief is the output of all that work — it's not a starting point, it's a destination.
+  </div>
+</div>
+
+<h2>Why the brief is structured this way</h2>
+
+<p>The eight sections are in this order for a reason. Each one serves the next.</p>
+
+<div class="brief-structure">
+  <div class="brief-structure-header">Research Brief — Section Purpose</div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">1</div>
+    <div class="brief-section-name">Core argument</div>
+    <div class="brief-section-why">One sentence. Everything else serves this. If it's vague, the rest of the brief will be vague.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">2</div>
+    <div class="brief-section-name">Audience</div>
+    <div class="brief-section-why">Determines the register, depth, and specific emphasis of everything that follows.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">3</div>
+    <div class="brief-section-name">Content gap</div>
+    <div class="brief-section-why">The strategic reason the article exists. Not "here's a topic" but "here's the specific thing not yet in the conversation."</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">4</div>
+    <div class="brief-section-name">Key evidence</div>
+    <div class="brief-section-why">Only the strongest, only with sources. Keeps the article grounded. When you reach for a claim while writing, this tells you what you have.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">5</div>
+    <div class="brief-section-name">Counterarguments</div>
+    <div class="brief-section-why">Must be in the structure from the start — not retrofitted after the article is drafted.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">6</div>
+    <div class="brief-section-name">Sections and structure</div>
+    <div class="brief-section-why">Not just section titles — each section with a note on what it needs to accomplish.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">7</div>
+    <div class="brief-section-name">Open knowledge gaps</div>
+    <div class="brief-section-why">Honest accounting of what you still don't know. Some gaps get closed before writing. Others become acknowledged open questions inside the article.</div>
+  </div>
+  <div class="brief-section-row">
+    <div class="brief-section-num">8</div>
+    <div class="brief-section-name">Sources to cite</div>
+    <div class="brief-section-why">A reference list for the writing session, compiled after everything else is settled.</div>
+  </div>
+</div>
+
+<div class="callout tip">
+  <div class="callout-label">Before you share the brief</div>
+  Read it in full before doing anything with it. Not skimming — checking. Does the core argument feel like something you're genuinely prepared to defend? Are the counterarguments addressed in the structure? Is there anything in the knowledge gaps section that needs to be closed before writing starts? If your team has a review step before writing, this is the document you share. Not your notes. Not your NotebookLM outputs. This brief.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>The project stays open</h2>
+
+<p>Your Claude Project doesn't close when this session ends. Every conversation inside it is saved. The context is still there tomorrow, and the day after.</p>
+
+<p>When you're writing the article and get stuck on how to frame a counterargument, open the project and ask. When you're not sure whether a statistic is strong enough to use, open the project and ask. When a colleague sends you a new study that just came out, upload it to the project and ask Claude how it changes your argument.</p>
+
+<p>The project is a working environment through the entire article production cycle, not a single-session tool. The brief you built today is the starting point, not the end point.</p>
+
+<h2>What Claude does not replace</h2>
+
+<p>Claude has helped you stress-test your argument, identify gaps, simplify dense concepts, and build a brief. It has not verified a single statistic. It has not confirmed that the sources you're planning to cite are accurate. It has not made the editorial decision about what the article should say. Those remain yours.</p>
+
+<div class="limits-grid">
+  <div class="limits-item"><span class="x">✗</span> Verifying facts, statistics, or claims — that is your responsibility, traceable to sources you actually read</div>
+  <div class="limits-item"><span class="x">✗</span> Replacing your editorial judgment about what the article needs to say and what it should leave out</div>
+  <div class="limits-item"><span class="x">✗</span> Sourcing material — every claim must trace back to your NotebookLM source library, not to something Claude mentioned</div>
+  <div class="limits-item"><span class="x">✗</span> Writing the article — the thinking, the decisions, the voice are still yours</div>
+</div>
+
+<p>Claude is a capable thinking partner. It is not a replacement for the judgment that makes you a writer rather than a prompt operator. The thinking has to be yours. Claude makes it sharper.</p>
+
+<div class="section-break">· · ·</div>
+
+<h2>What you have at the end of this step</h2>
+
+<ul class="outcome-list">
+  <li><span class="check">✓</span> A gap audit — what your research didn't cover, now identified and addressed</li>
+  <li><span class="check">✓</span> A stress-tested argument — you know where it's vulnerable and how to handle it</li>
+  <li><span class="check">✓</span> Plain language explanations of every complex concept in your research</li>
+  <li><span class="check">✓</span> A defensible, differentiated angle — supported by evidence, not already saturated</li>
+  <li><span class="check">✓</span> A claims check — every vague assertion identified and grounded or removed</li>
+  <li><span class="check">✓</span> A complete eight-section research brief, ready to write from</li>
+  <li><span class="check">✓</span> A persistent Claude Project that stays open through the writing process</li>
+</ul>
+
+<p>This is what 90 minutes of disciplined research with this workflow produces. Not a collection of tabs. Not an AI-generated outline you're not sure you trust. A research brief built on verified sources, challenged thinking, and a clear argument you can defend. The blank page is not blank anymore.</p>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 8 — What You Have When You're Done →</span>
+</footer>
+
+<header class="book-header">
+  <span class="book-title">Researching with AI — ProofHub Content Team</span>
+  <span class="chapter-label">Chapter 8 of 9</span>
+</header>
+
+<div class="chapter-eyebrow">What You Have When You're Done</div>
+<h1>The Complete Picture</h1>
+<p class="chapter-lede">Three tools. Three distinct jobs. One output. This chapter shows what the full workflow produces — and what it doesn't.</p>
+
+<h2>The workflow from start to finish</h2>
+
+<p>Here is the complete sequence in one view, with the output of each stage and the time it takes. Look at the total — 75 to 95 minutes — and hold it next to what a research session used to produce: a collection of tabs, some copied quotes, a vague sense of the topic. The time is similar. What you produce is not.</p>
+
+<div class="workflow-summary">
+  <div class="workflow-stage">
+    <div class="workflow-stage-tool">
+      <div class="tool-name">Gemini</div>
+      <div class="tool-time">20–25 min</div>
+    </div>
+    <div class="workflow-stage-outputs">
+      <div class="output-item"><span class="dot">◆</span> Competitive landscape mapped — what's ranking, what it covers, how it's structured</div>
+      <div class="output-item"><span class="dot">◆</span> Search intent understood</div>
+      <div class="output-item"><span class="dot">◆</span> Content gap identified — the specific angle no existing article addresses</div>
+      <div class="output-item"><span class="dot">◆</span> 8–12 vetted sources collected, logged, and ready to load</div>
+    </div>
+  </div>
+  <div class="workflow-arrow">↓</div>
+  <div class="workflow-stage">
+    <div class="workflow-stage-tool">
+      <div class="tool-name">NotebookLM</div>
+      <div class="tool-time">30–40 min</div>
+    </div>
+    <div class="workflow-stage-outputs">
+      <div class="output-item"><span class="dot">◆</span> Sources curated, loaded, and verified</div>
+      <div class="output-item"><span class="dot">◆</span> Topic coverage map built across all sources</div>
+      <div class="output-item"><span class="dot">◆</span> Statistics and evidence inventoried with sources and dates</div>
+      <div class="output-item"><span class="dot">◆</span> Counterarguments surfaced from the research itself</div>
+      <div class="output-item"><span class="dot">◆</span> Topic understood at subject matter level — not just collected</div>
+    </div>
+  </div>
+  <div class="workflow-arrow">↓</div>
+  <div class="workflow-stage">
+    <div class="workflow-stage-tool">
+      <div class="tool-name">Claude Projects</div>
+      <div class="tool-time">25–30 min</div>
+    </div>
+    <div class="workflow-stage-outputs">
+      <div class="output-item"><span class="dot">◆</span> Gaps audited and addressed</div>
+      <div class="output-item"><span class="dot">◆</span> Argument stress-tested against the strongest opposing case</div>
+      <div class="output-item"><span class="dot">◆</span> Angle confirmed as defensible and differentiated</div>
+      <div class="output-item"><span class="dot">◆</span> Claims checked against evidence standard</div>
+      <div class="output-item"><span class="dot">◆</span> Eight-section research brief built</div>
+    </div>
+  </div>
+  <div class="workflow-arrow">↓</div>
+  <div class="workflow-total"><strong>Research brief complete.</strong> Total time: 75–95 minutes.</div>
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>What a completed brief looks like</h2>
+
+<p>Below is a worked example for the topic used throughout this playbook. Your brief will follow this shape. Read it as if you're seeing it for the first time — pay attention to what makes each section useful, not just present.</p>
+
+<div class="brief-example">
+  <div class="brief-example-header">
+    <div class="brief-title">Research Brief: The Impact of AI on Project Management</div>
+    <div class="brief-subtitle">Example brief — your brief will have this structure</div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">1 — Core Argument</div>
+    <div class="brief-section-content argument">AI is shifting the project manager's role from task coordinator to decision interpreter — and most organisations are not prepared for that shift.</div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">2 — Audience and What They Need</div>
+    <div class="brief-section-content">Team leads and PMs at mid-size companies. Experienced professionals who want to understand what's actually changing in their job — not AI hype, not vendor claims. They need specific, grounded insight they can act on, with evidence that holds up to scrutiny.</div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">3 — Content Gap This Article Fills</div>
+    <div class="brief-section-content">Existing articles cover what AI tools do. None address the implications for PM accountability when AI-generated estimates or risk assessments prove wrong. That question is raised repeatedly in the research and never answered in the published content.</div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">4 — Key Evidence</div>
+    <div class="brief-section-content">
+      <div class="brief-evidence-item">
+        <span class="source-tag">PMI 2024</span>
+        X% of PMs report AI tools have changed how they communicate risk to stakeholders — with specific implication for accountability structures
+      </div>
+      <div class="brief-evidence-item">
+        <span class="source-tag">Gartner 2024</span>
+        Finding on AI adoption rate in knowledge work, with specific figure and context in which it applies
+      </div>
+      <div class="brief-evidence-item">
+        <span class="source-tag">Conference transcript</span>
+        Practitioner quote on the gap between what AI tools promise and what actually changes in daily PM workflow — speaker credentials noted
+      </div>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">5 — Counterarguments to Address</div>
+    <div class="brief-section-content">
+      <div class="brief-counter-item">AI adoption in project management is slower than reported; real-world implementation is messier and more context-dependent than the research suggests</div>
+      <div class="brief-counter-item">The accountability shift may reduce PM autonomy rather than elevate it — a case worth making honestly rather than dismissing</div>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">6 — Recommended Structure</div>
+    <div class="brief-section-content">Intro (the accountability question) → The old PM role and what defined it → What AI has actually changed vs. what's hype → The accountability gap no one is addressing → What good adaptation looks like in practice → Conclusion (what PMs should be asking their organisations)</div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">7 — Knowledge Gaps Still Open</div>
+    <div class="brief-section-content">
+      <div class="brief-gap-item">Limited data on AI adoption rates specifically in mid-size companies — most research covers enterprise. This gap should be acknowledged in the article.</div>
+      <div class="brief-gap-item">Need a concrete case study of a team that has navigated the accountability question in practice. Go back to sources or consider an SME interview.</div>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="brief-section-label">8 — Sources to Cite</div>
+    <div class="brief-section-content">PMI 2024 AI Adoption Report · Gartner Project Management AI Outlook · Conference transcript (speaker named) · Academic paper on AI in knowledge work (journal, year)</div>
+  </div>
+</div>
+
+<p>Look at the core argument. It's one sentence, not a theme. It takes a specific position — not "AI is changing project management," which tells you nothing, but a claim about <em>what specifically</em> is changing and what the implication is. That sentence is the spine of the entire article. Every section either supports it or addresses the strongest objection to it.</p>
+
+<p>Look at section 7 — knowledge gaps still open. This is the section most briefs don't include, and it's one of the most honest and useful. It tells you what you still need before you write. Some gaps get closed in the hour before writing starts. Some get acknowledged inside the article as questions the field hasn't resolved. Either way, you know they're there. An article written with awareness of its own gaps is more credible than one that pretends they don't exist.</p>
+
+<blockquote>A brief is organised around an argument. Notes are organised around whatever you happened to find. That distinction is everything.</blockquote>
+
+<div class="section-break">· · ·</div>
+
+<h2>What this workflow does not replace</h2>
+
+<p>The research workflow produces a brief. What comes after — writing, editing, optimisation, fact-checking before publication — none of that has been automated away. Be clear with yourself about where the workflow ends.</p>
+
+<ul class="limits-list">
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">Fact verification</span>
+      <span class="limit-detail">Every statistic and claim in your brief must be traceable to a source you actually read. Before anything appears in the published article, you confirm the number is what you say it is, the context is what you think it is, and the source is credible enough to cite under ProofHub's name. AI at no point in this workflow verifies facts.</span>
+    </span>
+  </li>
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">Editorial judgment</span>
+      <span class="limit-detail">What the article says, how it says it, what it chooses to emphasise and what it leaves out — these are decisions the brief informs but does not make. That thinking is yours.</span>
+    </span>
+  </li>
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">Brand voice</span>
+      <span class="limit-detail">How ProofHub communicates is a human decision applied in the writing. The brief gives you a structure and an argument. It does not give you a voice.</span>
+    </span>
+  </li>
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">The writing itself</span>
+      <span class="limit-detail">The brief tells you what to write. The thinking you bring to the writing — the transitions, the examples, the moments where you go beyond what your sources say — is yours. A brief without that thinking produces a competent article. With it, it produces something better.</span>
+    </span>
+  </li>
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">SME interviews</span>
+      <span class="limit-detail">If the topic requires a practitioner voice the research doesn't provide, this workflow will surface that gap in the brief. It doesn't fill it.</span>
+    </span>
+  </li>
+  <li>
+    <span class="x">✗</span>
+    <span>
+      <span class="limit-title">SEO optimisation</span>
+      <span class="limit-detail">Keyword targeting, internal links, and meta descriptions come after research, not during it. The workflow informs the content strategy, not the technical SEO layer.</span>
+    </span>
+  </li>
+</ul>
+
+<div class="callout note">
+  <div class="callout-label">What comes next in your quality system</div>
+  Your team already has a tool for what happens after writing: the AI Proofreading Prompt. It applies eight checks to your draft before it goes anywhere — AI vocabulary, vague claims, puffery, promotional language, editorial narration, synonym cycling, faux-profound openers and closers, and a full pattern diagnosis. The research workflow prevents weak claims from forming in the first place. The proofreading prompt catches any that made it into the draft. Together, they cover the full content quality loop from brief to published article.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>On time and what replaces what</h2>
+
+<p>The workflow takes 75 to 95 minutes for a standard topic. If you're thinking "I don't currently spend that long on research" — two things are worth saying.</p>
+
+<p>First, if you're not spending 75 minutes on research, something is being skipped. Either you're reading less than the topic requires, or you're not synthesising what you're reading, or you're writing from a vague understanding rather than a clear one. Those shortcuts show up in the work — in articles that rank poorly, that editors substantially revise, that cover the same ground as everything already out there.</p>
+
+<p>Second, the 75 minutes is not in addition to your current research time. It replaces it. You're doing the same things — reading, collecting, understanding — but with a system that produces a useful output at the end rather than a collection of tabs and an uncertain starting point. The workflow doesn't add time to your process. It restructures the time you were already spending into something that produces a better result.</p>
+
+<div class="callout tip">
+  <div class="callout-label">On narrower or broader topics</div>
+  Some topics will take longer. Narrower, more specialist topics with less available research will require more time in Gemini. Broader topics with abundant sources will require more curation judgment in NotebookLM. The 75–95 minute range is for a standard content topic. Adjust your expectations accordingly — but don't skip stages to hit a time target.
+</div>
+
+<div class="section-break">· · ·</div>
+
+<h2>The workflow on your next assignment</h2>
+
+<p>Seven steps. The workflow reduced to its simplest form. Starting from your next content assignment:</p>
+
+<ol class="seven-steps">
+  <li>Open Gemini before you open anything else</li>
+  <li>Run the competitive research prompts before you read a single article</li>
+  <li>Build your source list before you load anything into NotebookLM</li>
+  <li>Curate before you load — the final filter, applied source by source</li>
+  <li>Use both lenses in NotebookLM — SEO strategist and subject matter expert</li>
+  <li>Open a Claude Project, not a blank Claude chat</li>
+  <li>Don't write until the brief is done</li>
+</ol>
+
+<p>You have all the detail behind each of these steps. The prompts are documented in Chapter 9. The rationale for each one is in the chapters behind you. The only thing left is to use the workflow.</p>
+
+<div class="closing-statement">
+  <p>This is not a shortcut. It is a more disciplined version of what good research has always required: finding what exists, reading what's credible, understanding what you've read, and knowing what your argument is before you write it.</p>
+  <p>These tools remove the friction. <strong>They do not remove the thinking.</strong></p>
+  <p>The writers who get the most from this workflow are not the ones who run through it as quickly as possible. They're the ones who slow down in the NotebookLM session, who push back when Claude gives them easy answers, who close knowledge gaps before they write rather than hoping they won't matter. The discipline is what produces the output. The tools make the discipline more efficient.</p>
+  <p>The first time you use this on a real assignment, it will feel slower than your current process — you're running an unfamiliar system. The second time, it will feel natural. By the fifth time, it will be the only way research makes sense to you.</p>
+  <p><strong>Use it on your next assignment. Not the one after that. The next one.</strong></p>
+</div>
+
+<footer class="chapter-end">
+  <span>Researching with AI — ProofHub Content Team</span>
+  <span>Next: Chapter 9 — Prompt Library →</span>
+</footer>
+
+</body>
+</html>
