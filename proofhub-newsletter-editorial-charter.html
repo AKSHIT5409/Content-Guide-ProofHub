@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ProofHub Newsletter — Editorial Charter</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --rule: #e2e2e2;
+    --accent: #b34a00;
+    --bg: #fdfcfa;
+    --panel: #f5f2ec;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: "Charter", "Iowan Old Style", "Georgia", serif;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 40px 96px;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-family: "Inter", -apple-system, "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: "Charter", "Iowan Old Style", "Georgia", serif;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    letter-spacing: -0.3px;
+  }
+  .meta {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  h2 {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 20px;
+    margin: 48px 0 12px;
+    letter-spacing: -0.2px;
+  }
+  h3 {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 15px;
+    margin: 28px 0 6px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  p { margin: 0 0 16px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  strong { font-weight: 600; }
+  .lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+    padding: 2px 0 2px 18px;
+    margin-bottom: 32px;
+  }
+  .panel {
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .panel h3:first-child { margin-top: 0; }
+  .metric {
+    border-top: 1px solid var(--rule);
+    padding: 18px 0;
+  }
+  .metric:last-child { border-bottom: 1px solid var(--rule); }
+  .metric-name {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .metric-def {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .metric-why {
+    font-size: 15px;
+  }
+  .metric-why span {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  .target {
+    display: inline-block;
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 6px;
+    color: var(--ink-soft);
+  }
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px) {
+    body { padding: 32px 20px 64px; font-size: 16px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Editorial Charter · Working Draft</div>
+  <h1>ProofHub Newsletter</h1>
+  <div class="meta">For internal alignment — content team, marketing leadership, and editorial reviewers</div>
+</header>
+
+<p class="lead">A weekly-ish editorial email from ProofHub, written for managers who are figuring out how to lead teams well. Two tracks run in parallel: one on the craft of management and team work, one on specific recurring problems managers face and how to solve them. This is an editorial product, not a marketing channel that happens to use email.</p>
+
+<h2>Who it's for</h2>
+
+<p><strong>Primary reader.</strong> A manager of a small-to-mid team, roughly 5 to 50 people. Often promoted into the role in the last 1 to 3 years. Learning management on the job. Reads to get better at leading, not to keep up with industry news. Uses some project management tool already, which could be ProofHub, Asana, or a spreadsheet.</p>
+
+<p><strong>Secondary readers who'll self-identify.</strong> Team leads growing into management. Founders of small companies who are managing by default. Ops leaders. These readers should find the content useful even though it isn't written specifically for them.</p>
+
+<p><strong>Not the reader.</strong> Enterprise PMO leaders. Agency owners running client work. Individual contributors looking for productivity tips. If a piece drifts toward serving these audiences, it's off-charter.</p>
+
+<h2>What it believes</h2>
+
+<p>Three positions shape every issue. Every piece should ladder up to at least one.</p>
+
+<h3>1. Good management is a craft, not a personality trait.</h3>
+<p>It can be learned. Most of it is unglamorous — clear communication, consistent follow-through, protecting people's time, making decisions people can act on. We treat management as a skill to be practiced, not a status to be performed.</p>
+
+<h3>2. Tool sprawl is a management failure, not a tech problem.</h3>
+<p>When teams end up with 12 apps, it's usually because leadership hasn't decided what the work looks like. We are against adding tools as a substitute for clarity.</p>
+
+<h3>3. Calm work beats urgent work.</h3>
+<p>Sustainable teams that ship consistently beat heroic teams that burn out and miss quarters. Managers who protect focus and reduce noise get better results than managers who manufacture urgency.</p>
+
+<h2>What it covers</h2>
+<ul>
+  <li>The specific problems managers face day to day: running standups that matter, giving feedback, unblocking teams, protecting deep work, saying no upward.</li>
+  <li>How to structure work so teams don't drown: project shape, meeting hygiene, prioritization, visibility.</li>
+  <li>The transition from IC to manager, and from manager to manager-of-managers.</li>
+  <li>How to think about tools and process without becoming a process fetishist.</li>
+  <li>Occasional pieces on management thinking from outside the SaaS bubble: operations, military, hospitality, sports coaching, anywhere teams are led.</li>
+</ul>
+
+<h2>What it doesn't cover</h2>
+<ul>
+  <li>News, funding announcements, tool launches, industry gossip.</li>
+  <li>Productivity hacks, morning routines, life optimization.</li>
+  <li>Generic leadership platitudes ("great leaders listen").</li>
+  <li>Feature-by-feature comparisons of PM tools.</li>
+  <li>Content that requires the reader to already agree with ProofHub's worldview.</li>
+  <li>AI-of-the-week content unless it genuinely changes how managers should work.</li>
+</ul>
+
+<h2>What "good" looks like</h2>
+
+<p>A good issue meets four tests.</p>
+
+<h3>Recognition test.</h3>
+<p>The reader thinks, "Yes, this happens to me." Specificity is what triggers this. Not "team miscommunication" but "the Slack thread that goes 40 messages deep and then someone starts a new thread with the same question."</p>
+
+<h3>Utility test.</h3>
+<p>The reader can do something different tomorrow because of what they read. Not necessarily buy something. Not necessarily change their process. Just approach a situation differently.</p>
+
+<h3>Honesty test.</h3>
+<p>No overclaiming. No manufactured tension. No "the shocking truth about..." The reader trusts that we don't waste their time with rhetorical padding.</p>
+
+<h3>Voice test.</h3>
+<p>Written like a person talking to another person. Plain sentences. Direct verbs. No corporate throat-clearing at the top.</p>
+
+<h2>Voice and byline</h2>
+
+<p>Written under a ProofHub editorial byline, signed by a named editor. For example: <em>"— Sandeep, on behalf of the ProofHub editorial team."</em> A named signature gives readers a human to reply to, without pretending the whole thing is one person's newsletter.</p>
+
+<p>Voice is direct, plain, and slightly opinionated. Uses "we" when speaking as ProofHub, "you" when speaking to the reader. Avoids aphorisms, packaged wisdom, three-item parallel constructions used for effect, and any sentence that sounds like it belongs on LinkedIn.</p>
+
+<h2>Product mentions</h2>
+
+<div class="panel">
+  <h3>Track one (industry / educational)</h3>
+  <p>Zero or one soft product mention per issue, and only when the piece is genuinely about something ProofHub is designed for. If it feels shoehorned in, cut it.</p>
+
+  <h3>Track two (problem → solution → case study)</h3>
+  <p>Product appears in the last third of the piece. First two-thirds are about the problem and how to think about it. A reader who doesn't use ProofHub should still get something out of the whole email.</p>
+
+  <h3>Never</h3>
+  <p>Product mentions in subject lines. CTAs to "book a demo" or "start a trial" in the email body. Feature announcements. Pricing content.</p>
+</div>
+
+<h2>Cadence and format</h2>
+
+<p>Two tracks, alternating weeks. Each subscriber gets two emails per month from each track — four per month total. Both tracks send on the same day of the week. Suggested slot: Tuesday or Wednesday morning, confirmed against where the current 300 subscribers actually are.</p>
+
+<p>Word count: 600 to 900 for track one, 700 to 1,000 for track two. Hard ceiling of 1,200. If it doesn't fit, it's two issues.</p>
+
+<h2>Ownership and process</h2>
+<ul>
+  <li><strong>Editor.</strong> Sets the calendar, writes or commissions each piece, does final edit, hits send.</li>
+  <li><strong>Buffer requirement.</strong> Two issues written and edited ahead at all times. No exceptions.</li>
+  <li><strong>Second reader.</strong> Every issue reviewed by one person before send — either Vartika or a designated editorial second.</li>
+  <li><strong>Standards enforced.</strong> Verify claims. Plain language. No misattributed stats. No overclaiming product features. No aphorisms.</li>
+</ul>
+
+<h2>What we measure, and why</h2>
+
+<p>The metrics below are the ones the team is aligned on. Anything not on this list, we do not report on internally, even if the ESP surfaces it.</p>
+
+<div class="metric">
+  <div class="metric-name">Click rate</div>
+  <div class="metric-def"><strong>Definition:</strong> Unique clicks divided by delivered emails, per issue.</div>
+  <div class="metric-why"><span>Why we measure it</span>A click is the first action a reader takes that isn't automatic. It signals real intent — the reader cared enough about something in the email to act on it. Unlike opens, clicks cannot be inflated by mail clients or security scanners.</div>
+  <div class="target">Target: 4 to 8 percent by issue 12</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Reply rate</div>
+  <div class="metric-def"><strong>Definition:</strong> Human replies to the newsletter divided by delivered emails, per issue. Auto-replies and out-of-office responses are excluded.</div>
+  <div class="metric-why"><span>Why we measure it</span>Replies are the highest-quality signal in email. Someone typed a response. In B2B, reply rate above 1 percent predicts pipeline and retention better than any other single number. Replies also feed us qualitative signal we couldn't get any other way.</div>
+  <div class="target">Target: 1 percent or higher by issue 12</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Unsubscribe rate</div>
+  <div class="metric-def"><strong>Definition:</strong> Unsubscribes divided by delivered emails, per issue.</div>
+  <div class="metric-why"><span>Why we measure it</span>This is the fastest feedback loop on content-audience fit. A rising unsubscribe rate means we're writing for the wrong reader, sending too often, or drifting off charter. A stable low rate means we're delivering on what subscribers signed up for.</div>
+  <div class="target">Ceiling: 0.5 percent per issue</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Subscriber growth</div>
+  <div class="metric-def"><strong>Definition:</strong> Net new subscribers per month — new signups minus unsubscribes and hard bounces.</div>
+  <div class="metric-why"><span>Why we measure it</span>Tells us whether the capture systems around the newsletter are working: landing page, content upgrades, in-product prompts, LinkedIn promotion. Content quality shows up in reply and click rates. Growth shows up here.</div>
+  <div class="target">Target: to be set after first quarter baseline</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Account coverage</div>
+  <div class="metric-def"><strong>Definition:</strong> Of the accounts on our target account list, the percentage with at least one newsletter subscriber.</div>
+  <div class="metric-why"><span>Why we measure it</span>ProofHub sells to teams, not individuals. One subscriber inside an account often isn't the buying decision-maker, but they can carry our thinking into internal conversations. Coverage tracks how much of our ICP is exposed to our worldview — the leading indicator that matters most for pipeline over 12 months.</div>
+  <div class="target">Target: to be set after we see the current baseline</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Qualitative replies</div>
+  <div class="metric-def"><strong>Definition:</strong> The actual content of what people write back — logged and reviewed at each 4-issue check-in.</div>
+  <div class="metric-why"><span>Why we measure it</span>Numbers tell us what happened. Replies tell us why. A single thoughtful reply about a piece is worth more than 50 opens. This is also the earliest source of case study candidates, testimonials, and ICP refinement.</div>
+</div>
+
+<h2>What we do not measure, and why</h2>
+
+<div class="metric">
+  <div class="metric-name">Open rate</div>
+  <div class="metric-why"><span>Why we don't</span>Apple Mail Privacy Protection pre-fetches tracking pixels for every email delivered to Apple Mail users, which inflates opens regardless of whether anyone actually read the message. Corporate security gateways do the same. A large share of B2B recipients use one or both, so the number is systematically wrong. Reporting it makes bad issues look successful and creates the wrong incentives.</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Delivery rate</div>
+  <div class="metric-why"><span>Why we don't</span>Delivery only matters when it's broken. When it drops, it's a signal for the infrastructure owner to investigate, not a content quality metric. Treating it as a KPI encourages measuring what's easy instead of what matters.</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Composite "engagement score"</div>
+  <div class="metric-why"><span>Why we don't</span>Averages of averages hide what's actually happening. When clicks drop but replies rise, that's a signal worth investigating — a composite score would smooth it out and we'd miss it. We report metrics individually so patterns stay visible.</div>
+</div>
+
+<div class="metric">
+  <div class="metric-name">Time-in-email, scroll depth, heatmaps</div>
+  <div class="metric-why"><span>Why we don't</span>Even where the ESP surfaces them, sample sizes at our list size make these numbers noise rather than signal. Revisit at 5,000+ subscribers.</div>
+</div>
+
+<h2>What we review, and when</h2>
+
+<ul>
+  <li><strong>Every 4 issues.</strong> Quick check on which pieces drove the most clicks and replies. Adjust topic mix if needed.</li>
+  <li><strong>Every 12 issues (roughly quarterly).</strong> Full retrospective. Are we still on charter? Is the reader we're writing for still the right one? Do the tracks still make sense as two separate things?</li>
+  <li><strong>Every 6 months.</strong> Subscriber survey. Five questions maximum. Use the answers to sharpen the charter.</li>
+</ul>
+
+<footer>
+  ProofHub Newsletter Editorial Charter · Working draft, v1<br>
+  Owner: Content team · For team alignment only · Not for external distribution
+</footer>
+
+</body>
+</html>
