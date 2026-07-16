@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ProofHub Newsletter — Sequencing and Triggering Logic</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #444;
+    --rule: #e2e2e2;
+    --accent: #b34a00;
+    --bg: #fdfcfa;
+    --panel: #f5f2ec;
+    --panel-alt: #eef1ee;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: "Charter", "Iowan Old Style", "Georgia", serif;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 40px 96px;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+  .eyebrow {
+    font-family: "Inter", -apple-system, "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: "Charter", "Iowan Old Style", "Georgia", serif;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    letter-spacing: -0.3px;
+  }
+  .meta {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  h2 {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 20px;
+    margin: 48px 0 12px;
+    letter-spacing: -0.2px;
+  }
+  h3 {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 15px;
+    margin: 28px 0 6px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  p { margin: 0 0 16px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  .lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+    padding: 2px 0 2px 18px;
+    margin-bottom: 32px;
+  }
+  .panel {
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .panel h3:first-child { margin-top: 0; }
+  .panel-alt {
+    background: var(--panel-alt);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .glossary {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+  .glossary dt {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 14px;
+    color: var(--ink);
+  }
+  .glossary dt:first-child { margin-top: 0; }
+  .glossary dd {
+    margin: 4px 0 0;
+    color: var(--ink-soft);
+  }
+  .rule-box {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 0;
+    margin: 24px 0;
+  }
+  .rule-box .rule-title {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .condition-list {
+    counter-reset: cond;
+    list-style: none;
+    padding-left: 0;
+  }
+  .condition-list li {
+    counter-increment: cond;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 14px;
+  }
+  .condition-list li::before {
+    content: counter(cond);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .timeline {
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+    margin: 20px 0;
+  }
+  .timeline-item {
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .timeline-week {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .timeline-event {
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .timeline-event .note {
+    color: var(--ink-soft);
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+    font-size: 14px;
+  }
+  .state {
+    border-top: 1px solid var(--rule);
+    padding: 20px 0;
+  }
+  .state:last-child { border-bottom: 1px solid var(--rule); }
+  .state-name {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .state-def {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .state-action {
+    font-size: 15px;
+  }
+  .state-action span {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px) {
+    body { padding: 32px 20px 64px; font-size: 16px; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Operations Doc · Working Draft</div>
+  <h1>Sequencing and Triggering Logic</h1>
+  <div class="meta">How subscribers move through the ProofHub newsletter program — for content, marketing operations, and anyone reviewing the send setup</div>
+</header>
+
+<p class="lead">Most newsletter programs send the same email to everyone on the same day. This one doesn't. The ProofHub newsletter is designed as a per-subscriber experience, where what someone receives depends on how long they've been subscribed and how they've engaged. This document explains how that works, why it's designed this way, and what needs to be true for it to run correctly.</p>
+
+<h2>Background: what this document assumes</h2>
+
+<p>The ProofHub newsletter is a two-track editorial email program aimed at managers of small-to-mid teams. If you haven't seen the editorial charter yet, read that first — it defines who the newsletter is for, what it covers, and what "good" looks like. This document picks up from there and covers the operational side: who receives what, when, and why.</p>
+
+<p>The two tracks, in short:</p>
+<ul>
+  <li><strong>Track 1</strong> is broadly educational. It covers the craft of management and team work. No product angle.</li>
+  <li><strong>Track 2</strong> takes one specific problem managers face and walks through how to solve it — with a soft mention of ProofHub in the last third.</li>
+</ul>
+
+<p>Both tracks send on alternating weeks, so each subscriber gets four newsletters per month total. Everything below builds on that base.</p>
+
+<h2>The core principle: send behaviour, not calendars</h2>
+
+<p>The most common way to run a B2B newsletter is calendar-driven: every subscriber gets every email on the same day, regardless of who they are or how they've engaged. This is easy to set up and easy to break.</p>
+
+<p>It breaks because the reader who has been engaging deeply with problem-solution content for two months needs something different from the reader who signed up yesterday. Sending both people the same case study insults the first reader and confuses the second.</p>
+
+<p>The design in this document treats subscriber behaviour as the primary input. Everyone still gets the two tracks. But certain sends — the case study, the re-engagement piece, the welcome sequence — trigger based on what an individual subscriber has done, not on what day of the month it is.</p>
+
+<div class="panel">
+  <h3>What this means in practice</h3>
+  <p>Two subscribers who signed up on the same day may, three months later, have received different emails in different orders. That is intentional. A newsletter that adapts to the reader's actual engagement is doing its job. A newsletter that treats everyone identically is easier to run but performs worse and burns through subscribers faster.</p>
+</div>
+
+<h2>Glossary of terms used in this document</h2>
+
+<div class="glossary">
+  <dl>
+    <dt>Track 1</dt>
+    <dd>The broadly educational newsletter. Covers management craft. No direct product content. Sent every other week.</dd>
+
+    <dt>Track 2</dt>
+    <dd>The problem-solution newsletter. Covers one specific manager problem per issue and briefly shows how ProofHub addresses it. Sent every other week, alternating with Track 1.</dd>
+
+    <dt>Click-through</dt>
+    <dd>A subscriber clicks any link inside an email. In this document, "clicked on a Track 2 issue" means they clicked any link within that issue — not necessarily the ProofHub link.</dd>
+
+    <dt>Reply rate</dt>
+    <dd>Percentage of delivered emails that receive a human reply (auto-replies excluded). A key quality signal.</dd>
+
+    <dt>Engagement state</dt>
+    <dd>Every subscriber is in one of three states — Active, Cooling, or Dormant — based on their recent behaviour. State determines what they receive next.</dd>
+
+    <dt>Trigger</dt>
+    <dd>A rule that says "when a subscriber meets these conditions, send them this specific email instead of the standard scheduled one."</dd>
+
+    <dt>Welcome sequence</dt>
+    <dd>The three emails a new subscriber receives in their first five days, before they enter the standard cadence.</dd>
+
+    <dt>Sunset sequence</dt>
+    <dd>The final email sent to a subscriber who has stopped engaging. Confirms they'll be removed unless they respond.</dd>
+  </dl>
+</div>
+
+<h2>Layer 1: How the two tracks work together</h2>
+
+<p>Track 1 and Track 2 are not two separate newsletters. They are one program with two rhythms, and each track does a specific job.</p>
+
+<p><strong>Track 1 builds trust.</strong> It has no product content, so it can't be dismissed as marketing. It shows the reader that ProofHub understands their world and has something worth saying about it. Every Track 1 issue earns the right for the next Track 2 issue to be opened.</p>
+
+<p><strong>Track 2 demonstrates.</strong> It shows that ProofHub is built by people who think the way Track 1 talks. When Track 1 says something like "removing ambiguity is the manager's real job," a nearby Track 2 issue shows what a tool designed by people who believe that looks like in practice.</p>
+
+<p><strong>Practical sequencing rule.</strong> A Track 2 issue should ideally follow a Track 1 issue that established the relevant management principle. Not rigidly — subscribers won't remember what they read three weeks ago — but as a soft ordering rule when scheduling the calendar. When Track 1 names a belief, the next Track 2 issue should demonstrate that belief in action.</p>
+
+<h2>Layer 2: The case study trigger</h2>
+
+<p>Case studies are the highest-value asset a B2B company can send, and the easiest to waste. Sending one too early makes it feel like marketing collateral. Sending one to someone who has stopped engaging is worse than not sending it. This is why the case study is not on a schedule. It is triggered by the subscriber's own behaviour.</p>
+
+<div class="rule-box">
+  <div class="rule-title">The trigger</div>
+  <p>A subscriber becomes eligible to receive a case study when they meet <strong>all three</strong> of the following conditions:</p>
+
+  <ol class="condition-list">
+    <li>They have been subscribed for at least <strong>6 weeks</strong>, meaning they have received at least three Track 2 issues.</li>
+    <li>They have clicked through on at least <strong>two Track 2 issues</strong> during that time.</li>
+    <li>They are still engaging — no clicks or replies in the last 4 weeks would disqualify them.</li>
+  </ol>
+</div>
+
+<h3>Why each condition exists</h3>
+
+<p><strong>The 6-week floor.</strong> A case study without prior trust reads as a marketing send. A case study after six weeks of thoughtful editorial content reads as evidence. The floor makes sure the case study lands in the second context, not the first.</p>
+
+<p><strong>Two Track 2 clicks.</strong> Clicking on Track 2 content specifically signals that the reader is interested in the problem-solution angle — not just industry commentary. That's the signal that they might be actively evaluating how they solve these problems. A subscriber who reads only Track 1 is enjoying the editorial voice but hasn't shown they're weighing solutions yet.</p>
+
+<p><strong>Recent engagement.</strong> This filters out subscribers who have gone quiet. Sending a case study to a dormant subscriber uses up an inbox slot that would have been better spent on a re-engagement email. It also risks a spam complaint from someone who's forgotten they subscribed.</p>
+
+<h3>When the case study sends</h3>
+
+<p>When a subscriber becomes eligible, they receive the case study <strong>in their next scheduled Track 2 slot</strong>, in place of the standard Track 2 issue. The case study is formatted like a Track 2 issue — same length, same signoff, same voice — so it fits into their reading rhythm. It should not look or feel like a different kind of email.</p>
+
+<p>After the case study, the subscriber returns to the standard alternating cadence. If they engage with the case study (click through, reply), they are ready for a soft transition into sales-adjacent communication, which sits outside this newsletter program. If they don't engage, they simply return to the normal rotation. No follow-up, no re-send. One shot.</p>
+
+<div class="panel">
+  <h3>Important operational point</h3>
+  <p>This is a <strong>per-subscriber</strong> trigger, not a broadcast. Different subscribers will become eligible at different times based on their individual engagement. On any given Track 2 send day, some subscribers will receive the scheduled issue and others will receive a case study, depending on where they are in their own journey. This is normal and correct.</p>
+  <p>The Email Service Provider (ESP) used to run the newsletter must support this kind of per-subscriber logic. Basic tools like the free tier of Mailchimp cannot do this. Tools like HubSpot, Customer.io, ActiveCampaign, or the higher tiers of MailerLite can.</p>
+</div>
+
+<h2>Layer 3: Engagement states</h2>
+
+<p>Every subscriber sits in one of three states at any given time. The state is based on their recent behaviour and determines what they receive next. Subscribers move between states automatically as their behaviour changes.</p>
+
+<div class="state">
+  <div class="state-name">Active</div>
+  <div class="state-def"><strong>Definition:</strong> Has clicked or replied to at least one issue in the last 8 weeks.</div>
+  <div class="state-action"><span>What they receive</span>Standard alternating cadence. Both tracks. Eligible for case study trigger.</div>
+</div>
+
+<div class="state">
+  <div class="state-name">Cooling</div>
+  <div class="state-def"><strong>Definition:</strong> No clicks or replies in the last 8 weeks, but still opening or receiving emails.</div>
+  <div class="state-action"><span>What they receive</span>Standard cadence continues, but they are flagged. At the 12-week mark, they receive a lightweight re-engagement email — one short question asking what would make the newsletter more useful for them. This is not a "we miss you" email. It treats them as a peer whose input matters.</div>
+</div>
+
+<div class="state">
+  <div class="state-name">Dormant</div>
+  <div class="state-def"><strong>Definition:</strong> No engagement (clicks or replies) in the last 16 weeks.</div>
+  <div class="state-action"><span>What they receive</span>A sunset sequence: one final email that says, plainly, "we haven't heard from you in a while. Reply with anything, or ignore this and we'll take you off the list at the end of the month." If they don't reply, they are unsubscribed. Not marked as inactive — actually removed.</div>
+</div>
+
+<h3>Why we remove dormant subscribers instead of keeping them</h3>
+
+<p>This is the part that feels counter-intuitive. It seems logical to keep a large list, on the assumption that even a small percentage of dormant subscribers might come back. In practice, keeping dormant subscribers hurts the newsletter in two ways.</p>
+
+<p><strong>Deliverability.</strong> Inbox providers like Gmail and Outlook watch how much of your list actually engages with your content. When a large share of your subscribers never open or click, providers treat that as a signal that your emails aren't wanted, and they start filtering more of your future sends into spam — even for the engaged subscribers. Pruning dormant subscribers protects the deliverability of every remaining send.</p>
+
+<p><strong>Signal clarity.</strong> A list padded with dormant subscribers produces misleading numbers. Metrics look worse than they should, and trends are harder to read. A smaller, cleaner list gives us signal we can act on.</p>
+
+<p>This is not a growth-limiting choice. It's a health choice. Programs that prune early and honestly compound for years. Programs that hoard subscribers look successful for six months and then quietly decay.</p>
+
+<h2>Layer 4: The welcome sequence for new subscribers</h2>
+
+<p>Someone new signs up. What they receive in their first five days determines whether they stay engaged for six months or unsubscribe after issue two. The welcome sequence has three emails, spread across five days, with a specific job for each.</p>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <span class="timeline-week">Day 0 — Welcome</span>
+    <div class="timeline-event">
+      Confirms the subscription and sets expectations honestly. Delivers the lead magnet or resource they signed up for.
+      <span class="note">Sets the tone: no marketing overreach, clear about what they'll get, invites reply.</span>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-week">Day 2 — The thesis piece</span>
+    <div class="timeline-event">
+      A pre-selected Track 1 issue that best captures the newsletter's worldview. Not the most recent issue — the one that most clearly defines how we think.
+      <span class="note">The fastest way for a new subscriber to figure out if they're in the right place.</span>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-week">Day 5 — The soft ask</span>
+    <div class="timeline-event">
+      A short email with one direct question: "What's the hardest part of your week right now?" No form, no survey. Just a reply prompt.
+      <span class="note">Response rate on this predicts long-term engagement better than any other data point. Also surfaces case study candidates, ICP insights, and topic ideas.</span>
+    </div>
+  </div>
+</div>
+
+<p><strong>After Day 5,</strong> the subscriber enters the standard alternating cadence, starting with whichever track is next in the calendar. There is no catchup or backfill of past issues unless they specifically request it.</p>
+
+<div class="panel-alt">
+  <h3>One critical rule for the welcome sequence</h3>
+  <p>All three welcome emails send from the same sender identity as the main newsletter — the same signed byline, the same "from" address. Consistency of sender identity is what makes the whole program feel like one thing rather than a collection of automations. Do not send the welcome from a separate marketing address, a noreply@ address, or a different name.</p>
+</div>
+
+<h3>A note on the soft ask</h3>
+
+<p>The Day 5 email invites replies. This is a promise that has to be kept. Someone at ProofHub — likely the editor — needs to actually read and respond to those replies. If nobody is going to respond, we should not ask. An invitation to reply that goes unanswered is worse than not asking at all.</p>
+
+<h2>Putting it together: an example subscriber journey</h2>
+
+<p>To make the whole system concrete, here is what happens for a hypothetical subscriber. Call her Maya. She signs up on the first day of the program.</p>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <span class="timeline-week">Day 0</span>
+    <div class="timeline-event">Maya subscribes. Receives the welcome email and the lead magnet.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Day 2</span>
+    <div class="timeline-event">Receives the thesis piece — a Track 1 issue that defines the newsletter's worldview.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Day 5</span>
+    <div class="timeline-event">Receives the soft-ask email. Maya replies briefly. The editor responds.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 2</span>
+    <div class="timeline-event">Standard cadence begins. Track 1 Issue 1.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 3</span>
+    <div class="timeline-event">Track 2 Issue 1.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 4</span>
+    <div class="timeline-event">Track 1 Issue 2.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 5</span>
+    <div class="timeline-event">Track 2 Issue 2. Maya clicks through on a link inside.<span class="note">First Track 2 click recorded.</span></div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 6</span>
+    <div class="timeline-event">Track 1 Issue 3.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 7</span>
+    <div class="timeline-event">Track 2 Issue 3. Maya clicks through again.<span class="note">Second Track 2 click recorded. Maya has now met all three case study conditions: 6+ weeks subscribed, 2 Track 2 clicks, still engaging.</span></div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 8</span>
+    <div class="timeline-event">Track 1 Issue 4.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 9</span>
+    <div class="timeline-event"><strong>Case study fires.</strong> Instead of the next scheduled Track 2 issue, Maya receives the case study — formatted like a Track 2 issue, same voice, same signoff.</div>
+  </div>
+  <div class="timeline-item">
+    <span class="timeline-week">Week 10 onwards</span>
+    <div class="timeline-event">Maya returns to standard alternating cadence.</div>
+  </div>
+</div>
+
+<p>Another subscriber who signed up on the same day but reads only Track 1 pieces would never meet the trigger conditions, and would never receive the case study. That is the correct outcome. The case study reaches Maya because Maya's behaviour showed she was ready for it.</p>
+
+<h2>What this design deliberately does not include</h2>
+
+<p>A few common newsletter mechanics are missing from this program on purpose. They are not oversights.</p>
+
+<h3>No referral program</h3>
+<p>Referral mechanics ("refer three friends and get X") work well for creator newsletters like Morning Brew. For a B2B newsletter at 300 opted-in subscribers, asking readers to refer colleagues before the newsletter has proven itself feels presumptuous and rarely converts. Revisit once the list is at 2,000+ and there's evidence of organic sharing already happening.</p>
+
+<h3>No "recommended reads" or link roundup section</h3>
+<p>Adding a "here's what we found interesting this week" block dilutes the voice of each issue. Every issue should be one clear thing, not a magazine. Recommendations dilute the argument.</p>
+
+<h3>No cross-promotion with other newsletters</h3>
+<p>Same reason — and also premature at this list size. Newsletter swaps work when both sides have engaged audiences of comparable size.</p>
+
+<h3>No aggressive archive push</h3>
+<p>An archive of past issues on the ProofHub site is fine. Linking to it prominently in every send is not. It splits reader attention and reduces the sense that the current issue is the thing worth reading now.</p>
+
+<h3>No "share on LinkedIn" buttons in the email body</h3>
+<p>These almost never get clicked and add visual clutter. If a piece is good enough to share, readers will screenshot it or forward it.</p>
+
+<h2>What has to be true for this to run correctly</h2>
+
+<p>The design in this document depends on the underlying email infrastructure being able to support it. When the infrastructure conversation happens, these four things need to be in place. Flagging them here so nothing is a surprise later.</p>
+
+<ol>
+  <li><strong>An ESP that supports per-subscriber behavioural triggers.</strong> Not just scheduled sends. The tool needs to be able to check "has this subscriber clicked on 2+ Track 2 emails in the last 6 weeks" and act on it automatically. Basic ESP tiers cannot do this.</li>
+  <li><strong>Reliable click tracking, per subscriber, over time.</strong> Standard in any real ESP. Needs to be enabled and monitored.</li>
+  <li><strong>A single sender identity across the welcome sequence, main newsletter, and case study.</strong> Not separate "marketing" and "transactional" sender addresses. The subscriber should experience one consistent voice.</li>
+  <li><strong>Automated engagement-state segmentation.</strong> The three states — Active, Cooling, Dormant — need to update automatically based on behaviour, not be maintained manually in a spreadsheet.</li>
+</ol>
+
+<h2>Open questions for the team to resolve</h2>
+
+<p>Four decisions this document leaves open that the team should discuss and lock down before launch.</p>
+
+<ol>
+  <li><strong>Case study trigger threshold.</strong> Is "6 weeks + 2 Track 2 clicks" the right threshold? Tighter thresholds mean fewer, higher-quality case study sends. Looser thresholds mean more coverage but more waste.</li>
+  <li><strong>Dormancy cutoff.</strong> Is 16 weeks the right point at which to sunset a subscriber? Some B2B newsletters wait 24 weeks. A shorter cutoff keeps the list cleaner but may remove people who were about to re-engage.</li>
+  <li><strong>Reply ownership.</strong> The soft-ask email on Day 5 will surface real replies. Who inside ProofHub reads and responds to them? If the answer is nobody, the soft ask should be removed from the welcome sequence.</li>
+  <li><strong>Lead magnet dependence.</strong> The current welcome sequence assumes the lead magnet is stable. If ProofHub launches a new lead magnet, or the current one is retired, the welcome sequence has to be revised. Someone needs to own this maintenance.</li>
+</ol>
+
+<footer>
+  ProofHub Newsletter — Sequencing and Triggering Logic · Working draft, v1<br>
+  Owner: Content team · For team alignment only · Not for external distribution<br>
+  Read alongside: ProofHub Newsletter Editorial Charter
+</footer>
+
+</body>
+</html>
